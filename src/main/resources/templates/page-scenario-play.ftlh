@@ -1,0 +1,65 @@
+<#include "layout.ftlh">
+
+<#assign page_title="${scenario.title()}"/>
+<#assign page_description="Sand Saga"/>
+<#assign enable_google_analytics=true/>
+
+<#macro page_head>
+    <link rel="stylesheet" type="text/css" href="/page-scenario-play.css" />
+    <link rel="stylesheet" type="text/css" href="${scenarios.urlSandGameCss()}" />
+
+    <script defer src="${scenarios.urlSandGameJsScript()}"></script>
+    <script defer src="${scenarios.urlSandSagaScript()?replace('%s', scenario.name())}"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.SandGameJS !== undefined && window.SandSaga !== undefined) {
+                const root = document.getElementById('sand-game-root');
+
+                const config = {
+                    version: 'dev',
+                    debug: false,
+                    lobbyUrl: '/',
+                    onCompleted: () => {
+                        if (window.localStorage !== undefined) {
+                            localStorage.setItem('scenario_${scenario.name()}', 'true');
+                        }
+                    }
+                };
+
+                SandSaga.init(root, config);
+            } else {
+                const placeholder = document.getElementById('sand-game-placeholder-content');
+                placeholder.innerHTML = '<span style="color: red; font-weight: bold;">' +
+                    'Failed to load the game. Possible reasons:<br>' +
+                    '&bull; Your browser may not support modern JavaScript<br>' +
+                    '&bull; Internet connection<br>' +
+                    '&bull; A server side problem' +
+                    '</span>';
+            }
+        });
+    </script>
+</#macro>
+
+<#macro page_body_title>
+    <h1><a href="/">Sand Saga</a> / ${scenario.title()}</h1>
+</#macro>
+
+<#macro page_body>
+    <div id="sand-game-root">
+        <!-- Sand Game JS placeholder -->
+        <div style="user-select: none;">
+            <div>
+                <button disabled class="btn" type="button" style="min-width: 4em; line-height: 2; padding: 0 0.4em 0 0.4em; font-size: 75%; border: none; background-color: rgb(230, 230, 230); color: black;">&nbsp;</button>
+            </div>
+            <div style="height: 70vh; display: flex; align-items: center; justify-content: center; margin-top: 4pt; padding: 2em; outline: 1px solid #b7b7b7;">
+                <div id="sand-game-placeholder-content">
+                    Loading...
+                </div>
+            </div>
+            <div style="height: 20vh"></div>
+        </div>
+    </div>
+</#macro>
+
+<@display_page/>

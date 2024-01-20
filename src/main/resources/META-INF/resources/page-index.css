@@ -1,0 +1,25 @@
+
+h1 {
+    margin-top: 5pt;
+    margin-bottom: 10pt;
+
+    border-radius: 5pt;
+    padding: 5pt;
+}
+
+.container {
+    max-width: 768px;
+}
+
+#footer-image {
+    height: 80px;
+    background-image: url('/footer-image.png');
+    background-repeat: repeat no-repeat;
+    background-size: 1380px 80px;
+    background-position: center bottom;
+    image-rendering: pixelated;
+}
+
+.sand-saga-footer {
+    font-size: small;
+}
