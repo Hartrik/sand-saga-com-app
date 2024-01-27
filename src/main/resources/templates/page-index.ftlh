@@ -81,8 +81,9 @@
 
   <h1>Sand Saga</h1>
 
-  <ul class="list-group">
-    <#list scenarios.tutorial() as scenario>
+  <#list config.categories() as category>
+  <ul class="list-group sand-saga-scenario-list">
+    <#list category.scenarios() as scenario>
     <a href="/s/${scenario.name()}/play" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
       ${scenario.title()}
       <span id="scenario_${scenario.name()}">
@@ -91,6 +92,7 @@
     </a>
     </#list>
   </ul>
+  </#list>
 
 </#macro>
 

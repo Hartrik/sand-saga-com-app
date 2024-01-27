@@ -6,10 +6,10 @@
 
 <#macro page_head>
     <link rel="stylesheet" type="text/css" href="/page-scenario-play.css" />
-    <link rel="stylesheet" type="text/css" href="${scenarios.urlSandGameCss()}" />
+    <link rel="stylesheet" type="text/css" href="${config.urlSandGameCss()}" />
 
-    <script defer src="${scenarios.urlSandGameJsScript()}"></script>
-    <script defer src="${scenarios.urlSandSagaScript()?replace('%s', scenario.name())}"></script>
+    <script defer src="${config.urlSandGameJsScript()}"></script>
+    <script defer src="${config.urlSandSagaScript()?replace('%s', scenario.name())}"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {

@@ -3,7 +3,7 @@ package cz.harag.sandsaga.web.controller;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import cz.harag.sandsaga.web.ConfigScenarios;
+import cz.harag.sandsaga.web.SandSagaConfig;
 import cz.harag.sandsaga.web.service.Templates;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
@@ -17,7 +17,7 @@ import jakarta.ws.rs.core.SecurityContext;
 
 /**
  * @author Patrik Harag
- * @version 2024-01-20
+ * @version 2024-01-27
  */
 @Path("/")
 public class MainController {
@@ -29,14 +29,14 @@ public class MainController {
     SecurityContext security;
 
     @Inject
-    ConfigScenarios scenarios;
+    SandSagaConfig config;
 
     @GET
     @Path("/")
     @Produces(MediaType.TEXT_HTML)
     public String indexHandler() {
         Map<String, Object> parameters = new LinkedHashMap<>();
-        parameters.put("scenarios", scenarios);
+        parameters.put("config", config);
         return templates.build("page-index.ftlh", security, parameters);
     }
 
@@ -44,21 +44,24 @@ public class MainController {
     @Path("/s/{scenario}/play")
     @Produces(MediaType.TEXT_HTML)
     public String indexHandler(@PathParam("scenario") String name) {
-        ConfigScenarios.ConfigScenario scenario = getScenario(name);
+        SandSagaConfig.ConfigScenario scenario = getScenario(name);
         if (scenario == null) {
             throw new NotFoundException();
         }
 
         Map<String, Object> parameters = new LinkedHashMap<>();
-        parameters.put("scenarios", scenarios);
+        parameters.put("config", config);
         parameters.put("scenario", scenario);
         return templates.build("page-scenario-play.ftlh", security, parameters);
     }
 
-    private ConfigScenarios.ConfigScenario getScenario(String name) {
-        for (ConfigScenarios.ConfigScenario scenario : scenarios.tutorial()) {
-            if (scenario.name().equals(name)) {
-                return scenario;
+    private SandSagaConfig.ConfigScenario getScenario(String name) {
+        // TODO: optimize
+        for (SandSagaConfig.ConfigCategory category : config.categories()) {
+            for (SandSagaConfig.ConfigScenario scenario : category.scenarios()) {
+                if (scenario.name().equals(name)) {
+                    return scenario;
+                }
             }
         }
         return null;

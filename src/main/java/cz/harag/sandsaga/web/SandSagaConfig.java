@@ -6,16 +6,22 @@ import io.smallrye.config.ConfigMapping;
 
 /**
  * @author Patrik Harag
- * @version 2024-01-20
+ * @version 2024-01-27
  */
-@ConfigMapping(prefix = "scenarios")
-public interface ConfigScenarios {
+@ConfigMapping(prefix = "sandsaga")
+public interface SandSagaConfig {
 
     String urlSandGameJsScript();
     String urlSandGameCss();
     String urlSandSagaScript();  // with %s
 
-    List<ConfigScenario> tutorial();
+    List<ConfigCategory> categories();
+
+    interface ConfigCategory {
+        String title();
+//        String description();
+        List<ConfigScenario> scenarios();
+    }
 
     interface ConfigScenario {
         String name();
