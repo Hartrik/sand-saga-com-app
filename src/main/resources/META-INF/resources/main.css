@@ -1,7 +1,24 @@
 
+body {
+    background-color: #ffffff;
+    background-position: 0px 0px;
+    background-size: 200px 200px;
+    background-image: url("/noise.png");
+}
+
 #page-content-wrapper {
     min-width: 100vw;
     min-height: 100vh;
+}
+
+h1 {
+    padding: 1rem;
+    color: white;
+    background-color: rgb(52, 58, 64);
+    background-position: 0px 0px;
+    background-size: 100px 100px;
+    background-image: url("/noise.png");
+    border-radius: 5pt;
 }
 
 .spacer {
@@ -14,11 +31,4 @@
         min-width: 0;
         width: 100%;
     }
-}
-
-h1 {
-    background-color: rgb(225, 217, 171);
-    background-position: 0px 0px;
-    background-size: 100px 100px;
-    background-image: url("/noise.png");
 }

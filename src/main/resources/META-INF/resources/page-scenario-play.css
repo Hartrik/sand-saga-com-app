@@ -1,6 +1,6 @@
 
 h1 {
-    font-size: small;
+    font-size: 80%;
 
     margin-top: 0;
     margin-bottom: 5pt;
@@ -29,9 +29,10 @@ h1 {
 @media (min-width: 1024px) {
     h1 {
         font-size: 2rem;
+        padding: 0.5rem;
     }
 }
 
 h1 a {
-    color: black;
+    color: white;
 }
