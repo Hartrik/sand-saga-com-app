@@ -81,6 +81,14 @@
   </#if>
 
   <h1>Sand Saga</h1>
+  <div class="alert alert-info alert-dismissible fade show">
+    <p>
+      The Sand Saga is a collection of scenarios built on the <a href="https://harag.cz/app/sand-game-js">Sand Game JS</a> engine.
+      Use a mouse or a touch screen to complete the scenarios below.
+      Step into a universe where every pixel is simulated.
+    </p>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
 
   <#list config.categories() as category>
   <ul class="list-group sand-saga-scenario-list">
