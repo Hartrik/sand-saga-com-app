@@ -38,7 +38,8 @@
             if (localStorage.getItem(key)) {
               let element = document.getElementById(key);
               if (element) {
-                element.innerHTML = '<span class="badge bg-success rounded-pill">completed</span>';
+                const text = key.includes('sandbox') ? 'played' : 'completed';
+                element.innerHTML = '<span class="badge bg-success rounded-pill">' + text + '</span>';
               }
             }
           }
@@ -87,7 +88,9 @@
     <a href="/s/${scenario.name()}/play" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
       ${scenario.title()}
       <span id="scenario_${scenario.name()}">
-        <span class="badge bg-danger rounded-pill">not completed</span>
+        <span class="badge bg-danger rounded-pill">
+          <#if scenario.name()?contains('sandbox')>not played<#else>not completed</#if>
+        </span>
       </span>
     </a>
     </#list>
