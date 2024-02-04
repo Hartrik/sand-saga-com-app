@@ -45,6 +45,10 @@
       <artifactId>quarkus-resteasy-jackson</artifactId>
     </dependency>
     <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-resteasy-multipart</artifactId>
+    </dependency>
+    <dependency>
       <groupId>io.quarkiverse.freemarker</groupId>
       <artifactId>quarkus-freemarker</artifactId>
       <version>1.0.0</version>

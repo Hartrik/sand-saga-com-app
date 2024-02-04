@@ -1,8 +1,13 @@
 package cz.harag.sandsaga.web.controller;
 
+import java.util.List;
+
+import cz.harag.sandsaga.web.dto.ReportDto;
+import cz.harag.sandsaga.web.service.ReportProvider;
 import cz.harag.sandsaga.web.service.SandSagaConfigProvider;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -24,10 +29,20 @@ public class AdminApiController {
     @Inject
     SandSagaConfigProvider configProvider;
 
+    @Inject
+    ReportProvider reportProvider;
+
     @POST
     @Path("/reload-config")
     @Produces(MediaType.APPLICATION_JSON)
     public void handleReloadConfig() {
         configProvider.reload();
+    }
+
+    @GET
+    @Path("/reports")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<ReportDto> handleGetReports() {
+        return reportProvider.list();
     }
 }

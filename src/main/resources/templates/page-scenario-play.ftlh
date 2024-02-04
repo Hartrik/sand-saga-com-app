@@ -19,6 +19,7 @@
                 const config = {
                     version: 'dev',
                     debug: false,
+                    scenario: '${scenario.name}',
                     lobbyUrl: '/',
                     onCompleted: () => {
                         if (window.localStorage !== undefined) {
