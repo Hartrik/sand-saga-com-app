@@ -5,7 +5,7 @@
 <#assign enable_google_analytics=true/>
 
 <#macro page_head>
-    <link rel="stylesheet" type="text/css" href="/page-scenario-play.css" />
+    <link rel="stylesheet" type="text/css" href="/data/page-scenario-play.css" />
     <link rel="stylesheet" type="text/css" href="${scenario.urlSandGameJsCss}" />
 
     <script defer src="${scenario.urlSandGameJsScript}"></script>

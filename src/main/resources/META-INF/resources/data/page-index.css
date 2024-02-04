@@ -16,13 +16,13 @@ h1 {
     background-color: rgb(255, 234, 142);
     background-position: 0px 0px;
     background-size: 200px 200px;
-    background-image: url("/noise.png");
+    background-image: url("/data/noise.png");
     border-color: rgb(255, 230, 69);
 }
 
 #footer-image {
     height: 80px;
-    background-image: url('/footer-image.png');
+    background-image: url('/data/footer-image.png');
     background-repeat: repeat no-repeat;
     background-size: 1380px 80px;
     background-position: center bottom;

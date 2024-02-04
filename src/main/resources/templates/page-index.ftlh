@@ -5,7 +5,7 @@
 <#assign enable_google_analytics=true/>
 
 <#macro page_head>
-  <link href="/page-index.css" rel="stylesheet">
+  <link href="/data/page-index.css" rel="stylesheet">
 
   <#if !user??>
     <script>
