@@ -7,8 +7,10 @@ body {
 }
 
 #page-content-wrapper {
-    min-width: 100vw;
-    min-height: 100vh;
+    min-width: 100vw;  /* old browsers */
+    min-width: 100dvw;
+    min-height: 100vh;  /* old browsers */
+    min-height: 100dvh;
 }
 
 h1 {
