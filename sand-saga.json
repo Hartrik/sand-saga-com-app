@@ -1,7 +1,7 @@
 {
-  "urlSandGameJsScript": "https://files.harag.cz/www/app/sand-saga/prod/24w04a/sand-game-js.umd.min.js",
-  "urlSandGameJsCss": "https://files.harag.cz/www/app/sand-saga/prod/24w04a/sand-game-js.css",
-  "urlSandSagaScriptFormat": "https://files.harag.cz/www/app/sand-saga/prod/24w04a/sand-saga_%s.umd.min.js",
+  "urlSandGameJsScript": "https://files.harag.cz/www/app/sand-saga/prod/24w05a/sand-game-js.umd.min.js",
+  "urlSandGameJsCss": "https://files.harag.cz/www/app/sand-saga/prod/24w05a/sand-game-js.css",
+  "urlSandSagaScriptFormat": "https://files.harag.cz/www/app/sand-saga/prod/24w05a/sand-saga_%s.umd.min.js",
   "categories": [
     {
       "title": "Tutorial",
@@ -26,6 +26,10 @@
         {
           "name": "mission-deforestation",
           "title": "Mission: Deforestation"
+        },
+        {
+          "name": "mission-forestry",
+          "title": "Mission: Forestry"
         }
       ]
     },
@@ -33,7 +37,15 @@
       "title": "Puzzles",
       "scenarios": [
         {
-          "name": "challenge-a",
+          "name": "puzzle-sep-w",
+          "title": "Challenge: Separate 1"
+        },
+        {
+          "name": "puzzle-sep-ws",
+          "title": "Challenge: Separate 2"
+        },
+        {
+          "name": "puzzle-transfer-s",
           "title": "Challenge: Sand Transfer"
         }
       ]
