@@ -2,7 +2,7 @@ package cz.harag.sandsaga.web.controller;
 
 import java.util.Map;
 
-import cz.harag.sandsaga.web.dto.ReportMultipart;
+import cz.harag.sandsaga.web.dto.MultipartReport;
 import cz.harag.sandsaga.web.service.ReportProvider;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
@@ -32,7 +32,7 @@ public class MainApiController {
     @Path("/report")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public Object handlerReport(@MultipartForm ReportMultipart multipart, @Context HttpRequest request) {
+    public Object handlerReport(@MultipartForm MultipartReport multipart, @Context HttpRequest request) {
         String ip = request.getRemoteAddress();
 
         Long id = reportProvider.report(multipart, ip);

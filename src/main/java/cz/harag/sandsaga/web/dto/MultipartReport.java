@@ -9,7 +9,7 @@ import org.jboss.resteasy.annotations.providers.multipart.PartType;
  * @author Patrik Harag
  * @version 2024-02-04
  */
-public class ReportMultipart {
+public class MultipartReport {
 
     @FormParam("scenario")
     @PartType(MediaType.TEXT_PLAIN)

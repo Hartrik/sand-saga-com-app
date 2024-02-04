@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import cz.harag.sandsaga.web.dto.ReportDto;
-import cz.harag.sandsaga.web.dto.ReportMultipart;
+import cz.harag.sandsaga.web.dto.MultipartReport;
 import cz.harag.sandsaga.web.model.Report;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
@@ -20,7 +20,7 @@ public class ReportProvider {
     private static final Logger LOGGER = Logger.getLogger(ReportProvider.class);
 
     @Transactional
-    public Long report(ReportMultipart input, String ip) {
+    public Long report(MultipartReport input, String ip) {
         LOGGER.info("Storing report from IP: " + ip);
 
         Report report = new Report();
