@@ -90,14 +90,14 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
 
-  <#list config.categories() as category>
+  <#list categories as category>
   <ul class="list-group sand-saga-scenario-list">
-    <#list category.scenarios() as scenario>
-    <a href="/s/${scenario.name()}/play" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-      ${scenario.title()}
-      <span id="scenario_${scenario.name()}">
+    <#list category.scenarios as scenario>
+    <a href="/s/${scenario.name}/play" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+      ${scenario.title}
+      <span id="scenario_${scenario.name}">
         <span class="badge bg-danger rounded-pill">
-          <#if scenario.name()?contains('sandbox')>not played<#else>not completed</#if>
+          <#if scenario.name?contains('sandbox')>not played<#else>not completed</#if>
         </span>
       </span>
     </a>

@@ -3,7 +3,8 @@ package cz.harag.sandsaga.web.controller;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import cz.harag.sandsaga.web.SandSagaConfig;
+import cz.harag.sandsaga.web.dto.SandSagaScenario;
+import cz.harag.sandsaga.web.service.SandSagaConfigProvider;
 import cz.harag.sandsaga.web.service.Templates;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
@@ -29,14 +30,14 @@ public class MainController {
     SecurityContext security;
 
     @Inject
-    SandSagaConfig config;
+    SandSagaConfigProvider config;
 
     @GET
     @Path("/")
     @Produces(MediaType.TEXT_HTML)
     public String indexHandler() {
         Map<String, Object> parameters = new LinkedHashMap<>();
-        parameters.put("config", config);
+        parameters.put("categories", config.categories());
         return templates.build("page-index.ftlh", security, parameters);
     }
 
@@ -44,7 +45,7 @@ public class MainController {
     @Path("/s/{scenario}/play")
     @Produces(MediaType.TEXT_HTML)
     public String indexHandler(@PathParam("scenario") String name) {
-        SandSagaConfig.ConfigScenario scenario = getScenario(name);
+        SandSagaScenario scenario = config.scenario(name);
         if (scenario == null) {
             throw new NotFoundException();
         }
@@ -53,17 +54,5 @@ public class MainController {
         parameters.put("config", config);
         parameters.put("scenario", scenario);
         return templates.build("page-scenario-play.ftlh", security, parameters);
-    }
-
-    private SandSagaConfig.ConfigScenario getScenario(String name) {
-        // TODO: optimize
-        for (SandSagaConfig.ConfigCategory category : config.categories()) {
-            for (SandSagaConfig.ConfigScenario scenario : category.scenarios()) {
-                if (scenario.name().equals(name)) {
-                    return scenario;
-                }
-            }
-        }
-        return null;
     }
 }

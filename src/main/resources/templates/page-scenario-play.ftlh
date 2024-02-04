@@ -1,15 +1,15 @@
 <#include "layout.ftlh">
 
-<#assign page_title="${scenario.title()}"/>
+<#assign page_title="${scenario.title}"/>
 <#assign page_description="Sand Saga"/>
 <#assign enable_google_analytics=true/>
 
 <#macro page_head>
     <link rel="stylesheet" type="text/css" href="/page-scenario-play.css" />
-    <link rel="stylesheet" type="text/css" href="${config.urlSandGameCss()}" />
+    <link rel="stylesheet" type="text/css" href="${scenario.urlSandGameJsCss}" />
 
-    <script defer src="${config.urlSandGameJsScript()}"></script>
-    <script defer src="${config.urlSandSagaScript()?replace('%s', scenario.name())}"></script>
+    <script defer src="${scenario.urlSandGameJsScript}"></script>
+    <script defer src="${scenario.urlSandSagaScript}"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -22,7 +22,7 @@
                     lobbyUrl: '/',
                     onCompleted: () => {
                         if (window.localStorage !== undefined) {
-                            localStorage.setItem('scenario_${scenario.name()}', 'true');
+                            localStorage.setItem('scenario_${scenario.name}', 'true');
                         }
                     }
                 };
@@ -42,7 +42,7 @@
 </#macro>
 
 <#macro page_body_title>
-    <h1><a href="/">Sand Saga</a> / ${scenario.title()}</h1>
+    <h1><a href="/">Sand Saga</a> / ${scenario.title}</h1>
 </#macro>
 
 <#macro page_body>

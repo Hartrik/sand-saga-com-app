@@ -1,0 +1,59 @@
+{
+  "urlSandGameJsScript": "https://files.harag.cz/www/app/sand-saga/prod/24w04a/sand-game-js.umd.min.js",
+  "urlSandGameJsCss": "https://files.harag.cz/www/app/sand-saga/prod/24w04a/sand-game-js.css",
+  "urlSandSagaScriptFormat": "https://files.harag.cz/www/app/sand-saga/prod/24w04a/sand-saga_%s.umd.min.js",
+  "categories": [
+    {
+      "title": "Tutorial",
+      "scenarios": [
+        {
+          "name": "tutorial-basics",
+          "title": "Tutorial: Basics"
+        },
+        {
+          "name": "tutorial-fallthrough",
+          "title": "Tutorial: Fall-through Mode"
+        },
+        {
+          "name": "tutorial-move",
+          "title": "Tutorial: Move Tool"
+        }
+      ]
+    },
+    {
+      "title": "Missions",
+      "scenarios": [
+        {
+          "name": "mission-deforestation",
+          "title": "Mission: Deforestation"
+        }
+      ]
+    },
+    {
+      "title": "Puzzles",
+      "scenarios": [
+        {
+          "name": "challenge-a",
+          "title": "Challenge: Sand Transfer"
+        }
+      ]
+    },
+    {
+      "title": "Sandbox",
+      "scenarios": [
+        {
+          "name": "sandbox-rain",
+          "title": "Sandbox: Rain"
+        },
+        {
+          "name": "sandbox-meteors",
+          "title": "Sandbox: Meteors"
+        },
+        {
+          "name": "sandbox-empty",
+          "title": "Sandbox: Empty"
+        }
+      ]
+    }
+  ]
+}
