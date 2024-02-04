@@ -32,13 +32,19 @@ public class SandSagaConfigProvider {
     @ConfigProperty(name = "cz.harag.sandsaga.config-file")
     String configFile;
 
-    private final List<SandSagaCategory> cachedCategories = new ArrayList<>();
-    private final Map<String, SandSagaScenario> cachedScenarios = new LinkedHashMap<>();
+    private List<SandSagaCategory> cachedCategories = new ArrayList<>();
+    private Map<String, SandSagaScenario> cachedScenarios = new LinkedHashMap<>();
 
     void onStart(@Observes StartupEvent event) {
+        reload();
+    }
+
+    public void reload() {
+        List<SandSagaCategory> cachedCategories = new ArrayList<>();
+        Map<String, SandSagaScenario> cachedScenarios = new LinkedHashMap<>();
         try {
-            ConfigRoot config = new ObjectMapper().readValue(new File(configFile), ConfigRoot.class);
-            for (ConfigCategory configCategory : config.getCategories()) {
+            ConfigRoot configRoot = new ObjectMapper().readValue(new File(configFile), ConfigRoot.class);
+            for (ConfigCategory configCategory : configRoot.getCategories()) {
                 SandSagaCategory sandSagaCategory = new SandSagaCategory();
                 sandSagaCategory.setTitle(configCategory.getTitle());
 
@@ -47,9 +53,9 @@ public class SandSagaConfigProvider {
                     SandSagaScenario sandSagaScenario = new SandSagaScenario();
                     sandSagaScenario.setName(configScenario.getName());
                     sandSagaScenario.setTitle(configScenario.getTitle());
-                    sandSagaScenario.setUrlSandGameJsScript(config.getUrlSandGameJsScript());
-                    sandSagaScenario.setUrlSandGameJsCss(config.getUrlSandGameJsCss());
-                    String urlSandSagaScript = String.format(config.getUrlSandSagaScriptFormat(), configScenario.getName());
+                    sandSagaScenario.setUrlSandGameJsScript(configRoot.getUrlSandGameJsScript());
+                    sandSagaScenario.setUrlSandGameJsCss(configRoot.getUrlSandGameJsCss());
+                    String urlSandSagaScript = String.format(configRoot.getUrlSandSagaScriptFormat(), configScenario.getName());
                     sandSagaScenario.setUrlSandSagaScript(urlSandSagaScript);
 
                     sandSagaScenarios.add(sandSagaScenario);
@@ -59,13 +65,15 @@ public class SandSagaConfigProvider {
 
                 cachedCategories.add(sandSagaCategory);
             }
-
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
+
+        this.cachedCategories = cachedCategories;
+        this.cachedScenarios = cachedScenarios;
+
         LOGGER.info("Sand Saga config loaded, scenarios: " + cachedScenarios.size());
     }
-
 
     public SandSagaScenario scenario(String name) {
         return cachedScenarios.get(name);
