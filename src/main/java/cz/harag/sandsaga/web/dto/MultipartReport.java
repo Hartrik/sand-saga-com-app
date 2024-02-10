@@ -7,7 +7,7 @@ import org.jboss.resteasy.annotations.providers.multipart.PartType;
 
 /**
  * @author Patrik Harag
- * @version 2024-02-04
+ * @version 2024-02-10
  */
 public class MultipartReport {
 
@@ -26,4 +26,8 @@ public class MultipartReport {
     @FormParam("metadata")
     @PartType(MediaType.TEXT_PLAIN)
     public String metadata;
+
+    @FormParam("data")
+    @PartType(MediaType.APPLICATION_OCTET_STREAM)
+    public byte[] data;
 }

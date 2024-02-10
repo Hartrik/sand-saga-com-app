@@ -2,11 +2,12 @@ package cz.harag.sandsaga.web.dto;
 
 /**
  * @author Patrik Harag
- * @version 2024-02-04
+ * @version 2024-02-10
  */
 public class SandSagaScenario {
 
     private String name;
+    private Long entityId;
     private String title;
 
     private String urlSandGameJsScript;
@@ -19,6 +20,14 @@ public class SandSagaScenario {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getEntityId() {
+        return entityId;
+    }
+
+    public void setEntityId(Long entityId) {
+        this.entityId = entityId;
     }
 
     public String getTitle() {

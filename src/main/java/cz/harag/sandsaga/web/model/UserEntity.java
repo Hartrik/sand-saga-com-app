@@ -18,7 +18,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "t_user")
 @UserDefinition 
-public class User extends PanacheEntity {
+public class UserEntity extends PanacheEntity {
 
     public static final String ROLE_ADMIN = "admin";
 
@@ -34,10 +34,10 @@ public class User extends PanacheEntity {
     public String role;
 
 
-    public static User asUser(Principal principal) {
+    public static UserEntity asUser(Principal principal) {
         if (principal == null) {
             return null;
         }
-        return User.find("username", principal.getName()).firstResult();
+        return UserEntity.find("username", principal.getName()).firstResult();
     }
 }

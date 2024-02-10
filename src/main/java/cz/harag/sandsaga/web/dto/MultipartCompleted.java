@@ -6,11 +6,9 @@ import org.jboss.resteasy.annotations.providers.multipart.PartType;
 
 /**
  * @author Patrik Harag
- * @version 2024-02-04
+ * @version 2024-02-10
  */
 public class MultipartCompleted {
-
-    // TODO
 
     @FormParam("metadata")
     @PartType(MediaType.TEXT_PLAIN)
@@ -20,7 +18,7 @@ public class MultipartCompleted {
     @PartType(MediaType.TEXT_PLAIN)
     public String metadata;
 
-    @FormParam("image")
+    @FormParam("data")
     @PartType(MediaType.APPLICATION_OCTET_STREAM)
-    public byte[] image;
+    public byte[] data;
 }

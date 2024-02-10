@@ -1,6 +1,6 @@
 package cz.harag.sandsaga.web.service;
 
-import cz.harag.sandsaga.web.model.User;
+import cz.harag.sandsaga.web.model.UserEntity;
 import io.quarkus.runtime.StartupEvent;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
@@ -25,11 +25,11 @@ public class DatabasePopulator {
 
     @Transactional
     void onStart(@Observes StartupEvent event) {
-        if (User.count() == 0) {
-            User user = new User();
+        if (UserEntity.count() == 0) {
+            UserEntity user = new UserEntity();
             user.username = adminLogin;
             user.password = adminPassword;
-            user.role = User.ROLE_ADMIN;
+            user.role = UserEntity.ROLE_ADMIN;
 
             user.persist();
 

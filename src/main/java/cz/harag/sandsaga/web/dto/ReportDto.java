@@ -3,7 +3,7 @@ package cz.harag.sandsaga.web.dto;
 
 /**
  * @author Patrik Harag
- * @version 2024-02-04
+ * @version 2024-02-10
  */
 public class ReportDto {
 
@@ -13,6 +13,7 @@ public class ReportDto {
     private String location;
     private String message;
     private String metadata;
+    private long snapshotSize;
     private String ip;
 
     public long getId() {
@@ -61,6 +62,14 @@ public class ReportDto {
 
     public void setMetadata(String metadata) {
         this.metadata = metadata;
+    }
+
+    public long getSnapshotSize() {
+        return snapshotSize;
+    }
+
+    public void setSnapshotSize(long snapshotSize) {
+        this.snapshotSize = snapshotSize;
     }
 
     public String getIp() {
