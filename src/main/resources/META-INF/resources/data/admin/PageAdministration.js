@@ -1,6 +1,12 @@
 import { DomBuilder } from "/data/admin/DomBuilder.js";
 import { formatDate } from "/data/admin/Utils.js";
 
+/**
+ * @version 2024-02-10
+ * @author Patrik Harag
+ */
+
+
 const root = document.getElementById('administration-root');
 
 function handle(alertOnSuccess, alertOnFailure, fetchPromise, onSuccess = undefined) {
@@ -35,7 +41,8 @@ handle(false, false, fetch('/api/admin/server-status', {
         'Content-Type': 'application/json'
     }
 }), result => {
-    statusPar.innerText = Object.entries(JSON.parse(result)).map(([k, v]) => k + ': ' + v).join(',');
+    const json = JSON.parse(result);
+    statusPar.innerText = Object.entries(json).map(([k, v]) => k + ': ' + v).join(', ');
 });
 
 // buttons
@@ -56,7 +63,7 @@ root.append(DomBuilder.par(null, [
 // reports
 
 const reportDiv = DomBuilder.div();
-root.append(DomBuilder.element('h3', null, 'Reports'));
+root.append(DomBuilder.element('h3', null, 'Reported'));
 root.append(reportDiv);
 
 function refreshReports() {
@@ -156,3 +163,101 @@ function refreshReports() {
 }
 
 refreshReports();
+
+// completed
+
+const completedDiv = DomBuilder.div();
+root.append(DomBuilder.element('h3', null, 'Completed'));
+root.append(completedDiv);
+
+function refreshCompleted() {
+    fetch('/api/admin/completed', {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    }).then(response => response.json()).then(completedList => {
+        const table = DomBuilder.bootstrapTableBuilder();
+
+        function snapshotColumn(completed) {
+            if (completed.snapshotSize === 0) {
+                return 'n/a';
+            }
+
+            return [
+                DomBuilder.span('' + completed.snapshotSize + ' bytes ', {
+                    style: 'white-space: nowrap;'
+                }),
+                DomBuilder.element('br'),
+                DomBuilder.element('a', {
+                    href: `/api/admin/completed/${completed.id}/snapshot.sgjs`,
+                    target: '_blank'
+                }, 'Download')
+            ];
+        }
+
+        function metadataColumn(completed) {
+            if (completed.metadata === null || completed.metadata === undefined || completed.metadata.length === 0) {
+                return 'n/a';
+            }
+
+            return [
+                DomBuilder.link('Show', null, () => {
+                    let dialog = DomBuilder.bootstrapDialogBuilder();
+                    dialog.setHeaderContent('Metadata');
+                    dialog.setBodyContent([
+                        DomBuilder.par(null, completed.metadata)
+                    ]);
+                    dialog.addCloseButton('Close');
+                    dialog.show(root);
+                })
+            ];
+        }
+
+        function actionsColumn(completed) {
+            return DomBuilder.link('Delete', null, () => {
+                handle(false, true, fetch('/api/admin/completed/' + completed.id, {
+                    method: 'DELETE',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                }), result => {
+                    refreshCompleted();
+                });
+            })
+        }
+
+        table.addRow(DomBuilder.element('tr', null, [
+            DomBuilder.element('th', null, 'ID'),
+            DomBuilder.element('th', null, 'Date'),
+            DomBuilder.element('th', null, 'Scenario'),
+            DomBuilder.element('th', null, 'Metadata'),
+            DomBuilder.element('th', null, 'Snapshot'),
+            DomBuilder.element('th', null, 'IP'),
+            DomBuilder.element('th', null, '_'),
+        ]));
+
+        for (const completed of completedList) {
+            table.addRow(DomBuilder.element('tr', null, [
+                DomBuilder.element('td', null, '' + completed.id),
+                DomBuilder.element('td', null, DomBuilder.span(formatDate(new Date(completed.time)), {
+                    style: 'white-space: nowrap;'
+                })),
+                DomBuilder.element('td', null, DomBuilder.span(completed.scenario, {
+                    style: 'white-space: nowrap;'
+                })),
+                DomBuilder.element('td', null, metadataColumn(completed)),
+                DomBuilder.element('td', null, snapshotColumn(completed)),
+                DomBuilder.element('td', null, completed.ip),
+                DomBuilder.element('td', null, actionsColumn(completed)),
+            ]));
+        }
+
+        completedDiv.innerHTML = '';
+        completedDiv.append(table.createNode());
+    });
+}
+
+refreshCompleted();

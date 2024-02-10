@@ -2,7 +2,9 @@ package cz.harag.sandsaga.web.controller;
 
 import java.util.Map;
 
+import cz.harag.sandsaga.web.dto.MultipartCompleted;
 import cz.harag.sandsaga.web.dto.MultipartReport;
+import cz.harag.sandsaga.web.service.CompletedProvider;
 import cz.harag.sandsaga.web.service.ReportProvider;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
@@ -28,15 +30,28 @@ public class MainApiController {
     @Inject
     ReportProvider reportProvider;
 
+    @Inject
+    CompletedProvider completedProvider;
+
     @POST
     @Path("/report")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public Object handlerReport(@MultipartForm MultipartReport multipart, @Context HttpRequest request) {
         String ip = request.getRemoteAddress();
-
         Long id = reportProvider.report(multipart, ip);
 
-        return Map.of("reportId", id);
+        return Map.of("id", id);
+    }
+
+    @POST
+    @Path("/scenario-completed")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Object handlerReport(@MultipartForm MultipartCompleted multipart, @Context HttpRequest request) {
+        String ip = request.getRemoteAddress();
+        Long id = completedProvider.store(multipart, ip);
+
+        return Map.of("id", id);
     }
 }

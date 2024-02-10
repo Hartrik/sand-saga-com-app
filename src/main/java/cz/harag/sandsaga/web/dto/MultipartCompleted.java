@@ -10,7 +10,7 @@ import org.jboss.resteasy.annotations.providers.multipart.PartType;
  */
 public class MultipartCompleted {
 
-    @FormParam("metadata")
+    @FormParam("scenario")
     @PartType(MediaType.TEXT_PLAIN)
     public String scenario;
 

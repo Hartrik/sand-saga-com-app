@@ -38,11 +38,11 @@
       "scenarios": [
         {
           "name": "puzzle-sep-w",
-          "title": "Challenge: Separate 1"
+          "title": "Challenge: Separation 1"
         },
         {
           "name": "puzzle-sep-ws",
-          "title": "Challenge: Separate 2"
+          "title": "Challenge: Separation 2"
         },
         {
           "name": "puzzle-transfer-s",

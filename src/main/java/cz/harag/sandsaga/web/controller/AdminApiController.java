@@ -4,7 +4,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import cz.harag.sandsaga.web.dto.CompletedDto;
 import cz.harag.sandsaga.web.dto.ReportDto;
+import cz.harag.sandsaga.web.service.CompletedProvider;
 import cz.harag.sandsaga.web.service.ReportProvider;
 import cz.harag.sandsaga.web.service.SandSagaConfigProvider;
 import jakarta.annotation.security.RolesAllowed;
@@ -36,6 +38,9 @@ public class AdminApiController {
     @Inject
     ReportProvider reportProvider;
 
+    @Inject
+    CompletedProvider completedProvider;
+
     // server
 
     @POST
@@ -50,8 +55,40 @@ public class AdminApiController {
     @Produces(MediaType.APPLICATION_JSON)
     public Map<String, Object> handleGetStatus() {
         Map<String, Object> result = new LinkedHashMap<>();
-        result.put("apiLimitReport", reportProvider.getApiLimitUsedRatio());
+        result.put("limitCompletedEntity", completedProvider.getLimitEntityUsedRatio());
+        result.put("limitCompletedAdditionalData", completedProvider.getLimitAdditionalDataUsedRatio());
+        result.put("limitReportEntity", reportProvider.getLimitEntityUsedRatio());
         return result;
+    }
+
+    // completed
+
+    @GET
+    @Path("/completed")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<CompletedDto> handleGetCompleted() {
+        return completedProvider.list(0, 100);
+    }
+
+    @GET
+    @Path("/completed/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public CompletedDto handleGetCompleted(@PathParam("id") Long id) {
+        return completedProvider.get(id);
+    }
+
+    @DELETE
+    @Path("/completed/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void handleDeleteCompleted(@PathParam("id") Long id) {
+        completedProvider.delete(id);
+    }
+
+    @GET
+    @Path("/completed/{id}/snapshot.sgjs")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public byte[] handleGetCompletedSnapshot(@PathParam("id") Long id) {
+        return completedProvider.getSnapshotData(id);
     }
 
     // report

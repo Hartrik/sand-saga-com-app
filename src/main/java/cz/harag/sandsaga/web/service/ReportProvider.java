@@ -24,7 +24,7 @@ public class ReportProvider {
 
     private static final Logger LOGGER = Logger.getLogger(ReportProvider.class);
 
-    private final ApiLimit reportLimit = new ApiLimit(ApiLimit.EPOCH_DURATION_DAY, 100);
+    private final ApiLimit limitEntity = new ApiLimit(ApiLimit.EPOCH_DURATION_DAY, 100);
 
     @Inject
     SandSagaConfigProvider configProvider;
@@ -41,8 +41,8 @@ public class ReportProvider {
             throw new BadRequestException();
         }
 
-        if (!reportLimit.next()) {
-            LOGGER.info("API limit exceeded - report");
+        if (!limitEntity.next()) {
+            LOGGER.warn("API limit exceeded - report entity");
             throw new ApiLimitExceeded();
         }
 
@@ -122,7 +122,7 @@ public class ReportProvider {
         }
     }
 
-    public double getApiLimitUsedRatio() {
-        return reportLimit.countUsedRatio();
+    public double getLimitEntityUsedRatio() {
+        return limitEntity.countUsedRatio();
     }
 }
