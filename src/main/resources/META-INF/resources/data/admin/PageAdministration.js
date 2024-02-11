@@ -2,7 +2,7 @@ import { DomBuilder } from "/data/admin/DomBuilder.js";
 import { formatDate } from "/data/admin/Utils.js";
 
 /**
- * @version 2024-02-10
+ * @version 2024-02-11
  * @author Patrik Harag
  */
 
@@ -89,7 +89,12 @@ function refreshReports() {
                 DomBuilder.element('a', {
                     href: `/api/admin/reports/${report.id}/snapshot.sgjs`,
                     target: '_blank'
-                }, 'Download')
+                }, 'Download'),
+                ' ',
+                DomBuilder.element('a', {
+                    href: `/admin/reports/${report.id}/snapshot.sgjs`,
+                    target: '_blank'
+                }, 'Play')
             ];
         }
 
@@ -193,7 +198,12 @@ function refreshCompleted() {
                 DomBuilder.element('a', {
                     href: `/api/admin/completed/${completed.id}/snapshot.sgjs`,
                     target: '_blank'
-                }, 'Download')
+                }, 'Download'),
+                ' ',
+                DomBuilder.element('a', {
+                    href: `/admin/completed/${completed.id}/snapshot.sgjs`,
+                    target: '_blank'
+                }, 'Play')
             ];
         }
 

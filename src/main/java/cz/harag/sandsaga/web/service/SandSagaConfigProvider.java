@@ -11,6 +11,7 @@ import java.util.Optional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cz.harag.sandsaga.web.dto.ConfigScenario;
+import cz.harag.sandsaga.web.dto.SandGameConfig;
 import cz.harag.sandsaga.web.dto.SandSagaCategory;
 import cz.harag.sandsaga.web.dto.ConfigRoot;
 import cz.harag.sandsaga.web.dto.ConfigCategory;
@@ -25,7 +26,7 @@ import org.jboss.logging.Logger;
 
 /**
  * @author Patrik Harag
- * @version 2024-02-10
+ * @version 2024-02-11
  */
 @ApplicationScoped
 public class SandSagaConfigProvider {
@@ -35,6 +36,7 @@ public class SandSagaConfigProvider {
     @ConfigProperty(name = "cz.harag.sandsaga.config-file")
     String configFile;
 
+    private SandGameConfig cachedSandGameConfig;
     private List<SandSagaCategory> cachedCategories = new ArrayList<>();
     private Map<String, SandSagaScenario> cachedScenariosByName = new LinkedHashMap<>();
     private Map<Long, SandSagaScenario> cachedScenariosById = new LinkedHashMap<>();
@@ -45,11 +47,15 @@ public class SandSagaConfigProvider {
 
     @Transactional
     public void reload() {
+        SandGameConfig cachedSandGameConfig = new SandGameConfig();
         List<SandSagaCategory> cachedCategories = new ArrayList<>();
         Map<String, SandSagaScenario> cachedScenariosByName = new LinkedHashMap<>();
         Map<Long, SandSagaScenario> cachedScenariosById = new LinkedHashMap<>();
         try {
             ConfigRoot configRoot = new ObjectMapper().readValue(new File(configFile), ConfigRoot.class);
+            cachedSandGameConfig.setUrlSandGameJsScript(configRoot.getUrlSandGameJsScript());
+            cachedSandGameConfig.setUrlSandGameJsCss(configRoot.getUrlSandGameJsCss());
+
             for (ConfigCategory configCategory : configRoot.getCategories()) {
                 SandSagaCategory sandSagaCategory = new SandSagaCategory();
                 sandSagaCategory.setTitle(configCategory.getTitle());
@@ -70,6 +76,7 @@ public class SandSagaConfigProvider {
             throw new UncheckedIOException(e);
         }
 
+        this.cachedSandGameConfig = cachedSandGameConfig;
         this.cachedCategories = cachedCategories;
         this.cachedScenariosByName = cachedScenariosByName;
         this.cachedScenariosById = cachedScenariosById;
@@ -112,5 +119,9 @@ public class SandSagaConfigProvider {
 
     public List<SandSagaCategory> categories() {
         return cachedCategories;
+    }
+
+    public SandGameConfig getDefaultSandGameConfig() {
+        return this.cachedSandGameConfig;
     }
 }
