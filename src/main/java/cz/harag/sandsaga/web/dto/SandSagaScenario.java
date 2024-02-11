@@ -1,9 +1,12 @@
 package cz.harag.sandsaga.web.dto;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
+
 /**
  * @author Patrik Harag
  * @version 2024-02-10
  */
+@RegisterForReflection
 public class SandSagaScenario {
 
     private String name;
