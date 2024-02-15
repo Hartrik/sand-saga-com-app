@@ -32,3 +32,11 @@ h1 {
 .sand-saga-footer {
     font-size: small;
 }
+
+.small-preview {
+    user-select: none;
+    pointer-events: none;
+    position: absolute;
+    z-index: -1;
+    border-radius: 8px;
+}

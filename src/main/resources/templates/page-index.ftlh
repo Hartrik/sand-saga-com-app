@@ -80,6 +80,14 @@
     </div>
   </#if>
 
+  <div style="float: left;">
+    <img class="small-preview" src="/data/preview-sm-01.png" style="top: 50px; margin-left: -300px;" alt="Background image">
+  </div>
+  <div style="float: right;">
+    <img class="small-preview" src="/data/preview-sm-04.png" style="top: 50px;" alt="Background image">
+    <img class="small-preview" src="/data/preview-sm-07.png" style="top: 500px;" alt="Background image">
+  </div>
+
   <h1>Sand Saga</h1>
   <div class="alert alert-info alert-dismissible fade show">
     <p>
