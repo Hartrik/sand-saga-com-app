@@ -21,6 +21,7 @@
                     debug: false,
                     scenario: '${scenario.name}',
                     lobbyUrl: '/',
+                    nextUrl: <#if scenario.nextScenarioName??>'/s/${scenario.nextScenarioName}/play'<#else>undefined</#if>,
                     onCompleted: () => {
                         if (window.localStorage !== undefined) {
                             localStorage.setItem('scenario_${scenario.name}', 'true');

@@ -26,7 +26,7 @@ import org.jboss.logging.Logger;
 
 /**
  * @author Patrik Harag
- * @version 2024-02-11
+ * @version 2024-02-17
  */
 @ApplicationScoped
 public class SandSagaConfigProvider {
@@ -61,8 +61,13 @@ public class SandSagaConfigProvider {
                 sandSagaCategory.setTitle(configCategory.getTitle());
 
                 List<SandSagaScenario> sandSagaScenarios = new ArrayList<>(configCategory.getScenarios().size());
-                for (ConfigScenario configScenario : configCategory.getScenarios()) {
+                List<ConfigScenario> scenarios = configCategory.getScenarios();
+                for (int i = 0; i < scenarios.size(); i++) {
+                    ConfigScenario configScenario = scenarios.get(i);
                     SandSagaScenario sandSagaScenario = getSandSagaScenario(configRoot, configScenario);
+                    if (i + 1 < scenarios.size()) {
+                        sandSagaScenario.setNextScenarioName(scenarios.get(i + 1).getName());
+                    }
 
                     sandSagaScenarios.add(sandSagaScenario);
                     cachedScenariosByName.put(sandSagaScenario.getName(), sandSagaScenario);
