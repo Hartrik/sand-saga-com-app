@@ -16,15 +16,24 @@
             if (window.SandGameJS !== undefined && window.SandSaga !== undefined) {
                 const root = document.getElementById('sand-game-root');
 
+                const localStorageKey = 'scenario_${scenario.name}';
                 const config = {
                     version: 'dev',
                     debug: false,
                     scenario: '${scenario.name}',
                     lobbyUrl: '/',
                     nextUrl: <#if scenario.nextScenarioName??>'/s/${scenario.nextScenarioName}/play'<#else>undefined</#if>,
-                    onCompleted: () => {
+                    onCompleted: function () {
                         if (window.localStorage !== undefined) {
-                            localStorage.setItem('scenario_${scenario.name}', 'true');
+                            const oldValue = localStorage.getItem(localStorageKey);
+                            if (oldValue === null) {
+                                localStorage.setItem(localStorageKey, 'true');
+                            }
+                        }
+                    },
+                    onAccepted: function (id) {
+                        if (window.localStorage !== undefined) {
+                            localStorage.setItem(localStorageKey, '' + id);
                         }
                     }
                 };

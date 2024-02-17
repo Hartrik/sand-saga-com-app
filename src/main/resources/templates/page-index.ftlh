@@ -35,7 +35,7 @@
       if (window.localStorage !== undefined) {
         for (const key of Object.keys(localStorage)) {
           if (key.startsWith('scenario_')) {
-            if (localStorage.getItem(key)) {
+            if (localStorage.getItem(key) !== null) {
               let element = document.getElementById(key);
               if (element) {
                 const text = key.includes('sandbox') ? 'played' : 'completed';
