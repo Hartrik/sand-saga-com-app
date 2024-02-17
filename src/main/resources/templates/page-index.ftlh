@@ -1,7 +1,7 @@
 <#include "layout.ftlh">
 
 <#assign page_title=""/>
-<#assign page_description="Sand Saga"/>
+<#assign page_description="The Sand Saga is a unique falling-sand game, built on the Sand Game JS engine. It belongs to a genre that includes popular titles like The Powder Toy or Noita."/>
 <#assign enable_google_analytics=true/>
 
 <#macro page_head>
@@ -88,12 +88,12 @@
     <img class="small-preview" src="/data/preview-sm-07.png" style="top: 500px;" alt="Background image">
   </div>
 
-  <h1>Sand Saga</h1>
+  <h1>Sand Saga <span style="color: rgba(var(--bs-danger-rgb));">BETA</span></h1>
   <div class="alert alert-info alert-dismissible fade show">
     <p>
-      The Sand Saga is a collection of scenarios built on the <a href="https://harag.cz/app/sand-game-js">Sand Game JS</a> engine.
+      The Sand Saga is a unique falling-sand game, built on the <a href="https://harag.cz/app/sand-game-js">Sand Game JS</a> engine.
+      It belongs to a&nbsp;genre that includes popular titles like The Powder Toy or Noita.
       Use a mouse or a touch screen to complete the scenarios below.
-      Step into a universe where every pixel is simulated.
     </p>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
