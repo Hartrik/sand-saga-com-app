@@ -17,7 +17,7 @@ import org.jboss.logging.Logger;
 
 /**
  * @author Patrik Harag
- * @version 2024-02-10
+ * @version 2024-02-18
  */
 @ApplicationScoped
 public class CompletedProvider {
@@ -85,6 +85,16 @@ public class CompletedProvider {
             throw new NotFoundException();
         }
         return entity.snapshot;
+    }
+
+    @Transactional
+    public void deleteSnapshotData(Long id) {
+        CompletedEntity entity = CompletedEntity.findById(id);
+        if (entity == null) {
+            throw new NotFoundException();
+        }
+        entity.snapshot = null;
+        entity.persist();
     }
 
     @Transactional

@@ -2,7 +2,7 @@ import { DomBuilder } from "/data/admin/DomBuilder.js";
 import { formatDate } from "/data/admin/Utils.js";
 
 /**
- * @version 2024-02-11
+ * @version 2024-02-18
  * @author Patrik Harag
  */
 
@@ -203,7 +203,15 @@ function refreshCompleted() {
                 DomBuilder.element('a', {
                     href: `/admin/completed/${completed.id}/snapshot.sgjs`,
                     target: '_blank'
-                }, 'Play')
+                }, 'Play'),
+                ' ',
+                DomBuilder.link('X', null, () => {
+                    handle(false, true, fetch(`/api/admin/completed/${completed.id}/snapshot.sgjs`, {
+                        method: 'DELETE',
+                    }), result => {
+                        refreshCompleted();
+                    });
+                })
             ];
         }
 
@@ -229,10 +237,6 @@ function refreshCompleted() {
             return DomBuilder.link('Delete', null, () => {
                 handle(false, true, fetch('/api/admin/completed/' + completed.id, {
                     method: 'DELETE',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    }
                 }), result => {
                     refreshCompleted();
                 });

@@ -23,7 +23,7 @@ import jakarta.ws.rs.core.SecurityContext;
 
 /**
  * @author Patrik Harag
- * @version 2024-02-10
+ * @version 2024-02-18
  */
 @RolesAllowed("admin")
 @Path("/api/admin")
@@ -89,6 +89,13 @@ public class AdminApiController {
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public byte[] handleGetCompletedSnapshot(@PathParam("id") Long id) {
         return completedProvider.getSnapshotData(id);
+    }
+
+    @DELETE
+    @Path("/completed/{id}/snapshot.sgjs")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public void handleDeleteCompletedSnapshot(@PathParam("id") Long id) {
+        completedProvider.deleteSnapshotData(id);
     }
 
     // report
