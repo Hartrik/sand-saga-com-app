@@ -63,9 +63,11 @@ root.append(DomBuilder.par(null, [
 
 // stats
 
-const statsDiv = DomBuilder.div();
+const statsByScenarioDiv = DomBuilder.div();
+const statsByDayDiv = DomBuilder.div();
 root.append(DomBuilder.element('h3', null, 'Statistics'));
-root.append(statsDiv);
+root.append(statsByScenarioDiv);
+root.append(statsByDayDiv);
 
 function refreshStats() {
     fetch('/api/admin/stats/by-day', {
@@ -104,12 +106,39 @@ function refreshStats() {
                 'Content-Type': 'application/json'
             }
         }).then(response => response.json()).then(stats => {
-            total.append(DomBuilder.span('Total updates: ' + stats.updates));
+            total.append(DomBuilder.span('Total updates (day updates sum): ' + stats.updates));
         });
 
-        statsDiv.innerHTML = '';
-        statsDiv.append(total);
-        statsDiv.append(table.createNode());
+        statsByDayDiv.innerHTML = '';
+        statsByDayDiv.append(total);
+        statsByDayDiv.append(table.createNode());
+    });
+
+    fetch('/api/admin/stats/by-scenario', {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    }).then(response => response.json()).then(scenarios => {
+        const table = DomBuilder.bootstrapTableBuilder();
+
+        table.addRow(DomBuilder.element('tr', null, [
+            DomBuilder.element('th', null, 'Id'),
+            DomBuilder.element('th', null, 'Name'),
+            DomBuilder.element('th', null, 'Updates'),
+        ]));
+
+        for (const stats of scenarios) {
+            table.addRow(DomBuilder.element('tr', null, [
+                DomBuilder.element('td', null, '' + stats.id),
+                DomBuilder.element('td', null, stats.name),
+                DomBuilder.element('td', null, '' + stats.updates)
+            ]));
+        }
+
+        statsByScenarioDiv.innerHTML = '';
+        statsByScenarioDiv.append(table.createNode());
     });
 }
 

@@ -5,9 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import cz.harag.sandsaga.web.dto.CompletedDto;
-import cz.harag.sandsaga.web.dto.DayStatsDto;
+import cz.harag.sandsaga.web.dto.StatsDayDto;
 import cz.harag.sandsaga.web.dto.ReportDto;
 import cz.harag.sandsaga.web.dto.StatsDto;
+import cz.harag.sandsaga.web.dto.StatsScenarioDto;
 import cz.harag.sandsaga.web.service.CompletedProvider;
 import cz.harag.sandsaga.web.service.ReportProvider;
 import cz.harag.sandsaga.web.service.SandSagaConfigProvider;
@@ -137,16 +138,23 @@ public class AdminApiController {
     // stats
 
     @GET
+    @Path("/stats/by-scenario")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<StatsScenarioDto> handleGetStatsByScenario() {
+        return statsProvider.listScenarioStats(0, 30);
+    }
+
+    @GET
     @Path("/stats/by-day")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<DayStatsDto> handleGetStatsByDay() {
-        return statsProvider.list(0, 30);
+    public List<StatsDayDto> handleGetStatsByDay() {
+        return statsProvider.listDayStats(0, 30);
     }
 
     @GET
     @Path("/stats/sum")
     @Produces(MediaType.APPLICATION_JSON)
     public StatsDto handleGetStatsSum() {
-        return statsProvider.sum();
+        return statsProvider.sumDayStats();
     }
 }

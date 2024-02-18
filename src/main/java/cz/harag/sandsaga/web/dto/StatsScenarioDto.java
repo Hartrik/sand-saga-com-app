@@ -8,9 +8,10 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
  * @version 2024-02-18
  */
 @RegisterForReflection
-public class DayStatsDto {
+public class StatsScenarioDto {
 
     private long id;
+    private String name;
     private long updates;
 
     public long getId() {
@@ -19,6 +20,14 @@ public class DayStatsDto {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public long getUpdates() {

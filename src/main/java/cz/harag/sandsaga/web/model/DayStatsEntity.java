@@ -21,7 +21,8 @@ public class DayStatsEntity extends PanacheEntityBase {
     @Column(nullable = false)
     public Long updates;
 
-    public static int updateDayStats(Long id) {
+
+    public static int incrementUpdates(Long id) {
         return update("updates = updates + 1 WHERE id = ?1", id);
     }
 
