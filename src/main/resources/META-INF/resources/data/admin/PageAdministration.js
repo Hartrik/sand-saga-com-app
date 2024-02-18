@@ -60,6 +60,62 @@ root.append(DomBuilder.par(null, [
     })
 ]));
 
+
+// stats
+
+const statsDiv = DomBuilder.div();
+root.append(DomBuilder.element('h3', null, 'Statistics'));
+root.append(statsDiv);
+
+function refreshStats() {
+    fetch('/api/admin/stats/by-day', {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    }).then(response => response.json()).then(statsList => {
+        const table = DomBuilder.bootstrapTableBuilder();
+
+        function asDate(epochDay) {
+            return new Date(epochDay * 86_400_000 + 10_000_000).toUTCString().substring(0, 17);
+        }
+
+        table.addRow(DomBuilder.element('tr', null, [
+            DomBuilder.element('th', null, 'Id'),
+            DomBuilder.element('th', null, 'Day'),
+            DomBuilder.element('th', null, 'Updates'),
+        ]));
+
+        for (const stats of statsList) {
+            table.addRow(DomBuilder.element('tr', null, [
+                DomBuilder.element('td', null, '' + stats.id),
+                DomBuilder.element('td', null, asDate(stats.id)),
+                DomBuilder.element('td', null, '' + stats.updates)
+            ]));
+        }
+
+        const total = DomBuilder.par();
+
+        fetch('/api/admin/stats/sum', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.json()).then(stats => {
+            total.append(DomBuilder.span('Total updates: ' + stats.updates));
+        });
+
+        statsDiv.innerHTML = '';
+        statsDiv.append(total);
+        statsDiv.append(table.createNode());
+    });
+}
+
+refreshStats();
+
+
 // reports
 
 const reportDiv = DomBuilder.div();
@@ -168,6 +224,7 @@ function refreshReports() {
 }
 
 refreshReports();
+
 
 // completed
 

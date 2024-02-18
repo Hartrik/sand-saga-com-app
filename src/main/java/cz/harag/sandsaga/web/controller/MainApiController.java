@@ -4,8 +4,10 @@ import java.util.Map;
 
 import cz.harag.sandsaga.web.dto.MultipartCompleted;
 import cz.harag.sandsaga.web.dto.MultipartReport;
+import cz.harag.sandsaga.web.dto.MultipartUpdate;
 import cz.harag.sandsaga.web.service.CompletedProvider;
 import cz.harag.sandsaga.web.service.ReportProvider;
+import cz.harag.sandsaga.web.service.StatsProvider;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
@@ -19,7 +21,7 @@ import org.jboss.resteasy.spi.HttpRequest;
 
 /**
  * @author Patrik Harag
- * @version 2024-02-04
+ * @version 2024-02-18
  */
 @Path("/api/user")
 public class MainApiController {
@@ -32,6 +34,9 @@ public class MainApiController {
 
     @Inject
     CompletedProvider completedProvider;
+
+    @Inject
+    StatsProvider statsProvider;
 
     @POST
     @Path("/report")
@@ -53,5 +58,14 @@ public class MainApiController {
         Long id = completedProvider.store(multipart, ip);
 
         return Map.of("id", id);
+    }
+
+    @POST
+    @Path("/update")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    public void handleUpdate(@MultipartForm MultipartUpdate multipart, @Context HttpRequest request) {
+        String ip = request.getRemoteAddress();
+        statsProvider.update(multipart, ip);
     }
 }

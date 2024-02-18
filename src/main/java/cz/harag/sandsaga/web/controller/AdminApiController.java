@@ -5,10 +5,13 @@ import java.util.List;
 import java.util.Map;
 
 import cz.harag.sandsaga.web.dto.CompletedDto;
+import cz.harag.sandsaga.web.dto.DayStatsDto;
 import cz.harag.sandsaga.web.dto.ReportDto;
+import cz.harag.sandsaga.web.dto.StatsDto;
 import cz.harag.sandsaga.web.service.CompletedProvider;
 import cz.harag.sandsaga.web.service.ReportProvider;
 import cz.harag.sandsaga.web.service.SandSagaConfigProvider;
+import cz.harag.sandsaga.web.service.StatsProvider;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.DELETE;
@@ -40,6 +43,9 @@ public class AdminApiController {
 
     @Inject
     CompletedProvider completedProvider;
+
+    @Inject
+    StatsProvider statsProvider;
 
     // server
 
@@ -126,5 +132,21 @@ public class AdminApiController {
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public byte[] handleGetReportSnapshot(@PathParam("id") Long id) {
         return reportProvider.getSnapshotData(id);
+    }
+
+    // stats
+
+    @GET
+    @Path("/stats/by-day")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<DayStatsDto> handleGetStatsByDay() {
+        return statsProvider.list(0, 30);
+    }
+
+    @GET
+    @Path("/stats/sum")
+    @Produces(MediaType.APPLICATION_JSON)
+    public StatsDto handleGetStatsSum() {
+        return statsProvider.sum();
     }
 }
