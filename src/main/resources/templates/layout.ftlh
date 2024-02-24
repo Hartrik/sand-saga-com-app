@@ -42,7 +42,7 @@
 
     <link rel="stylesheet" type="text/css" href="/data/main.css">
 
-    <#if enable_google_analytics??>
+    <#if enable_google_analytics?? && enable_google_analytics>
     <#include "part-google-analytics.ftlh">
     </#if>
 
