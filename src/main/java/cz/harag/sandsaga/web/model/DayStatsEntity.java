@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 
 /**
  * @author Patrik Harag
- * @version 2024-02-18
+ * @version 2024-02-24
  */
 @Entity
 @Table(name = "t_day_stats")
@@ -27,20 +27,23 @@ public class DayStatsEntity extends PanacheEntityBase {
     }
 
     public static long sumUpdates() {
-        SumUpdatesDto result = DayStatsEntity.find("SELECT SUM(updates) FROM DayStatsEntity")
-                .project(SumUpdatesDto.class).singleResult();
+        StatsSumDto result = DayStatsEntity.find("SELECT SUM(updates) FROM DayStatsEntity")
+                .project(StatsSumDto.class).singleResult();
         if (result == null || result.updates == null) {
             return 0;
         }
         return result.updates;
     }
 
-
+    /**
+     * @author Patrik Harag
+     * @version 2024-02-24
+     */
     @RegisterForReflection
-    private static final class SumUpdatesDto {
+    private static final class StatsSumDto {
         public final Long updates;
 
-        public SumUpdatesDto(Long updates){
+        public StatsSumDto(Long updates) {
             this.updates = updates;
         }
     }

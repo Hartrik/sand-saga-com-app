@@ -145,6 +145,13 @@ public class AdminApiController {
     }
 
     @GET
+    @Path("/stats/by-scenario/sum")
+    @Produces(MediaType.APPLICATION_JSON)
+    public StatsDto handleGetStatsByScenarioSum() {
+        return statsProvider.sumScenarioStats();
+    }
+
+    @GET
     @Path("/stats/by-day")
     @Produces(MediaType.APPLICATION_JSON)
     public List<StatsDayDto> handleGetStatsByDay() {
@@ -152,9 +159,9 @@ public class AdminApiController {
     }
 
     @GET
-    @Path("/stats/sum")
+    @Path("/stats/by-day/sum")
     @Produces(MediaType.APPLICATION_JSON)
-    public StatsDto handleGetStatsSum() {
+    public StatsDto handleGetStatsByDaySum() {
         return statsProvider.sumDayStats();
     }
 }

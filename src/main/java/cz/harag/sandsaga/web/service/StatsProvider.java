@@ -18,7 +18,7 @@ import org.jboss.logging.Logger;
 
 /**
  * @author Patrik Harag
- * @version 2024-02-18
+ * @version 2024-02-24
  */
 @ApplicationScoped
 public class StatsProvider {
@@ -58,6 +58,13 @@ public class StatsProvider {
         return ScenarioEntity.<ScenarioEntity>findAll(Sort.by("id").ascending())
                 .page(pageIndex, pageSize)
                 .stream().map(this::asDto).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public StatsDto sumScenarioStats() {
+        StatsDto dto = new StatsDto();
+        dto.setUpdates(ScenarioEntity.sumUpdates());
+        return dto;
     }
 
     @Transactional

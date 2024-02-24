@@ -99,19 +99,19 @@ function refreshStats() {
 
         const total = DomBuilder.par();
 
-        fetch('/api/admin/stats/sum', {
+        fetch('/api/admin/stats/by-day/sum', {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
         }).then(response => response.json()).then(stats => {
-            total.append(DomBuilder.span('Total updates (day updates sum): ' + stats.updates));
+            total.append(DomBuilder.span('Total updates: ' + stats.updates));
         });
 
         statsByDayDiv.innerHTML = '';
-        statsByDayDiv.append(total);
         statsByDayDiv.append(table.createNode());
+        statsByDayDiv.append(total);
     });
 
     fetch('/api/admin/stats/by-scenario', {
@@ -137,8 +137,21 @@ function refreshStats() {
             ]));
         }
 
+        const total = DomBuilder.par();
+
+        fetch('/api/admin/stats/by-scenario/sum', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.json()).then(stats => {
+            total.append(DomBuilder.span('Total updates: ' + stats.updates));
+        });
+
         statsByScenarioDiv.innerHTML = '';
         statsByScenarioDiv.append(table.createNode());
+        statsByScenarioDiv.append(total);
     });
 }
 
