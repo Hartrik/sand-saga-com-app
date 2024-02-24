@@ -58,8 +58,10 @@ public class CompletedProvider {
                 entity.metadata = input.metadata;
             }
 
-            if (input.data != null && input.data.length <= 150_000) {
-                entity.snapshot = input.data;
+            if (scenario.getStoreSnapshot()) {
+                if (input.data != null && input.data.length <= 150_000) {
+                    entity.snapshot = input.data;
+                }
             }
         } else {
             LOGGER.warn("API limit exceeded - completed additional data");

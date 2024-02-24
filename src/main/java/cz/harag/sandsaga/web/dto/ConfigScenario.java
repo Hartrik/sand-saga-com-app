@@ -4,13 +4,14 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 
 /**
  * @author Patrik Harag
- * @version 2024-02-04
+ * @version 2024-02-24
  */
 @RegisterForReflection
 public class ConfigScenario {
 
     private String name;
     private String title;
+    private boolean storeSnapshot;
 
     public String getName() {
         return name;
@@ -26,5 +27,13 @@ public class ConfigScenario {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public boolean getStoreSnapshot() {
+        return storeSnapshot;
+    }
+
+    public void setStoreSnapshot(boolean storeSnapshot) {
+        this.storeSnapshot = storeSnapshot;
     }
 }

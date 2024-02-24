@@ -26,7 +26,7 @@ import org.jboss.logging.Logger;
 
 /**
  * @author Patrik Harag
- * @version 2024-02-17
+ * @version 2024-02-24
  */
 @ApplicationScoped
 public class SandSagaConfigProvider {
@@ -93,6 +93,7 @@ public class SandSagaConfigProvider {
         SandSagaScenario sandSagaScenario = new SandSagaScenario();
         sandSagaScenario.setName(configScenario.getName());
         sandSagaScenario.setTitle(configScenario.getTitle());
+        sandSagaScenario.setStoreSnapshot(configScenario.getStoreSnapshot());
 
         // resolve urls
         sandSagaScenario.setUrlSandGameJsScript(configRoot.getUrlSandGameJsScript());

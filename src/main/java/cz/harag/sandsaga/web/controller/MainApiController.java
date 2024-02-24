@@ -53,7 +53,7 @@ public class MainApiController {
     @Path("/scenario-completed")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public Object handlerReport(@MultipartForm MultipartCompleted multipart, @Context HttpRequest request) {
+    public Object handleCompleted(@MultipartForm MultipartCompleted multipart, @Context HttpRequest request) {
         String ip = request.getRemoteAddress();
         Long id = completedProvider.store(multipart, ip);
 

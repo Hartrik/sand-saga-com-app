@@ -8,15 +8,18 @@
       "scenarios": [
         {
           "name": "tutorial-basics",
-          "title": "Tutorial: Basics"
+          "title": "Tutorial: Basics",
+          "storeSnapshot": false
         },
         {
           "name": "tutorial-fallthrough",
-          "title": "Tutorial: Fall-through Mode"
+          "title": "Tutorial: Fall-through Mode",
+          "storeSnapshot": false
         },
         {
           "name": "tutorial-move",
-          "title": "Tutorial: Move Tool"
+          "title": "Tutorial: Move Tool",
+          "storeSnapshot": false
         }
       ]
     },
@@ -25,11 +28,13 @@
       "scenarios": [
         {
           "name": "mission-deforestation",
-          "title": "Mission: Deforestation"
+          "title": "Mission: Deforestation",
+          "storeSnapshot": true
         },
         {
           "name": "mission-recultivation",
-          "title": "Mission: Recultivation"
+          "title": "Mission: Recultivation",
+          "storeSnapshot": true
         }
       ]
     },
@@ -38,27 +43,33 @@
       "scenarios": [
         {
           "name": "puzzle-sep-w",
-          "title": "Challenge: Separation 1"
+          "title": "Challenge: Separation 1",
+          "storeSnapshot": false
         },
         {
           "name": "puzzle-sep-ws",
-          "title": "Challenge: Separation 2"
+          "title": "Challenge: Separation 2",
+          "storeSnapshot": false
         },
         {
           "name": "puzzle-sep-s",
-          "title": "Challenge: Separation 3"
+          "title": "Challenge: Separation 3",
+          "storeSnapshot": true
         },
         {
           "name": "puzzle-transfer-w-1",
-          "title": "Challenge: Water Transfer 1"
+          "title": "Challenge: Water Transfer 1",
+          "storeSnapshot": true
         },
         {
           "name": "puzzle-transfer-w-2",
-          "title": "Challenge: Water Transfer 2"
+          "title": "Challenge: Water Transfer 2",
+          "storeSnapshot": true
         },
         {
           "name": "puzzle-transfer-s",
-          "title": "Challenge: Sand Transfer"
+          "title": "Challenge: Sand Transfer",
+          "storeSnapshot": true
         }
       ]
     },
@@ -67,15 +78,18 @@
       "scenarios": [
         {
           "name": "sandbox-rain",
-          "title": "Sandbox: Rain"
+          "title": "Sandbox: Rain",
+          "storeSnapshot": true
         },
         {
           "name": "sandbox-meteors",
-          "title": "Sandbox: Meteors"
+          "title": "Sandbox: Meteors",
+          "storeSnapshot": true
         },
         {
           "name": "sandbox-empty",
-          "title": "Sandbox: Empty"
+          "title": "Sandbox: Empty",
+          "storeSnapshot": true
         }
       ]
     }
