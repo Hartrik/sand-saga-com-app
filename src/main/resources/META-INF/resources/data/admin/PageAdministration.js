@@ -2,7 +2,7 @@ import { DomBuilder } from "/data/admin/DomBuilder.js";
 import { formatDate } from "/data/admin/Utils.js";
 
 /**
- * @version 2024-02-18
+ * @version 2024-02-24
  * @author Patrik Harag
  */
 
@@ -57,6 +57,17 @@ root.append(DomBuilder.par(null, [
             },
             body: ''
         }));
+    }),
+    ' ',
+    DomBuilder.button('Update Stats From Completed', {class: 'btn btn-primary'}, () => {
+        handle(true, true, fetch('/api/admin/update-stats-from-completed', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: ''
+        }));
     })
 ]));
 
@@ -87,13 +98,15 @@ function refreshStats() {
             DomBuilder.element('th', null, 'Id'),
             DomBuilder.element('th', null, 'Day'),
             DomBuilder.element('th', null, 'Updates'),
+            DomBuilder.element('th', null, 'Completed'),
         ]));
 
         for (const stats of statsList) {
             table.addRow(DomBuilder.element('tr', null, [
                 DomBuilder.element('td', null, '' + stats.id),
                 DomBuilder.element('td', null, asDate(stats.id)),
-                DomBuilder.element('td', null, '' + stats.updates)
+                DomBuilder.element('td', null, '' + stats.updates),
+                DomBuilder.element('td', null, '' + stats.completed),
             ]));
         }
 
@@ -106,7 +119,9 @@ function refreshStats() {
                 'Content-Type': 'application/json'
             }
         }).then(response => response.json()).then(stats => {
-            total.append(DomBuilder.span('Total updates: ' + stats.updates));
+            total.append(DomBuilder.span(`Total updates: ${stats.updates}`));
+            total.append(DomBuilder.element('br'));
+            total.append(DomBuilder.span(`Total completed: ${stats.completed}`));
         });
 
         statsByDayDiv.innerHTML = '';
@@ -127,13 +142,15 @@ function refreshStats() {
             DomBuilder.element('th', null, 'Id'),
             DomBuilder.element('th', null, 'Name'),
             DomBuilder.element('th', null, 'Updates'),
+            DomBuilder.element('th', null, 'Completed'),
         ]));
 
         for (const stats of scenarios) {
             table.addRow(DomBuilder.element('tr', null, [
                 DomBuilder.element('td', null, '' + stats.id),
                 DomBuilder.element('td', null, stats.name),
-                DomBuilder.element('td', null, '' + stats.updates)
+                DomBuilder.element('td', null, '' + stats.updates),
+                DomBuilder.element('td', null, '' + stats.completed),
             ]));
         }
 
@@ -146,7 +163,9 @@ function refreshStats() {
                 'Content-Type': 'application/json'
             }
         }).then(response => response.json()).then(stats => {
-            total.append(DomBuilder.span('Total updates: ' + stats.updates));
+            total.append(DomBuilder.span(`Total updates: ${stats.updates}`));
+            total.append(DomBuilder.element('br'));
+            total.append(DomBuilder.span(`Total completed: ${stats.completed}`));
         });
 
         statsByScenarioDiv.innerHTML = '';

@@ -1,0 +1,29 @@
+POST http://localhost:8080/api/user/update HTTP/1.1
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="scenario";
+
+tutorial-basics
+--boundary--
+
+###
+POST http://localhost:8080/api/user/update HTTP/1.1
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="scenario";
+
+tutorial-fallthrough
+--boundary--
+
+###
+POST http://localhost:8080/api/user/scenario-completed HTTP/1.1
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="scenario";
+
+tutorial-fallthrough
+--boundary--
+

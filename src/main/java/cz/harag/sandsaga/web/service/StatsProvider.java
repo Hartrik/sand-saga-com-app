@@ -8,6 +8,7 @@ import cz.harag.sandsaga.web.dto.MultipartUpdate;
 import cz.harag.sandsaga.web.dto.SandSagaScenario;
 import cz.harag.sandsaga.web.dto.StatsDto;
 import cz.harag.sandsaga.web.dto.StatsScenarioDto;
+import cz.harag.sandsaga.web.model.CompletedEntity;
 import cz.harag.sandsaga.web.model.DayStatsEntity;
 import cz.harag.sandsaga.web.model.ScenarioEntity;
 import io.quarkus.panache.common.Sort;
@@ -62,9 +63,7 @@ public class StatsProvider {
 
     @Transactional
     public StatsDto sumScenarioStats() {
-        StatsDto dto = new StatsDto();
-        dto.setUpdates(ScenarioEntity.sumUpdates());
-        return dto;
+        return ScenarioEntity.sumStats();
     }
 
     @Transactional
@@ -76,15 +75,14 @@ public class StatsProvider {
 
     @Transactional
     public StatsDto sumDayStats() {
-        StatsDto dto = new StatsDto();
-        dto.setUpdates(DayStatsEntity.sumUpdates());
-        return dto;
+        return DayStatsEntity.sumStats();
     }
 
     private StatsDayDto asDto(DayStatsEntity e) {
         StatsDayDto dto = new StatsDayDto();
         dto.setId(e.id);
         dto.setUpdates(e.updates);
+        dto.setCompleted(e.completed);
         return dto;
     }
 
@@ -93,6 +91,22 @@ public class StatsProvider {
         dto.setId(e.id);
         dto.setName(e.name);
         dto.setUpdates(e.updates);
+        dto.setCompleted(e.completed);
         return dto;
+    }
+
+
+    // TEMPORARY
+
+    @Transactional
+    public void updateStatsFromCompleted() {
+        for (ScenarioEntity scenario : ScenarioEntity.<ScenarioEntity>listAll()) {
+            scenario.completed = CompletedEntity.countCompleted(scenario);
+            scenario.persist();
+        }
+        for (DayStatsEntity dayStats : DayStatsEntity.<DayStatsEntity>listAll()) {
+            dayStats.completed = CompletedEntity.countCompleted(dayStats.id);
+            dayStats.persist();
+        }
     }
 }

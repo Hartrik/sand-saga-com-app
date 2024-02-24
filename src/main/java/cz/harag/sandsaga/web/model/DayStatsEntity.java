@@ -1,5 +1,6 @@
 package cz.harag.sandsaga.web.model;
 
+import cz.harag.sandsaga.web.dto.StatsDto;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import jakarta.persistence.Column;
@@ -19,20 +20,29 @@ public class DayStatsEntity extends PanacheEntityBase {
     public Long id;
 
     @Column(nullable = false)
-    public Long updates;
+    public Long updates = 0L;
 
+    @Column
+    public Long completed = 0L;
 
     public static int incrementUpdates(Long id) {
         return update("updates = updates + 1 WHERE id = ?1", id);
     }
 
-    public static long sumUpdates() {
-        StatsSumDto result = DayStatsEntity.find("SELECT SUM(updates) FROM DayStatsEntity")
+    public static StatsDto sumStats() {
+        StatsSumDto result = DayStatsEntity.find("SELECT SUM(updates), SUM(completed) FROM DayStatsEntity")
                 .project(StatsSumDto.class).singleResult();
-        if (result == null || result.updates == null) {
-            return 0;
+
+        StatsDto stats = new StatsDto();
+        if (result != null) {
+            if (result.updates != null) {
+                stats.setUpdates(result.updates);
+            }
+            if (result.completed != null) {
+                stats.setCompleted(result.completed);
+            }
         }
-        return result.updates;
+        return stats;
     }
 
     /**
@@ -42,9 +52,11 @@ public class DayStatsEntity extends PanacheEntityBase {
     @RegisterForReflection
     private static final class StatsSumDto {
         public final Long updates;
+        public final Long completed;
 
-        public StatsSumDto(Long updates) {
+        public StatsSumDto(Long updates, Long completed) {
             this.updates = updates;
+            this.completed = completed;
         }
     }
 }

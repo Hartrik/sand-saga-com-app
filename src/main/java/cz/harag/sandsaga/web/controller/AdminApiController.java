@@ -27,7 +27,7 @@ import jakarta.ws.rs.core.SecurityContext;
 
 /**
  * @author Patrik Harag
- * @version 2024-02-18
+ * @version 2024-02-24
  */
 @RolesAllowed("admin")
 @Path("/api/admin")
@@ -55,6 +55,13 @@ public class AdminApiController {
     @Produces(MediaType.APPLICATION_JSON)
     public void handleReloadConfig() {
         configProvider.reload();
+    }
+
+    @POST
+    @Path("/update-stats-from-completed")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void handleUpdateStatsFromCompleted() {
+        statsProvider.updateStatsFromCompleted();
     }
 
     @GET

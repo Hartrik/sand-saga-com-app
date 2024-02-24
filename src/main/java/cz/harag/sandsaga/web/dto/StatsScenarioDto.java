@@ -5,7 +5,7 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 
 /**
  * @author Patrik Harag
- * @version 2024-02-18
+ * @version 2024-02-24
  */
 @RegisterForReflection
 public class StatsScenarioDto {
@@ -13,6 +13,7 @@ public class StatsScenarioDto {
     private long id;
     private String name;
     private long updates;
+    private long completed;
 
     public long getId() {
         return id;
@@ -36,5 +37,13 @@ public class StatsScenarioDto {
 
     public void setUpdates(long updates) {
         this.updates = updates;
+    }
+
+    public long getCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(long completed) {
+        this.completed = completed;
     }
 }

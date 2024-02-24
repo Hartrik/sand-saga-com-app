@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 
 /**
  * @author Patrik Harag
- * @version 2024-02-10
+ * @version 2024-02-24
  */
 @Entity
 @Table(name = "t_completed")
@@ -36,4 +36,15 @@ public class CompletedEntity extends PanacheEntity {
 
     @Column(nullable = false, length = 48)
     public String ip;
+
+
+    public static long countCompleted(ScenarioEntity scenarioEntity) {
+        return CompletedEntity.count("scenario = ?1", scenarioEntity);
+    }
+
+    public static long countCompleted(long epochDay) {
+        long start = epochDay * 86_400_000;
+        long end = start + 86_400_000;
+        return CompletedEntity.count("time > ?1 and time < ?2", start, end);
+    }
 }
