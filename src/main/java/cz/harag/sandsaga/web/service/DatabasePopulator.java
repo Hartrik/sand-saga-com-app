@@ -30,6 +30,7 @@ public class DatabasePopulator {
             user.username = adminLogin;
             user.password = adminPassword;
             user.role = UserEntity.ROLE_ADMIN;
+            user.displayName = adminLogin;
 
             user.persist();
 

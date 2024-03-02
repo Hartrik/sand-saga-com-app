@@ -1,5 +1,10 @@
 package cz.harag.sandsaga.web.controller;
 
+import io.quarkus.oidc.OidcSession;
+import jakarta.annotation.security.RolesAllowed;
+import jakarta.ws.rs.core.Response;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -18,7 +23,7 @@ import jakarta.ws.rs.core.SecurityContext;
 
 /**
  * @author Patrik Harag
- * @version 2024-01-27
+ * @version 2024-03-01
  */
 @Path("/")
 public class MainController {
@@ -54,5 +59,16 @@ public class MainController {
         parameters.put("config", config);
         parameters.put("scenario", scenario);
         return templates.build("page-scenario-play.ftlh", security, parameters);
+    }
+
+    @Inject
+    OidcSession oidcSession;
+
+    @GET
+    @RolesAllowed("user")
+    @Path("/logout")
+    public Response logout() throws URISyntaxException {
+        oidcSession.logout().await().indefinitely();
+        return Response.seeOther(new URI("/")).build();
     }
 }

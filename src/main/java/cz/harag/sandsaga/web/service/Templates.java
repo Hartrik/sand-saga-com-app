@@ -1,7 +1,9 @@
 package cz.harag.sandsaga.web.service;
 
+import cz.harag.sandsaga.web.controller.CustomSecurityIdentityAugmentor;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.security.Principal;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -17,7 +19,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 /**
  * @author Patrik Harag
- * @version 2024-01-20
+ * @version 2024-03-01
  */
 @ApplicationScoped
 public class Templates {
@@ -39,8 +41,24 @@ public class Templates {
                 "token", UUID.randomUUID().toString()
         ));
 
+        boolean logged = false;
         if (securityContext.isUserInRole("admin")) {
             map.put("user", "ADMIN");
+            logged = true;
+        } else if (securityContext.isUserInRole("user")) {
+            map.put("user", "USER");
+            logged = true;
+        }
+        if (logged) {
+            Principal userPrincipal = securityContext.getUserPrincipal();
+            if (userPrincipal != null) {
+                map.put("user_name", userPrincipal.getName());
+            }
+            if (userPrincipal instanceof CustomSecurityIdentityAugmentor.DiscordPrincipal) {
+                map.put("user_tenant", "discord");
+            } else {
+                map.put("user_tenant", "form");
+            }
         }
 
         map.putAll(viewParameters);

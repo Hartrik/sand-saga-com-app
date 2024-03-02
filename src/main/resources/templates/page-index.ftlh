@@ -7,23 +7,23 @@
 <#macro page_head>
   <link href="/data/page-index.css" rel="stylesheet">
 
-  <#if !user??>
+  <#if !user??> <#-- if not logged -->
     <script>
-      function sand_saga_com_showLoginForm() {
+      function sand_saga_com_showFormLogin() {
         const dialogNode = document.getElementById('dialog-login');
         const modal = new window.bootstrap.Modal(dialogNode);
         modal.show();
       }
-      if (window.location.hash === '#login' || window.location.hash === '#login-failed') {
+      if (window.location.hash === '#form-login' || window.location.hash === '#form-login-failed') {
         document.addEventListener('DOMContentLoaded', () => {
-          sand_saga_com_showLoginForm();
+          sand_saga_com_showFormLogin();
         });
       }
     </script>
   </#if>
-  <#if user??>
+  <#if user?? && user_tenant == 'form'>
     <script>
-      if (window.location.hash === '#logout') {
+      function sand_saga_com_formLogout() {
         document.cookie = "login-session-id=; Max-Age=0;path=/";
         window.location.href = "/";
       }
@@ -51,7 +51,7 @@
 
 <#macro page_body>
 
-  <#if !user??>
+  <#if !user??>  <#-- if not logged -->
   <#-- login dialog -->
     <div class="modal fade" id="dialog-login" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog">
@@ -89,13 +89,34 @@
   </div>
 
   <h1>Sand Saga <span style="color: rgba(var(--bs-danger-rgb));">BETA</span></h1>
-  <div class="alert alert-info alert-dismissible fade show">
+  <div class="alert alert-info">
     <p>
       The Sand Saga is a unique falling-sand game, built on the <a href="https://harag.cz/app/sand-game-js">Sand Game JS</a> engine.
       It belongs to a&nbsp;genre that includes popular titles like The Powder Toy or Noita.
       Use a mouse or a touch screen to complete the scenarios below.
     </p>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <div class="alert alert-info">
+    <#if user??>
+      <h5>Account</h5>
+      <p>
+        Logged as ${user_name!''}
+      </p>
+      <#if user_tenant == 'form'>
+      <a href="javascript: sand_saga_com_formLogout();" class="btn btn-primary">Logout</a>
+      <#else>
+      <a href="/logout" class="btn btn-primary">Logout</a>
+      </#if>
+    <#else>
+      <h5>Save your progress</h5>
+      <p>Log in with Discord to save your progress. If you don't have an account, creating one is easy.</p>
+      <a href="/login/discord" class="btn btn-primary btn-discord">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-discord" viewBox="0 0 16 16">
+          <path d="M13.545 2.907a13.2 13.2 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.2 12.2 0 0 0-3.658 0 8 8 0 0 0-.412-.833.05.05 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.04.04 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032q.003.022.021.037a13.3 13.3 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019q.463-.63.818-1.329a.05.05 0 0 0-.01-.059l-.018-.011a9 9 0 0 1-1.248-.595.05.05 0 0 1-.02-.066l.015-.019q.127-.095.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.05.05 0 0 1 .053.007q.121.1.248.195a.05.05 0 0 1-.004.085 8 8 0 0 1-1.249.594.05.05 0 0 0-.03.03.05.05 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.2 13.2 0 0 0 4.001-2.02.05.05 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.03.03 0 0 0-.02-.019m-8.198 7.307c-.789 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612m5.316 0c-.788 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612"/>
+        </svg>
+        Continue with Discord</a>
+    </#if>
   </div>
 
   <#list categories as category>
@@ -118,11 +139,13 @@
 <#macro page_bottom>
   <div class="container sand-saga-footer">
     <a href="https://harag.cz/app/sand-game-js">Sand Game JS</a> & Sand Saga; &copy; Patrik Harag, <a href="https://harag.cz">harag.cz</a>; all rights reserved
-    &bull;
-    <#if user??>
-      <a href="/#logout">Logout</a>
+    <#if user?? && user == 'ADMIN'>
+      &bull;
+      <a href="/admin">Administration</a>
+    <#elseif user??>
     <#else>
-      <a href="#" onclick="sand_saga_com_showLoginForm(); return false;">Login</a>
+      &bull;
+      <a href="#" onclick="sand_saga_com_showFormLogin(); return false;">Administration</a>
     </#if>
   </div>
 

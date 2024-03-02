@@ -40,3 +40,13 @@ h1 {
     z-index: -1;
     border-radius: 8px;
 }
+
+.btn-discord {
+    --bs-btn-bg: rgb(88, 101, 242);
+}
+
+.btn-discord .bi-discord {
+    vertical-align: -0.125em;
+    width: 1em;
+    height: 1em;
+}
