@@ -1,16 +1,16 @@
 package cz.harag.sandsaga.web.controller;
 
-import io.quarkus.oidc.OidcSession;
-import jakarta.annotation.security.RolesAllowed;
-import jakarta.ws.rs.core.Response;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import cz.harag.sandsaga.web.dto.SandSagaScenario;
+import cz.harag.sandsaga.web.service.LiveStatsProvider;
 import cz.harag.sandsaga.web.service.SandSagaConfigProvider;
 import cz.harag.sandsaga.web.service.Templates;
+import io.quarkus.oidc.OidcSession;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.NotFoundException;
@@ -19,11 +19,12 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.SecurityContext;
 
 /**
  * @author Patrik Harag
- * @version 2024-03-01
+ * @version 2024-03-02
  */
 @Path("/")
 public class MainController {
@@ -37,12 +38,16 @@ public class MainController {
     @Inject
     SandSagaConfigProvider config;
 
+    @Inject
+    LiveStatsProvider liveStatsProvider;
+
     @GET
     @Path("/")
     @Produces(MediaType.TEXT_HTML)
     public String indexHandler() {
         Map<String, Object> parameters = new LinkedHashMap<>();
         parameters.put("categories", config.categories());
+        parameters.put("stats", liveStatsProvider.getStats());
         return templates.build("page-index.ftlh", security, parameters);
     }
 

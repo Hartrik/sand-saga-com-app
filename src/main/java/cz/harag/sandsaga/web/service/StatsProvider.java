@@ -19,7 +19,7 @@ import org.jboss.logging.Logger;
 
 /**
  * @author Patrik Harag
- * @version 2024-02-24
+ * @version 2024-03-02
  */
 @ApplicationScoped
 public class StatsProvider {
@@ -29,9 +29,14 @@ public class StatsProvider {
     @Inject
     SandSagaConfigProvider configProvider;
 
+    @Inject
+    LiveStatsProvider liveStatsProvider;
+
     @Transactional
     public void update(MultipartUpdate input, String ip) {
         Long epochDay = System.currentTimeMillis() / 86_400_000;
+
+        liveStatsProvider.incrementUpdates();
 
         // increment day stats
         if (DayStatsEntity.incrementUpdates(epochDay) > 0) {

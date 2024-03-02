@@ -17,7 +17,7 @@ import org.jboss.logging.Logger;
 
 /**
  * @author Patrik Harag
- * @version 2024-02-18
+ * @version 2024-03-02
  */
 @ApplicationScoped
 public class CompletedProvider {
@@ -29,6 +29,9 @@ public class CompletedProvider {
 
     @Inject
     SandSagaConfigProvider configProvider;
+
+    @Inject
+    LiveStatsProvider liveStatsProvider;
 
     @Transactional
     public Long store(MultipartCompleted input, String ip) {
@@ -66,6 +69,8 @@ public class CompletedProvider {
         } else {
             LOGGER.warn("API limit exceeded - completed additional data");
         }
+
+        liveStatsProvider.incrementCompleted();
 
         CompletedEntity.persist(entity);
         return entity.id;

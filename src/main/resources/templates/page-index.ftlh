@@ -95,6 +95,10 @@
       It belongs to a&nbsp;genre that includes popular titles like The Powder Toy or Noita.
       Use a mouse or a touch screen to complete the scenarios below.
     </p>
+    <p style="text-align: center;">
+      <span style="white-space: nowrap;"><strong>${stats.completed?string.number}</strong> <small style="margin-right: 1em;">scenarios completed</small></span>
+      <span style="white-space: nowrap;"><strong>${stats.updates?string.number}</strong> <small>minutes played</small></span>
+    </p>
   </div>
 
   <div class="alert alert-info">
