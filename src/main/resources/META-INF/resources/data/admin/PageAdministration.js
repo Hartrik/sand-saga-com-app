@@ -2,7 +2,7 @@ import { DomBuilder } from "/data/admin/DomBuilder.js";
 import { formatDate } from "/data/admin/Utils.js";
 
 /**
- * @version 2024-02-24
+ * @version 2024-03-02
  * @author Patrik Harag
  */
 
@@ -327,7 +327,7 @@ function refreshCompleted() {
                     handle(false, true, fetch(`/api/admin/completed/${completed.id}/snapshot.sgjs`, {
                         method: 'DELETE',
                     }), result => {
-                        refreshCompleted();
+                        refreshUsers();
                     });
                 })
             ];
@@ -356,7 +356,7 @@ function refreshCompleted() {
                 handle(false, true, fetch('/api/admin/completed/' + completed.id, {
                     method: 'DELETE',
                 }), result => {
-                    refreshCompleted();
+                    refreshUsers();
                 });
             })
         }
@@ -393,3 +393,61 @@ function refreshCompleted() {
 }
 
 refreshCompleted();
+
+
+// user list
+
+const usersDiv = DomBuilder.div();
+root.append(DomBuilder.element('h3', null, 'User list'));
+root.append(usersDiv);
+
+function refreshUsers() {
+    fetch('/api/admin/users', {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    }).then(response => response.json()).then(userList => {
+        const table = DomBuilder.bootstrapTableBuilder();
+
+        function actionsColumn(user) {
+            return DomBuilder.link('Delete', null, () => {
+                handle(false, true, fetch('/api/admin/users/' + user.id, {
+                    method: 'DELETE',
+                }), result => {
+                    refreshUsers();
+                });
+            })
+        }
+
+        table.addRow(DomBuilder.element('tr', null, [
+            DomBuilder.element('th', null, 'ID'),
+            DomBuilder.element('th', null, 'Role'),
+            DomBuilder.element('th', null, 'Registered'),
+            DomBuilder.element('th', null, 'Name'),
+            DomBuilder.element('th', null, 'Email'),
+            DomBuilder.element('th', null, '_'),
+        ]));
+
+        for (const user of userList) {
+            table.addRow(DomBuilder.element('tr', null, [
+                DomBuilder.element('td', null, '' + user.id),
+                DomBuilder.element('td', null, user.role),
+                DomBuilder.element('td', null, DomBuilder.span(formatDate(new Date(user.timeRegistered)), {
+                    style: 'white-space: nowrap;'
+                })),
+                DomBuilder.element('td', null, DomBuilder.span(user.displayName, {
+                    style: 'white-space: nowrap;'
+                })),
+                DomBuilder.element('td', null, user.email),
+                DomBuilder.element('td', null, actionsColumn(user)),
+            ]));
+        }
+
+        usersDiv.innerHTML = '';
+        usersDiv.append(table.createNode());
+    });
+}
+
+refreshUsers();

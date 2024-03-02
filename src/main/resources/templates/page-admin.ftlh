@@ -9,6 +9,7 @@
 </#macro>
 
 <#macro page_head>
+  <link rel="stylesheet" type="text/css" href="/data/admin/page-admin.css" />
   <script src="/data/admin/PageAdministration.js" type="module"></script>
 </#macro>
 

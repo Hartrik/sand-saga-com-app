@@ -9,10 +9,12 @@ import cz.harag.sandsaga.web.dto.StatsDayDto;
 import cz.harag.sandsaga.web.dto.ReportDto;
 import cz.harag.sandsaga.web.dto.StatsDto;
 import cz.harag.sandsaga.web.dto.StatsScenarioDto;
+import cz.harag.sandsaga.web.dto.UserDto;
 import cz.harag.sandsaga.web.service.CompletedProvider;
 import cz.harag.sandsaga.web.service.ReportProvider;
 import cz.harag.sandsaga.web.service.SandSagaConfigProvider;
 import cz.harag.sandsaga.web.service.StatsProvider;
+import cz.harag.sandsaga.web.service.UserProvider;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.DELETE;
@@ -21,20 +23,15 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.SecurityContext;
 
 /**
  * @author Patrik Harag
- * @version 2024-02-24
+ * @version 2024-03-02
  */
 @RolesAllowed("admin")
 @Path("/api/admin")
 public class AdminApiController {
-
-    @Context
-    SecurityContext security;
 
     @Inject
     SandSagaConfigProvider configProvider;
@@ -47,6 +44,9 @@ public class AdminApiController {
 
     @Inject
     StatsProvider statsProvider;
+
+    @Inject
+    UserProvider userProvider;
 
     // server
 
@@ -170,5 +170,28 @@ public class AdminApiController {
     @Produces(MediaType.APPLICATION_JSON)
     public StatsDto handleGetStatsByDaySum() {
         return statsProvider.sumDayStats();
+    }
+
+    // users
+
+    @GET
+    @Path("/users")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<UserDto> handleGetUsers() {
+        return userProvider.list(0, 100);
+    }
+
+    @GET
+    @Path("/users/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public UserDto handleGetUser(@PathParam("id") Long id) {
+        return userProvider.get(id);
+    }
+
+    @DELETE
+    @Path("/users/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void handleDeleteUser(@PathParam("id") Long id) {
+        userProvider.delete(id);
     }
 }
