@@ -38,6 +38,9 @@ public class UserEntity extends PanacheEntity {
 
     // ---
 
+    @Column
+    public Long timeRegistered;
+
     @Roles
     public String role = ROLE_USER;
 

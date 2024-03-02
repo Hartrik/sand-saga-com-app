@@ -10,7 +10,7 @@ import org.jboss.logging.Logger;
 
 /**
  * @author Patrik Harag
- * @version 2024-01-20
+ * @version 2024-03-02
  */
 @ApplicationScoped
 public class DatabasePopulator {
@@ -27,6 +27,7 @@ public class DatabasePopulator {
     void onStart(@Observes StartupEvent event) {
         if (UserEntity.count() == 0) {
             UserEntity user = new UserEntity();
+            user.timeRegistered = System.currentTimeMillis();
             user.username = adminLogin;
             user.password = adminPassword;
             user.role = UserEntity.ROLE_ADMIN;

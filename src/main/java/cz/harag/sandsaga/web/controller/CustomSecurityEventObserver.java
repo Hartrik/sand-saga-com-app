@@ -12,7 +12,7 @@ import org.jboss.logging.Logger;
 
 /**
  * @author Patrik Harag
- * @version 2024-02-28
+ * @version 2024-03-02
  */
 @ApplicationScoped
 public class CustomSecurityEventObserver {
@@ -37,6 +37,7 @@ public class CustomSecurityEventObserver {
         if (user == null) {
             // create new entry
             user = new UserEntity();
+            user.timeRegistered = System.currentTimeMillis();
             user.discordId = discordPrincipal.getId();
             user.displayName = discordPrincipal.getName();
             user.email = discordPrincipal.getEmail();
