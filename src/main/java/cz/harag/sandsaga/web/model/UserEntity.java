@@ -56,6 +56,14 @@ public class UserEntity extends PanacheEntity {
 
     // ---
 
+    public static Long findByPrincipalAsId(Principal principal) {
+        UserEntity user = findByPrincipal(principal);
+        if (user != null) {
+            return user.id;
+        }
+        return null;
+    }
+
     public static UserEntity findByPrincipal(Principal principal) {
         if (principal instanceof DiscordPrincipal discordPrincipal) {
             return findByDiscordId(discordPrincipal.getId());

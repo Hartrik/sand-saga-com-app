@@ -5,7 +5,7 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 
 /**
  * @author Patrik Harag
- * @version 2024-02-10
+ * @version 2024-03-02
  */
 @RegisterForReflection
 public class ReportDto {
@@ -18,6 +18,7 @@ public class ReportDto {
     private String metadata;
     private long snapshotSize;
     private String ip;
+    private Long userId;
 
     public long getId() {
         return id;
@@ -81,5 +82,13 @@ public class ReportDto {
 
     public void setIp(String ip) {
         this.ip = ip;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

@@ -249,6 +249,7 @@ function refreshReports() {
 
         table.addRow(DomBuilder.element('tr', null, [
             DomBuilder.element('th', null, 'ID'),
+            DomBuilder.element('th', null, 'User'),
             DomBuilder.element('th', null, 'Date'),
             DomBuilder.element('th', null, 'Scenario'),
             DomBuilder.element('th', null, 'Type'),
@@ -262,6 +263,7 @@ function refreshReports() {
         for (const report of reports) {
             table.addRow(DomBuilder.element('tr', null, [
                 DomBuilder.element('td', null, '' + report.id),
+                DomBuilder.element('td', null, '' + report.userId),
                 DomBuilder.element('td', null, DomBuilder.span(formatDate(new Date(report.time)), {
                     style: 'white-space: nowrap;'
                 })),
@@ -356,13 +358,14 @@ function refreshCompleted() {
                 handle(false, true, fetch('/api/admin/completed/' + completed.id, {
                     method: 'DELETE',
                 }), result => {
-                    refreshUsers();
+                    refreshCompleted();
                 });
             })
         }
 
         table.addRow(DomBuilder.element('tr', null, [
             DomBuilder.element('th', null, 'ID'),
+            DomBuilder.element('th', null, 'User'),
             DomBuilder.element('th', null, 'Date'),
             DomBuilder.element('th', null, 'Scenario'),
             DomBuilder.element('th', null, 'Metadata'),
@@ -374,6 +377,7 @@ function refreshCompleted() {
         for (const completed of completedList) {
             table.addRow(DomBuilder.element('tr', null, [
                 DomBuilder.element('td', null, '' + completed.id),
+                DomBuilder.element('td', null, '' + completed.userId),
                 DomBuilder.element('td', null, DomBuilder.span(formatDate(new Date(completed.time)), {
                     style: 'white-space: nowrap;'
                 })),

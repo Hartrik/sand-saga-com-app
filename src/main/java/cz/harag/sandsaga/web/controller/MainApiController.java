@@ -21,7 +21,7 @@ import org.jboss.resteasy.spi.HttpRequest;
 
 /**
  * @author Patrik Harag
- * @version 2024-02-18
+ * @version 2024-03-02
  */
 @Path("/api/user")
 public class MainApiController {
@@ -44,7 +44,7 @@ public class MainApiController {
     @Produces(MediaType.APPLICATION_JSON)
     public Object handlerReport(@MultipartForm MultipartReport multipart, @Context HttpRequest request) {
         String ip = request.getRemoteAddress();
-        Long id = reportProvider.report(multipart, ip);
+        Long id = reportProvider.report(multipart, ip, security.getUserPrincipal());
 
         return Map.of("id", id);
     }
@@ -55,7 +55,7 @@ public class MainApiController {
     @Produces(MediaType.APPLICATION_JSON)
     public Object handleCompleted(@MultipartForm MultipartCompleted multipart, @Context HttpRequest request) {
         String ip = request.getRemoteAddress();
-        Long id = completedProvider.store(multipart, ip);
+        Long id = completedProvider.store(multipart, ip, security.getUserPrincipal());
 
         return Map.of("id", id);
     }

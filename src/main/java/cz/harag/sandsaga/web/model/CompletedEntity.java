@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 
 /**
  * @author Patrik Harag
- * @version 2024-02-24
+ * @version 2024-03-02
  */
 @Entity
 @Table(name = "t_completed")
@@ -36,6 +36,13 @@ public class CompletedEntity extends PanacheEntity {
 
     @Column(nullable = false, length = 48)
     public String ip;
+
+    @Column(name = "user_id", nullable = true)
+    public Long userId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
+    public UserEntity user;
 
 
     public static long countCompleted(ScenarioEntity scenarioEntity) {

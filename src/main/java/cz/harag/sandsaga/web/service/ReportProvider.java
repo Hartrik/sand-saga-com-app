@@ -1,5 +1,6 @@
 package cz.harag.sandsaga.web.service;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -7,6 +8,7 @@ import cz.harag.sandsaga.web.dto.ReportDto;
 import cz.harag.sandsaga.web.dto.MultipartReport;
 import cz.harag.sandsaga.web.dto.SandSagaScenario;
 import cz.harag.sandsaga.web.model.ReportEntity;
+import cz.harag.sandsaga.web.model.UserEntity;
 import io.quarkus.panache.common.Sort;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -17,7 +19,7 @@ import org.jboss.logging.Logger;
 
 /**
  * @author Patrik Harag
- * @version 2024-02-10
+ * @version 2024-03-02
  */
 @ApplicationScoped
 public class ReportProvider {
@@ -30,7 +32,7 @@ public class ReportProvider {
     SandSagaConfigProvider configProvider;
 
     @Transactional
-    public Long report(MultipartReport input, String ip) {
+    public Long report(MultipartReport input, String ip, Principal userPrincipal) {
         LOGGER.info("Storing report from IP: " + ip);
 
         // basic validation
@@ -48,9 +50,10 @@ public class ReportProvider {
 
         ReportEntity report = new ReportEntity();
         report.time = System.currentTimeMillis();
-        report.ip = ip;
         report.location = input.location;
         report.message = input.message;
+        report.ip = ip;
+        report.userId = UserEntity.findByPrincipalAsId(userPrincipal);
 
         if (input.metadata != null && input.metadata.length() <= 8192) {
             report.metadata = input.metadata;
@@ -111,6 +114,7 @@ public class ReportProvider {
         dto.setMetadata(e.metadata);
         dto.setSnapshotSize((e.snapshot == null) ? 0 : e.snapshot.length);
         dto.setIp(e.ip);
+        dto.setUserId(e.userId);
         return dto;
     }
 

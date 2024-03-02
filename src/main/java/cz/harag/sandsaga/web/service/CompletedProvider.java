@@ -1,5 +1,6 @@
 package cz.harag.sandsaga.web.service;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -7,6 +8,7 @@ import cz.harag.sandsaga.web.dto.CompletedDto;
 import cz.harag.sandsaga.web.dto.MultipartCompleted;
 import cz.harag.sandsaga.web.dto.SandSagaScenario;
 import cz.harag.sandsaga.web.model.CompletedEntity;
+import cz.harag.sandsaga.web.model.UserEntity;
 import io.quarkus.panache.common.Sort;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -34,7 +36,7 @@ public class CompletedProvider {
     LiveStatsProvider liveStatsProvider;
 
     @Transactional
-    public Long store(MultipartCompleted input, String ip) {
+    public Long store(MultipartCompleted input, String ip, Principal userPrincipal) {
         LOGGER.info("Storing completed from IP: " + ip);
 
         // basic validation
@@ -53,8 +55,9 @@ public class CompletedProvider {
 
         CompletedEntity entity = new CompletedEntity();
         entity.time = System.currentTimeMillis();
+        entity.scenarioId = scenario.getEntityId();
         entity.ip = ip;
-        entity.scenarioId = scenario.getEntityId();;
+        entity.userId = UserEntity.findByPrincipalAsId(userPrincipal);
 
         if (limitAdditionalData.next()) {
             if (input.metadata != null && input.metadata.length() <= 8192) {
@@ -124,6 +127,7 @@ public class CompletedProvider {
         dto.setMetadata(e.metadata);
         dto.setSnapshotSize((e.snapshot == null) ? 0 : e.snapshot.length);
         dto.setIp(e.ip);
+        dto.setUserId(e.userId);
         return dto;
     }
 
