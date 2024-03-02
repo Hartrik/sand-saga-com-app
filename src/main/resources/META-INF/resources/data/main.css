@@ -4,6 +4,7 @@ body {
     background-position: 0px 0px;
     background-size: 200px 200px;
     background-image: url("/data/noise.png");
+    overflow-x: hidden;
 }
 
 #page-content-wrapper {

@@ -41,6 +41,12 @@ h1 {
     border-radius: 8px;
 }
 
+@media (max-width: 1099px) {
+    .small-preview {
+        display: none;
+    }
+}
+
 .btn-discord {
     --bs-btn-bg: rgb(88, 101, 242);
 }
