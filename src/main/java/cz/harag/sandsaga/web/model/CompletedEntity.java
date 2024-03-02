@@ -1,5 +1,7 @@
 package cz.harag.sandsaga.web.model;
 
+import java.util.List;
+
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -53,5 +55,11 @@ public class CompletedEntity extends PanacheEntity {
         long start = epochDay * 86_400_000;
         long end = start + 86_400_000;
         return CompletedEntity.count("time > ?1 and time < ?2", start, end);
+    }
+
+    public static List<Long> collectCompletedScenarios(long userId) {
+        return CompletedEntity.find("SELECT DISTINCT scenario.id FROM CompletedEntity WHERE user.id = ?1", userId)
+                .project(Long.class)
+                .list();
     }
 }

@@ -37,7 +37,7 @@ public class ScenarioEntity extends PanacheEntity {
     }
 
     public static StatsDto sumStats() {
-        StatsSumDto result = DayStatsEntity.find("SELECT SUM(updates), SUM(completed) FROM ScenarioEntity")
+        StatsSumDto result = ScenarioEntity.find("SELECT SUM(updates), SUM(completed) FROM ScenarioEntity")
                 .project(StatsSumDto.class).singleResult();
 
         StatsDto stats = new StatsDto();

@@ -12,6 +12,7 @@
     <script defer src="${scenario.urlSandSagaScript}"></script>
 
     <script>
+        const logged = ${(user??)?c};
         document.addEventListener('DOMContentLoaded', () => {
             if (window.SandGameJS !== undefined && window.SandSaga !== undefined) {
                 const root = document.getElementById('sand-game-root');
@@ -24,7 +25,7 @@
                     lobbyUrl: '/',
                     nextUrl: <#if scenario.nextScenarioName??>'/s/${scenario.nextScenarioName}/play'<#else>undefined</#if>,
                     onCompleted: function () {
-                        if (window.localStorage !== undefined) {
+                        if (!logged && window.localStorage !== undefined) {
                             const oldValue = localStorage.getItem(localStorageKey);
                             if (oldValue === null) {
                                 localStorage.setItem(localStorageKey, 'true');
@@ -32,7 +33,7 @@
                         }
                     },
                     onAccepted: function (id) {
-                        if (window.localStorage !== undefined) {
+                        if (!logged && window.localStorage !== undefined) {
                             localStorage.setItem(localStorageKey, '' + id);
                         }
                     }

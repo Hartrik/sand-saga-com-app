@@ -6,6 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import cz.harag.sandsaga.web.dto.SandSagaScenario;
+import cz.harag.sandsaga.web.model.UserEntity;
+import cz.harag.sandsaga.web.service.CompletedProvider;
 import cz.harag.sandsaga.web.service.LiveStatsProvider;
 import cz.harag.sandsaga.web.service.SandSagaConfigProvider;
 import cz.harag.sandsaga.web.service.Templates;
@@ -41,6 +43,9 @@ public class MainController {
     @Inject
     LiveStatsProvider liveStatsProvider;
 
+    @Inject
+    CompletedProvider completedProvider;
+
     @GET
     @Path("/")
     @Produces(MediaType.TEXT_HTML)
@@ -48,6 +53,15 @@ public class MainController {
         Map<String, Object> parameters = new LinkedHashMap<>();
         parameters.put("categories", config.categories());
         parameters.put("stats", liveStatsProvider.getStats());
+
+        Long userId = UserEntity.findByPrincipalAsId(security.getUserPrincipal());
+        if (userId != null) {
+            Map<String, Boolean> completedScenarios = completedProvider.completedScenarios(userId);
+            if (!completedScenarios.isEmpty()) {
+                parameters.put("completed", completedScenarios);
+            }
+        }
+
         return templates.build("page-index.ftlh", security, parameters);
     }
 

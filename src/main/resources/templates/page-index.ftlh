@@ -129,9 +129,15 @@
     <a href="/s/${scenario.name}/play" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
       ${scenario.title}
       <span id="scenario_${scenario.name}">
+        <#if completed?? && completed[scenario.name]??>
+        <span class="badge bg-success rounded-pill">
+          <#if scenario.name?contains('sandbox')>played<#else>completed</#if>
+        </span>
+        <#else>
         <span class="badge bg-danger rounded-pill">
           <#if scenario.name?contains('sandbox')>not played<#else>not completed</#if>
         </span>
+        </#if>
       </span>
     </a>
     </#list>

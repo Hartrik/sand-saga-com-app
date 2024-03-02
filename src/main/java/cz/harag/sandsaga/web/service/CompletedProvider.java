@@ -1,7 +1,9 @@
 package cz.harag.sandsaga.web.service;
 
 import java.security.Principal;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import cz.harag.sandsaga.web.dto.CompletedDto;
@@ -137,6 +139,22 @@ public class CompletedProvider {
         if (!b) {
             throw new NotFoundException();
         }
+    }
+
+    @Transactional
+    public Map<String, Boolean> completedScenarios(long userId) {
+        // freemarker not supports sets
+        Map<String, Boolean> set = new LinkedHashMap<>();
+
+        List<Long> scenarios = CompletedEntity.collectCompletedScenarios(userId);
+        for (Long scenarioId : scenarios) {
+            SandSagaScenario scenario = configProvider.scenario(scenarioId);
+            if (scenario != null) {
+                set.put(scenario.getName(), true);
+            }
+        }
+
+        return set;
     }
 
     public double getLimitEntityUsedRatio() {
