@@ -1,6 +1,5 @@
-package cz.harag.sandsaga.web.controller;
+package cz.harag.sandsaga.web.security;
 
-import cz.harag.sandsaga.web.controller.CustomSecurityIdentityAugmentor.DiscordPrincipal;
 import cz.harag.sandsaga.web.model.UserEntity;
 import io.quarkus.security.identity.SecurityIdentity;
 import io.quarkus.security.spi.runtime.SecurityEvent;

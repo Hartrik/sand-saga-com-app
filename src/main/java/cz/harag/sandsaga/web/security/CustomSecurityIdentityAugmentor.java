@@ -1,6 +1,4 @@
-package cz.harag.sandsaga.web.controller;
-
-import java.security.Principal;
+package cz.harag.sandsaga.web.security;
 
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -13,7 +11,7 @@ import io.smallrye.mutiny.Uni;
 
 /**
  * @author Patrik Harag
- * @version 2024-03-01
+ * @version 2024-03-02
  */
 @ApplicationScoped
 public class CustomSecurityIdentityAugmentor implements SecurityIdentityAugmentor {
@@ -28,12 +26,17 @@ public class CustomSecurityIdentityAugmentor implements SecurityIdentityAugmento
 		UserInfo userInfo = identity.getAttribute("userinfo");
 		if (userInfo == null) {
 			// logged using JPA Security / form based
-			return Uni.createFrom().item(() -> identity);
+			QuarkusSecurityIdentity.Builder builder = QuarkusSecurityIdentity.builder(identity);
+			builder.setPrincipal(new FormPrincipal(identity.getPrincipal().getName()));
+			return Uni.createFrom().item(builder.build());
 		}
 
 		// logged using OIDC
 		QuarkusSecurityIdentity.Builder builder = QuarkusSecurityIdentity.builder(identity);
 		String username = userInfo.getString("username");
+		if (username == null) {
+			username = "";
+		}
 		String tenantId = identity.getAttribute("tenant-id");
 		String id = userInfo.getString("id");
 		if (id == null) {
@@ -44,29 +47,4 @@ public class CustomSecurityIdentityAugmentor implements SecurityIdentityAugmento
 		builder.addRole("user");
         return Uni.createFrom().item(builder.build());
     }
-
-	public static class DiscordPrincipal implements Principal {
-		private final String username;
-		private final String email;
-		private final String id;
-
-		public DiscordPrincipal(String username, String email, String id) {
-			this.username = username;
-			this.email = email;
-			this.id = id;
-		}
-
-		public String getEmail() {
-			return email;
-		}
-
-		public String getId() {
-			return id;
-		}
-
-		@Override
-		public String getName() {
-			return username;
-		}
-	}
 }

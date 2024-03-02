@@ -1,5 +1,9 @@
 package cz.harag.sandsaga.web.model;
 
+import java.security.Principal;
+
+import cz.harag.sandsaga.web.security.DiscordPrincipal;
+import cz.harag.sandsaga.web.security.FormPrincipal;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.security.jpa.Password;
 import io.quarkus.security.jpa.Roles;
@@ -51,6 +55,16 @@ public class UserEntity extends PanacheEntity {
     public String displayName;
 
     // ---
+
+    public static UserEntity findByPrincipal(Principal principal) {
+        if (principal instanceof DiscordPrincipal discordPrincipal) {
+            return findByDiscordId(discordPrincipal.getId());
+        }
+        if (principal instanceof FormPrincipal formPrincipal) {
+            return findByUsername(formPrincipal.getName());
+        }
+        return null;
+    }
 
     public static UserEntity findByUsername(String username) {
         return UserEntity.find("username", username).firstResult();

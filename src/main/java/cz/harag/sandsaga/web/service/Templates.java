@@ -1,6 +1,5 @@
 package cz.harag.sandsaga.web.service;
 
-import cz.harag.sandsaga.web.controller.CustomSecurityIdentityAugmentor;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.security.Principal;
@@ -9,6 +8,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import cz.harag.sandsaga.web.security.DiscordPrincipal;
+import cz.harag.sandsaga.web.security.FormPrincipal;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -19,7 +20,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 /**
  * @author Patrik Harag
- * @version 2024-03-01
+ * @version 2024-03-02
  */
 @ApplicationScoped
 public class Templates {
@@ -54,9 +55,9 @@ public class Templates {
             if (userPrincipal != null) {
                 map.put("user_name", userPrincipal.getName());
             }
-            if (userPrincipal instanceof CustomSecurityIdentityAugmentor.DiscordPrincipal) {
+            if (userPrincipal instanceof DiscordPrincipal) {
                 map.put("user_tenant", "discord");
-            } else {
+            } else if (userPrincipal instanceof FormPrincipal) {
                 map.put("user_tenant", "form");
             }
         }
