@@ -12,32 +12,35 @@
     <script defer src="${scenario.urlSandSagaScript}"></script>
 
     <script>
-        const logged = ${(user??)?c};
         document.addEventListener('DOMContentLoaded', () => {
             if (window.SandGameJS !== undefined && window.SandSaga !== undefined) {
                 const root = document.getElementById('sand-game-root');
 
-                const localStorageKey = 'scenario_${scenario.name}';
                 const config = {
                     version: 'dev',
                     debug: false,
                     scenario: '${scenario.name}',
                     lobbyUrl: '/',
                     nextUrl: <#if scenario.nextScenarioName??>'/s/${scenario.nextScenarioName}/play'<#else>undefined</#if>,
-                    onCompleted: function () {
-                        if (!logged && window.localStorage !== undefined) {
-                            const oldValue = localStorage.getItem(localStorageKey);
-                            if (oldValue === null) {
-                                localStorage.setItem(localStorageKey, 'true');
-                            }
-                        }
-                    },
-                    onAccepted: function (id) {
-                        if (!logged && window.localStorage !== undefined) {
-                            localStorage.setItem(localStorageKey, '' + id);
+                    includeSnapshot: ${scenario.storeSnapshot?c}
+                };
+
+                <#if !user??>
+                const localStorageKey = 'scenario_${scenario.name}';
+                config.onCompleted = function () {
+                    if (window.localStorage !== undefined) {
+                        const oldValue = localStorage.getItem(localStorageKey);
+                        if (oldValue === null) {
+                            localStorage.setItem(localStorageKey, 'true');
                         }
                     }
                 };
+                config.onAccepted = function (id) {
+                    if (window.localStorage !== undefined) {
+                        localStorage.setItem(localStorageKey, '' + id);
+                    }
+                },
+                </#if>
 
                 SandSaga.init(root, config);
             } else {
