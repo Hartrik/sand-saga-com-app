@@ -59,6 +59,17 @@ root.append(DomBuilder.par(null, [
         }));
     }),
     ' ',
+    DomBuilder.button('Refresh Live Stats', {class: 'btn btn-primary'}, () => {
+        handle(true, true, fetch('/api/admin/refresh-live-stats', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: ''
+        }));
+    }),
+    ' ',
     DomBuilder.button('Update Stats From Completed', {class: 'btn btn-primary'}, () => {
         handle(true, true, fetch('/api/admin/update-stats-from-completed', {
             method: 'POST',
@@ -67,7 +78,9 @@ root.append(DomBuilder.par(null, [
                 'Content-Type': 'application/json'
             },
             body: ''
-        }));
+        }), () => {
+            refreshStats();
+        });
     })
 ]));
 

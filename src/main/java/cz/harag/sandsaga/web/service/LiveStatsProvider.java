@@ -12,7 +12,7 @@ import jakarta.transaction.Transactional;
  * Fast stats - can be used on the front page.
  *
  * @author Patrik Harag
- * @version 2024-03-02
+ * @version 2024-03-03
  */
 @ApplicationScoped
 public class LiveStatsProvider {
@@ -22,6 +22,11 @@ public class LiveStatsProvider {
 
     @Transactional
     synchronized void onStart(@Observes StartupEvent event) {
+        refresh();
+    }
+
+    @Transactional
+    public synchronized void refresh() {
         completed = CompletedEntity.count();
         updates = ScenarioEntity.sumStats().getUpdates();
     }

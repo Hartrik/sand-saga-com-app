@@ -11,6 +11,7 @@ import cz.harag.sandsaga.web.dto.OutStatsDto;
 import cz.harag.sandsaga.web.dto.OutStatsScenarioDto;
 import cz.harag.sandsaga.web.dto.OutUserDto;
 import cz.harag.sandsaga.web.service.CompletedProvider;
+import cz.harag.sandsaga.web.service.LiveStatsProvider;
 import cz.harag.sandsaga.web.service.ReportProvider;
 import cz.harag.sandsaga.web.service.SandSagaConfigProvider;
 import cz.harag.sandsaga.web.service.StatsProvider;
@@ -27,7 +28,7 @@ import jakarta.ws.rs.core.MediaType;
 
 /**
  * @author Patrik Harag
- * @version 2024-03-02
+ * @version 2024-03-03
  */
 @RolesAllowed("admin")
 @Path("/api/admin")
@@ -46,6 +47,9 @@ public class AdminApiController {
     StatsProvider statsProvider;
 
     @Inject
+    LiveStatsProvider liveStatsProvider;
+
+    @Inject
     UserProvider userProvider;
 
     // server
@@ -62,6 +66,13 @@ public class AdminApiController {
     @Produces(MediaType.APPLICATION_JSON)
     public void handleUpdateStatsFromCompleted() {
         statsProvider.updateStatsFromCompleted();
+    }
+
+    @POST
+    @Path("/refresh-live-stats")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void handleRefreshLiveStats() {
+        liveStatsProvider.refresh();
     }
 
     @GET
