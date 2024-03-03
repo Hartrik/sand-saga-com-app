@@ -4,12 +4,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import cz.harag.sandsaga.web.dto.CompletedDto;
-import cz.harag.sandsaga.web.dto.StatsDayDto;
-import cz.harag.sandsaga.web.dto.ReportDto;
-import cz.harag.sandsaga.web.dto.StatsDto;
-import cz.harag.sandsaga.web.dto.StatsScenarioDto;
-import cz.harag.sandsaga.web.dto.UserDto;
+import cz.harag.sandsaga.web.dto.OutCompletedDto;
+import cz.harag.sandsaga.web.dto.OutStatsDayDto;
+import cz.harag.sandsaga.web.dto.OutReportDto;
+import cz.harag.sandsaga.web.dto.OutStatsDto;
+import cz.harag.sandsaga.web.dto.OutStatsScenarioDto;
+import cz.harag.sandsaga.web.dto.OutUserDto;
 import cz.harag.sandsaga.web.service.CompletedProvider;
 import cz.harag.sandsaga.web.service.ReportProvider;
 import cz.harag.sandsaga.web.service.SandSagaConfigProvider;
@@ -80,14 +80,14 @@ public class AdminApiController {
     @GET
     @Path("/completed")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<CompletedDto> handleGetCompleted() {
+    public List<OutCompletedDto> handleGetCompleted() {
         return completedProvider.list(0, 100);
     }
 
     @GET
     @Path("/completed/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public CompletedDto handleGetCompleted(@PathParam("id") Long id) {
+    public OutCompletedDto handleGetCompleted(@PathParam("id") Long id) {
         return completedProvider.get(id);
     }
 
@@ -117,14 +117,14 @@ public class AdminApiController {
     @GET
     @Path("/reports")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<ReportDto> handleGetReports() {
+    public List<OutReportDto> handleGetReports() {
         return reportProvider.list(0, 100);
     }
 
     @GET
     @Path("/reports/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public ReportDto handleGetReport(@PathParam("id") Long id) {
+    public OutReportDto handleGetReport(@PathParam("id") Long id) {
         return reportProvider.get(id);
     }
 
@@ -147,28 +147,28 @@ public class AdminApiController {
     @GET
     @Path("/stats/by-scenario")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<StatsScenarioDto> handleGetStatsByScenario() {
+    public List<OutStatsScenarioDto> handleGetStatsByScenario() {
         return statsProvider.listScenarioStats(0, 30);
     }
 
     @GET
     @Path("/stats/by-scenario/sum")
     @Produces(MediaType.APPLICATION_JSON)
-    public StatsDto handleGetStatsByScenarioSum() {
+    public OutStatsDto handleGetStatsByScenarioSum() {
         return statsProvider.sumScenarioStats();
     }
 
     @GET
     @Path("/stats/by-day")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<StatsDayDto> handleGetStatsByDay() {
+    public List<OutStatsDayDto> handleGetStatsByDay() {
         return statsProvider.listDayStats(0, 30);
     }
 
     @GET
     @Path("/stats/by-day/sum")
     @Produces(MediaType.APPLICATION_JSON)
-    public StatsDto handleGetStatsByDaySum() {
+    public OutStatsDto handleGetStatsByDaySum() {
         return statsProvider.sumDayStats();
     }
 
@@ -177,14 +177,14 @@ public class AdminApiController {
     @GET
     @Path("/users")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<UserDto> handleGetUsers() {
+    public List<OutUserDto> handleGetUsers() {
         return userProvider.list(0, 100);
     }
 
     @GET
     @Path("/users/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public UserDto handleGetUser(@PathParam("id") Long id) {
+    public OutUserDto handleGetUser(@PathParam("id") Long id) {
         return userProvider.get(id);
     }
 

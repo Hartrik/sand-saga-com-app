@@ -4,8 +4,8 @@ import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import cz.harag.sandsaga.web.dto.ReportDto;
-import cz.harag.sandsaga.web.dto.MultipartReport;
+import cz.harag.sandsaga.web.dto.OutReportDto;
+import cz.harag.sandsaga.web.dto.InReportMultipart;
 import cz.harag.sandsaga.web.dto.SandSagaScenario;
 import cz.harag.sandsaga.web.model.ReportEntity;
 import cz.harag.sandsaga.web.model.UserEntity;
@@ -32,7 +32,7 @@ public class ReportProvider {
     SandSagaConfigProvider configProvider;
 
     @Transactional
-    public Long report(MultipartReport input, String ip, Principal userPrincipal) {
+    public Long report(InReportMultipart input, String ip, Principal userPrincipal) {
         LOGGER.info("Storing report from IP: " + ip);
 
         // basic validation
@@ -75,7 +75,7 @@ public class ReportProvider {
     }
 
     @Transactional
-    public ReportDto get(Long id) {
+    public OutReportDto get(Long id) {
         ReportEntity entity = ReportEntity.findById(id);
         if (entity == null) {
             throw new NotFoundException();
@@ -93,14 +93,14 @@ public class ReportProvider {
     }
 
     @Transactional
-    public List<ReportDto> list(int pageIndex, int pageSize) {
+    public List<OutReportDto> list(int pageIndex, int pageSize) {
         return ReportEntity.<ReportEntity>findAll(Sort.by("time").descending())
                 .page(pageIndex, pageSize)
                 .stream().map(this::asDto).collect(Collectors.toList());
     }
 
-    private ReportDto asDto(ReportEntity e) {
-        ReportDto dto = new ReportDto();
+    private OutReportDto asDto(ReportEntity e) {
+        OutReportDto dto = new OutReportDto();
         dto.setId(e.id);
         dto.setTime(e.time);
         if (e.scenarioId != null) {

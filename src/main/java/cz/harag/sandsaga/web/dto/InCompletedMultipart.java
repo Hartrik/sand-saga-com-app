@@ -10,7 +10,7 @@ import org.jboss.resteasy.annotations.providers.multipart.PartType;
  * @version 2024-02-10
  */
 @RegisterForReflection
-public class MultipartCompleted {
+public class InCompletedMultipart {
 
     @FormParam("scenario")
     @PartType(MediaType.TEXT_PLAIN)

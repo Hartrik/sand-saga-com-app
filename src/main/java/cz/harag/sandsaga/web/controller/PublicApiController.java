@@ -2,9 +2,9 @@ package cz.harag.sandsaga.web.controller;
 
 import java.util.Map;
 
-import cz.harag.sandsaga.web.dto.MultipartCompleted;
-import cz.harag.sandsaga.web.dto.MultipartReport;
-import cz.harag.sandsaga.web.dto.MultipartUpdate;
+import cz.harag.sandsaga.web.dto.InCompletedMultipart;
+import cz.harag.sandsaga.web.dto.InReportMultipart;
+import cz.harag.sandsaga.web.dto.InUpdateMultipart;
 import cz.harag.sandsaga.web.service.CompletedProvider;
 import cz.harag.sandsaga.web.service.ReportProvider;
 import cz.harag.sandsaga.web.service.StatsProvider;
@@ -24,7 +24,7 @@ import org.jboss.resteasy.spi.HttpRequest;
  * @version 2024-03-02
  */
 @Path("/api/user")
-public class MainApiController {
+public class PublicApiController {
 
     @Context
     SecurityContext security;
@@ -42,7 +42,7 @@ public class MainApiController {
     @Path("/report")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public Object handlerReport(@MultipartForm MultipartReport multipart, @Context HttpRequest request) {
+    public Object handlerReport(@MultipartForm InReportMultipart multipart, @Context HttpRequest request) {
         String ip = request.getRemoteAddress();
         Long id = reportProvider.report(multipart, ip, security.getUserPrincipal());
 
@@ -53,7 +53,7 @@ public class MainApiController {
     @Path("/scenario-completed")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public Object handleCompleted(@MultipartForm MultipartCompleted multipart, @Context HttpRequest request) {
+    public Object handleCompleted(@MultipartForm InCompletedMultipart multipart, @Context HttpRequest request) {
         String ip = request.getRemoteAddress();
         Long id = completedProvider.store(multipart, ip, security.getUserPrincipal());
 
@@ -64,7 +64,7 @@ public class MainApiController {
     @Path("/update")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public void handleUpdate(@MultipartForm MultipartUpdate multipart, @Context HttpRequest request) {
+    public void handleUpdate(@MultipartForm InUpdateMultipart multipart, @Context HttpRequest request) {
         String ip = request.getRemoteAddress();
         statsProvider.update(multipart, ip);
     }

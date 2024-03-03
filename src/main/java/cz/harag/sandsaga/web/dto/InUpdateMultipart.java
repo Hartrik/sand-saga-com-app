@@ -10,7 +10,7 @@ import org.jboss.resteasy.annotations.providers.multipart.PartType;
  * @version 2024-02-18
  */
 @RegisterForReflection
-public class MultipartUpdate {
+public class InUpdateMultipart {
 
     @FormParam("scenario")
     @PartType(MediaType.TEXT_PLAIN)

@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import cz.harag.sandsaga.web.dto.CompletedDto;
-import cz.harag.sandsaga.web.dto.MultipartCompleted;
+import cz.harag.sandsaga.web.dto.OutCompletedDto;
+import cz.harag.sandsaga.web.dto.InCompletedMultipart;
 import cz.harag.sandsaga.web.dto.SandSagaScenario;
 import cz.harag.sandsaga.web.model.CompletedEntity;
 import cz.harag.sandsaga.web.model.UserEntity;
@@ -38,7 +38,7 @@ public class CompletedProvider {
     LiveStatsProvider liveStatsProvider;
 
     @Transactional
-    public Long store(MultipartCompleted input, String ip, Principal userPrincipal) {
+    public Long store(InCompletedMultipart input, String ip, Principal userPrincipal) {
         LOGGER.info("Storing completed from IP: " + ip);
 
         // basic validation
@@ -82,7 +82,7 @@ public class CompletedProvider {
     }
 
     @Transactional
-    public CompletedDto get(Long id) {
+    public OutCompletedDto get(Long id) {
         CompletedEntity entity = CompletedEntity.findById(id);
         if (entity == null) {
             throw new NotFoundException();
@@ -110,14 +110,14 @@ public class CompletedProvider {
     }
 
     @Transactional
-    public List<CompletedDto> list(int pageIndex, int pageSize) {
+    public List<OutCompletedDto> list(int pageIndex, int pageSize) {
         return CompletedEntity.<CompletedEntity>findAll(Sort.by("time").descending())
                 .page(pageIndex, pageSize)
                 .stream().map(this::asDto).collect(Collectors.toList());
     }
 
-    private CompletedDto asDto(CompletedEntity e) {
-        CompletedDto dto = new CompletedDto();
+    private OutCompletedDto asDto(CompletedEntity e) {
+        OutCompletedDto dto = new OutCompletedDto();
         dto.setId(e.id);
         dto.setTime(e.time);
         if (e.scenarioId != null) {

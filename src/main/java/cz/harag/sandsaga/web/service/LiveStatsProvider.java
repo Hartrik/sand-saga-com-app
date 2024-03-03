@@ -1,6 +1,6 @@
 package cz.harag.sandsaga.web.service;
 
-import cz.harag.sandsaga.web.dto.StatsDto;
+import cz.harag.sandsaga.web.dto.OutStatsDto;
 import cz.harag.sandsaga.web.model.CompletedEntity;
 import cz.harag.sandsaga.web.model.ScenarioEntity;
 import io.quarkus.runtime.StartupEvent;
@@ -34,8 +34,8 @@ public class LiveStatsProvider {
         updates++;
     }
 
-    public synchronized StatsDto getStats() {
-        StatsDto statsDto = new StatsDto();
+    public synchronized OutStatsDto getStats() {
+        OutStatsDto statsDto = new OutStatsDto();
         statsDto.setCompleted(completed);
         statsDto.setUpdates(updates);
         return statsDto;

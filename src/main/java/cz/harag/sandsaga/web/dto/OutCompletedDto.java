@@ -8,7 +8,7 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
  * @version 2024-03-02
  */
 @RegisterForReflection
-public class CompletedDto {
+public class OutCompletedDto {
 
     private long id;
     private long time;

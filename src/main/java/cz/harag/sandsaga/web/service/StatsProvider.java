@@ -3,11 +3,11 @@ package cz.harag.sandsaga.web.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import cz.harag.sandsaga.web.dto.StatsDayDto;
-import cz.harag.sandsaga.web.dto.MultipartUpdate;
+import cz.harag.sandsaga.web.dto.OutStatsDayDto;
+import cz.harag.sandsaga.web.dto.InUpdateMultipart;
 import cz.harag.sandsaga.web.dto.SandSagaScenario;
-import cz.harag.sandsaga.web.dto.StatsDto;
-import cz.harag.sandsaga.web.dto.StatsScenarioDto;
+import cz.harag.sandsaga.web.dto.OutStatsDto;
+import cz.harag.sandsaga.web.dto.OutStatsScenarioDto;
 import cz.harag.sandsaga.web.model.CompletedEntity;
 import cz.harag.sandsaga.web.model.DayStatsEntity;
 import cz.harag.sandsaga.web.model.ScenarioEntity;
@@ -33,7 +33,7 @@ public class StatsProvider {
     LiveStatsProvider liveStatsProvider;
 
     @Transactional
-    public void update(MultipartUpdate input, String ip) {
+    public void update(InUpdateMultipart input, String ip) {
         Long epochDay = System.currentTimeMillis() / 86_400_000;
 
         liveStatsProvider.incrementUpdates();
@@ -60,39 +60,39 @@ public class StatsProvider {
     }
 
     @Transactional
-    public List<StatsScenarioDto> listScenarioStats(int pageIndex, int pageSize) {
+    public List<OutStatsScenarioDto> listScenarioStats(int pageIndex, int pageSize) {
         return ScenarioEntity.<ScenarioEntity>findAll(Sort.by("id").ascending())
                 .page(pageIndex, pageSize)
                 .stream().map(this::asDto).collect(Collectors.toList());
     }
 
     @Transactional
-    public StatsDto sumScenarioStats() {
+    public OutStatsDto sumScenarioStats() {
         return ScenarioEntity.sumStats();
     }
 
     @Transactional
-    public List<StatsDayDto> listDayStats(int pageIndex, int pageSize) {
+    public List<OutStatsDayDto> listDayStats(int pageIndex, int pageSize) {
         return DayStatsEntity.<DayStatsEntity>findAll(Sort.by("id").descending())
                 .page(pageIndex, pageSize)
                 .stream().map(this::asDto).collect(Collectors.toList());
     }
 
     @Transactional
-    public StatsDto sumDayStats() {
+    public OutStatsDto sumDayStats() {
         return DayStatsEntity.sumStats();
     }
 
-    private StatsDayDto asDto(DayStatsEntity e) {
-        StatsDayDto dto = new StatsDayDto();
+    private OutStatsDayDto asDto(DayStatsEntity e) {
+        OutStatsDayDto dto = new OutStatsDayDto();
         dto.setId(e.id);
         dto.setUpdates(e.updates);
         dto.setCompleted(e.completed);
         return dto;
     }
 
-    private StatsScenarioDto asDto(ScenarioEntity e) {
-        StatsScenarioDto dto = new StatsScenarioDto();
+    private OutStatsScenarioDto asDto(ScenarioEntity e) {
+        OutStatsScenarioDto dto = new OutStatsScenarioDto();
         dto.setId(e.id);
         dto.setName(e.name);
         dto.setUpdates(e.updates);

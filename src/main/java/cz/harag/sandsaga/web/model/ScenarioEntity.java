@@ -1,6 +1,6 @@
 package cz.harag.sandsaga.web.model;
 
-import cz.harag.sandsaga.web.dto.StatsDto;
+import cz.harag.sandsaga.web.dto.OutStatsDto;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.runtime.annotations.RegisterForReflection;
@@ -36,11 +36,11 @@ public class ScenarioEntity extends PanacheEntity {
         return update("updates = updates + 1 WHERE id = ?1", id);
     }
 
-    public static StatsDto sumStats() {
+    public static OutStatsDto sumStats() {
         StatsSumDto result = ScenarioEntity.find("SELECT SUM(updates), SUM(completed) FROM ScenarioEntity")
                 .project(StatsSumDto.class).singleResult();
 
-        StatsDto stats = new StatsDto();
+        OutStatsDto stats = new OutStatsDto();
         if (result != null) {
             if (result.updates != null) {
                 stats.setUpdates(result.updates);

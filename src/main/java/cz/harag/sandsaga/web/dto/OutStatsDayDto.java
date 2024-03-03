@@ -8,10 +8,19 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
  * @version 2024-02-24
  */
 @RegisterForReflection
-public class StatsDto {
+public class OutStatsDayDto {
 
+    private long id;
     private long updates;
     private long completed;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public long getUpdates() {
         return updates;

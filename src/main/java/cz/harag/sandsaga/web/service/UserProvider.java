@@ -3,7 +3,7 @@ package cz.harag.sandsaga.web.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import cz.harag.sandsaga.web.dto.UserDto;
+import cz.harag.sandsaga.web.dto.OutUserDto;
 import cz.harag.sandsaga.web.model.UserEntity;
 import io.quarkus.panache.common.Sort;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -21,14 +21,14 @@ public class UserProvider {
     private static final Logger LOGGER = Logger.getLogger(UserProvider.class);
 
     @Transactional
-    public List<UserDto> list(int pageIndex, int pageSize) {
+    public List<OutUserDto> list(int pageIndex, int pageSize) {
         return UserEntity.<UserEntity>findAll(Sort.by("timeRegistered").descending())
                 .page(pageIndex, pageSize)
                 .stream().map(this::asDto).collect(Collectors.toList());
     }
 
-    private UserDto asDto(UserEntity e) {
-        UserDto dto = new UserDto();
+    private OutUserDto asDto(UserEntity e) {
+        OutUserDto dto = new OutUserDto();
         dto.setId(e.id);
         dto.setTimeRegistered(e.timeRegistered);
         dto.setRole(e.role);
@@ -38,7 +38,7 @@ public class UserProvider {
     }
 
     @Transactional
-    public UserDto get(Long id) {
+    public OutUserDto get(Long id) {
         UserEntity entity = UserEntity.findById(id);
         if (entity == null) {
             throw new NotFoundException();
