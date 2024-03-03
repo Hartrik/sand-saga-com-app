@@ -2,7 +2,7 @@ import { DomBuilder } from "/data/admin/DomBuilder.js";
 import { formatDate } from "/data/admin/Utils.js";
 
 /**
- * @version 2024-03-02
+ * @version 2024-03-03
  * @author Patrik Harag
  */
 
@@ -145,6 +145,7 @@ function refreshStats() {
             DomBuilder.element('th', null, 'Completed'),
         ]));
 
+        scenarios = scenarios.sort((a, b) => a.name.localeCompare(b.name));
         for (const stats of scenarios) {
             table.addRow(DomBuilder.element('tr', null, [
                 DomBuilder.element('td', null, '' + stats.id),
