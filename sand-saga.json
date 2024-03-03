@@ -29,7 +29,7 @@
         {
           "name": "mission-deforestation",
           "title": "Mission: Deforestation",
-          "storeSnapshot": true
+          "storeSnapshot": false
         },
         {
           "name": "mission-recultivation",
@@ -54,7 +54,7 @@
         {
           "name": "puzzle-sep-s",
           "title": "Challenge: Separation 3",
-          "storeSnapshot": true
+          "storeSnapshot": false
         },
         {
           "name": "puzzle-transfer-w-1",
@@ -79,12 +79,12 @@
         {
           "name": "sandbox-rain",
           "title": "Sandbox: Rain",
-          "storeSnapshot": true
+          "storeSnapshot": false
         },
         {
           "name": "sandbox-meteors",
           "title": "Sandbox: Meteors",
-          "storeSnapshot": true
+          "storeSnapshot": false
         },
         {
           "name": "sandbox-empty",
