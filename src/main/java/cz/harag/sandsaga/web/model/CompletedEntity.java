@@ -1,8 +1,10 @@
 package cz.harag.sandsaga.web.model;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import io.quarkus.runtime.annotations.RegisterForReflection;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,7 +14,7 @@ import jakarta.persistence.Table;
 
 /**
  * @author Patrik Harag
- * @version 2024-03-02
+ * @version 2024-03-03
  */
 @Entity
 @Table(name = "t_completed")
@@ -59,7 +61,22 @@ public class CompletedEntity extends PanacheEntity {
 
     public static List<Long> collectCompletedScenarios(long userId) {
         return CompletedEntity.find("SELECT DISTINCT scenario.id FROM CompletedEntity WHERE user.id = ?1", userId)
-                .project(Long.class)
-                .list();
+                .project(CollectCompletedScenariosRowType.class)
+                .stream()
+                .map(s -> s.scenarioId)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * @author Patrik Harag
+     * @version 2024-03-03
+     */
+    @RegisterForReflection
+    private static final class CollectCompletedScenariosRowType {
+        public final Long scenarioId;
+
+        public CollectCompletedScenariosRowType(Long scenarioId) {
+            this.scenarioId = scenarioId;
+        }
     }
 }

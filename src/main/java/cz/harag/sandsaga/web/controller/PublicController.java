@@ -18,6 +18,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.SecurityContext;
+import org.jboss.logging.Logger;
 
 /**
  * @author Patrik Harag
@@ -25,6 +26,8 @@ import jakarta.ws.rs.core.SecurityContext;
  */
 @Path("/")
 public class PublicController {
+
+    private static final Logger LOGGER = Logger.getLogger(PublicController.class);
 
     @Inject
     Templates templates;
@@ -49,12 +52,17 @@ public class PublicController {
         parameters.put("categories", config.categories());
         parameters.put("stats", liveStatsProvider.getStats());
 
-        Long userId = UserEntity.findByPrincipalAsId(security.getUserPrincipal());
-        if (userId != null) {
-            Map<String, Boolean> completedScenarios = completedProvider.completedScenarios(userId);
-            if (!completedScenarios.isEmpty()) {
-                parameters.put("completed", completedScenarios);
+        try {
+            Long userId = UserEntity.findByPrincipalAsId(security.getUserPrincipal());
+            if (userId != null) {
+                Map<String, Boolean> completedScenarios = completedProvider.completedScenarios(userId);
+                if (!completedScenarios.isEmpty()) {
+                    parameters.put("completed", completedScenarios);
+                }
             }
+        } catch (Exception e) {
+            // front page should not fail
+            LOGGER.error(e);
         }
 
         return templates.build("page-index.ftlh", security, parameters);
