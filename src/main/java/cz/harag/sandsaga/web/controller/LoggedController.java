@@ -16,7 +16,7 @@ import jakarta.ws.rs.core.Response;
  */
 @Path("/")
 @RolesAllowed({"user", "admin"})
-public class UserController {
+public class LoggedController {
 
     @Inject
     OidcSession oidcSession;

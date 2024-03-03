@@ -2,10 +2,17 @@ package cz.harag.sandsaga.web.service;
 
 import java.security.Principal;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+import cz.harag.sandsaga.web.dto.InClaimDto;
+import cz.harag.sandsaga.web.dto.InClaimEntryDto;
+import cz.harag.sandsaga.web.dto.OutClaimDto;
+import cz.harag.sandsaga.web.dto.OutClaimEntryDto;
 import cz.harag.sandsaga.web.dto.OutCompletedDto;
 import cz.harag.sandsaga.web.dto.InCompletedMultipart;
 import cz.harag.sandsaga.web.dto.SandSagaScenario;
@@ -16,6 +23,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.BadRequestException;
+import jakarta.ws.rs.ForbiddenException;
 import jakarta.ws.rs.NotFoundException;
 import org.jboss.logging.Logger;
 
@@ -155,6 +163,76 @@ public class CompletedProvider {
         }
 
         return set;
+    }
+
+    @Transactional
+    public OutClaimDto claim(InClaimDto claimData, String ip, Principal userPrincipal) {
+        Set<OutClaimEntryDto> accepted = new LinkedHashSet<>();
+        Set<OutClaimEntryDto> refused = new LinkedHashSet<>();
+
+        Long userId = UserEntity.findByPrincipalAsId(userPrincipal);
+        if (userId == null) {
+            throw new ForbiddenException("User not found");
+        }
+
+        if (claimData != null && claimData.getCompleted() != null) {
+            for (InClaimEntryDto entry : claimData.getCompleted()) {
+                if (entry == null || entry.getId() == null || entry.getScenario() == null) {
+                    // missing information
+                    continue;
+                }
+
+                CompletedEntity completed = CompletedEntity.findById(entry.getId());
+                if (validateClaim(entry, completed, ip)) {
+                    completed.userId = userId;
+                    completed.persist();
+
+                    accepted.add(OutClaimEntryDto.convert(entry));
+
+                    LOGGER.info("Claim accepted - user id: " + userId + ", completed id: " + entry.getId());
+
+                } else {
+                    refused.add(OutClaimEntryDto.convert(entry));
+
+                    LOGGER.info("Claim refused - user id: " + userId + ", completed id: " + entry.getId());
+                }
+            }
+        }
+
+        OutClaimDto dto = new OutClaimDto();
+        dto.setAccepted(accepted);
+        dto.setRefused(refused);
+        return dto;
+    }
+
+    private boolean validateClaim(InClaimEntryDto entry, CompletedEntity completed, String ip) {
+        if (completed == null) {
+            // not found
+            return false;
+        }
+
+        if (completed.userId != null) {
+            // already claimed
+            return false;
+        }
+
+        if (!Objects.equals(completed.ip, ip)) {
+            // ip not matches
+            return false;
+        }
+
+        String entryScenario = entry.getScenario();
+        SandSagaScenario scenario = configProvider.scenario(entryScenario);
+        if (scenario == null) {
+            // scenario not found
+            return false;
+        }
+        if (!Objects.equals(entryScenario, scenario.getName())) {
+            // scenario not matches
+            return false;
+        }
+
+        return true;
     }
 
     public double getLimitEntityUsedRatio() {

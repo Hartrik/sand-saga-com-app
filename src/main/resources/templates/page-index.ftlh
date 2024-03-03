@@ -9,44 +9,94 @@
 
   <#if !user??> <#-- if not logged -->
     <script>
-      function sand_saga_com_showFormLogin() {
-        const dialogNode = document.getElementById('dialog-login');
-        const modal = new window.bootstrap.Modal(dialogNode);
-        modal.show();
-      }
-      if (window.location.hash === '#form-login' || window.location.hash === '#form-login-failed') {
-        document.addEventListener('DOMContentLoaded', () => {
-          sand_saga_com_showFormLogin();
-        });
-      }
+        function sand_saga_com_showFormLogin() {
+            const dialogNode = document.getElementById('dialog-login');
+            const modal = new window.bootstrap.Modal(dialogNode);
+            modal.show();
+        }
+
+        if (window.location.hash === '#form-login' || window.location.hash === '#form-login-failed') {
+            document.addEventListener('DOMContentLoaded', () => {
+                sand_saga_com_showFormLogin();
+            });
+        }
     </script>
   </#if>
   <#if user?? && user_tenant == 'form'>
     <script>
-      function sand_saga_com_formLogout() {
-        document.cookie = "login-session-id=; Max-Age=0;path=/";
-        window.location.href = "/";
-      }
+        function sand_saga_com_formLogout() {
+            document.cookie = "login-session-id=; Max-Age=0;path=/";
+            window.location.href = "/";
+        }
     </script>
   </#if>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      if (window.localStorage !== undefined) {
-        for (const key of Object.keys(localStorage)) {
-          if (key.startsWith('scenario_')) {
-            if (localStorage.getItem(key) !== null) {
-              let element = document.getElementById(key);
-              if (element) {
-                const text = key.includes('sandbox') ? 'played' : 'completed';
-                element.innerHTML = '<span class="badge bg-success rounded-pill">' + text + '</span>';
+      document.addEventListener('DOMContentLoaded', () => {
+          if (window.localStorage !== undefined) {
+              for (const key of Object.keys(localStorage)) {
+                  if (key.startsWith('scenario_')) {
+                      if (localStorage.getItem(key) !== null) {
+                          let element = document.getElementById(key);
+                          if (element) {
+                              const text = key.includes('sandbox') ? 'played' : 'completed';
+                              element.innerHTML = '<span class="badge bg-success rounded-pill">' + text + '</span>';
+                          }
+                      }
+                  }
               }
-            }
           }
-        }
-      }
-    });
+      });
   </script>
+
+  <#if user??>  <#-- if logged -->
+  <script>
+      <#-- claim completed -->
+      if (window.localStorage !== undefined) {
+          let completed = [];
+          for (const key of Object.keys(localStorage)) {
+              if (key.startsWith('scenario_')) {
+                  const scenario = key.substring(9);
+                  const value = localStorage.getItem(key);
+                  const valueAsNumber = Number.parseInt(value);
+                  if (Number.isInteger(valueAsNumber)) {
+                      completed.push({ id: valueAsNumber, scenario: scenario });
+                  }
+              }
+          }
+
+          if (completed.length > 0) {
+              const jsonData = JSON.stringify({
+                  completed: completed
+              });
+
+              fetch('/api/user/claim-completed', {
+                  method: 'POST',
+                  headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json'
+                  },
+                  body: jsonData
+              }).then(r => {
+                  if (r.ok) {
+                      return r.json();
+                  } else {
+                      throw r.status;
+                  }
+              }).then(json => {
+                  for (let {id, scenario} of json.accepted) {
+                      localStorage.removeItem('scenario_' + scenario);
+                  }
+                  for (let {id, scenario} of json.refused) {
+                      localStorage.removeItem('scenario_' + scenario);
+                  }
+              }).catch(e => {
+                  console.error(e);
+              });
+          }
+      }
+  </script>
+  </#if>
 </#macro>
 
 <#macro page_body>
