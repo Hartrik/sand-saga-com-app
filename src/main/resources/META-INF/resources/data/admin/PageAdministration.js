@@ -343,7 +343,7 @@ function refreshCompleted() {
                     handle(false, true, fetch(`/api/admin/completed/${completed.id}/snapshot.sgjs`, {
                         method: 'DELETE',
                     }), result => {
-                        refreshUsers();
+                        refreshCompleted();
                     });
                 })
             ];
