@@ -216,10 +216,10 @@ public class CompletedProvider {
             return false;
         }
 
-        if (!Objects.equals(completed.ip, ip)) {
-            // ip not matches
-            return false;
-        }
+//        if (!Objects.equals(completed.ip, ip)) {
+//            // ip not matches
+//            return false;
+//        }
 
         String entryScenario = entry.getScenario();
         SandSagaScenario scenario = configProvider.scenario(entryScenario);
