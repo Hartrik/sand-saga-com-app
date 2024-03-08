@@ -18,6 +18,8 @@ public class SandSagaScenario {
 
     private String nextScenarioName;
 
+    private String versionSandGameJs;
+
     private String urlSandGameJsScript;
     private String urlSandGameJsCss;
     private String urlSandSagaScript;
@@ -68,6 +70,14 @@ public class SandSagaScenario {
 
     public void setNextScenarioName(String nextScenarioName) {
         this.nextScenarioName = nextScenarioName;
+    }
+
+    public String getVersionSandGameJs() {
+        return versionSandGameJs;
+    }
+
+    public void setVersionSandGameJs(String versionSandGameJs) {
+        this.versionSandGameJs = versionSandGameJs;
     }
 
     public String getUrlSandGameJsScript() {

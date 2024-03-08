@@ -49,6 +49,7 @@ public class PublicController {
     @Produces(MediaType.TEXT_HTML)
     public String indexHandler() {
         Map<String, Object> parameters = new LinkedHashMap<>();
+        parameters.put("config", config.getDefaultSandGameConfig());
         parameters.put("categories", config.categories());
         parameters.put("stats", liveStatsProvider.getStats());
 

@@ -6,16 +6,26 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 
 /**
  * @author Patrik Harag
- * @version 2024-02-04
+ * @version 2024-03-08
  */
 @RegisterForReflection
 public class ConfigRoot {
+
+    private String versionSandGameJs;
 
     private String urlSandGameJsScript;
     private String urlSandGameJsCss;
     private String urlSandSagaScriptFormat;  // with %s
 
     private List<ConfigCategory> categories;
+
+    public String getVersionSandGameJs() {
+        return versionSandGameJs;
+    }
+
+    public void setVersionSandGameJs(String versionSandGameJs) {
+        this.versionSandGameJs = versionSandGameJs;
+    }
 
     public String getUrlSandGameJsScript() {
         return urlSandGameJsScript;

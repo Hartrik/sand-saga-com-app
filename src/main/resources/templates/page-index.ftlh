@@ -210,7 +210,7 @@
 
 <#macro page_bottom>
   <div class="container sand-saga-footer">
-    <a href="https://harag.cz/app/sand-game-js">Sand Game JS</a> & Sand Saga; &copy; Patrik Harag, <a href="https://harag.cz">harag.cz</a>; all rights reserved
+    <a href="https://harag.cz/app/sand-game-js">Sand Game JS</a> (${config.versionSandGameJs}) & Sand Saga; &copy; Patrik Harag, <a href="https://harag.cz">harag.cz</a>; all rights reserved
     <#if user?? && user == 'ADMIN'>
       &bull; <a href="/admin">Administration</a>
     <#elseif user??>

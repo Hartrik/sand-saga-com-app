@@ -53,6 +53,7 @@ public class SandSagaConfigProvider {
         Map<Long, SandSagaScenario> cachedScenariosById = new LinkedHashMap<>();
         try {
             ConfigRoot configRoot = new ObjectMapper().readValue(new File(configFile), ConfigRoot.class);
+            cachedSandGameConfig.setVersionSandGameJs(configRoot.getVersionSandGameJs());
             cachedSandGameConfig.setUrlSandGameJsScript(configRoot.getUrlSandGameJsScript());
             cachedSandGameConfig.setUrlSandGameJsCss(configRoot.getUrlSandGameJsCss());
 
@@ -95,6 +96,9 @@ public class SandSagaConfigProvider {
         sandSagaScenario.setTitle(configScenario.getTitle());
         sandSagaScenario.setScriptingEnabled(configScenario.getScriptingEnabled());
         sandSagaScenario.setStoreSnapshot(configScenario.getStoreSnapshot());
+
+        // resolve versions
+        sandSagaScenario.setVersionSandGameJs(configRoot.getVersionSandGameJs());
 
         // resolve urls
         sandSagaScenario.setUrlSandGameJsScript(configRoot.getUrlSandGameJsScript());

@@ -15,7 +15,7 @@
               const root = document.getElementById('sand-game-root');
 
               const config = {
-                  version: 'dev',
+                  version: '${config.versionSandGameJs}',
                   debug: true,
                   scene: {
                       init: async function (sandGame, controller) {

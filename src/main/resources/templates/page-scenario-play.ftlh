@@ -23,7 +23,7 @@
                 const root = document.getElementById('sand-game-root');
 
                 const config = {
-                    version: 'dev',
+                    version: '${scenario.versionSandGameJs}',
                     debug: false,
                     scenario: '${scenario.name}',
                     lobbyUrl: '/',
