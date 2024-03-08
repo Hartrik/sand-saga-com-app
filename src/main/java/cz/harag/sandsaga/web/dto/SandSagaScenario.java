@@ -4,7 +4,7 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 
 /**
  * @author Patrik Harag
- * @version 2024-02-24
+ * @version 2024-03-08
  */
 @RegisterForReflection
 public class SandSagaScenario {
@@ -13,6 +13,7 @@ public class SandSagaScenario {
     private Long entityId;
     private String title;
 
+    private boolean scriptingEnabled;
     private boolean storeSnapshot;
 
     private String nextScenarioName;
@@ -43,6 +44,14 @@ public class SandSagaScenario {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public boolean getScriptingEnabled() {
+        return scriptingEnabled;
+    }
+
+    public void setScriptingEnabled(boolean scriptingEnabled) {
+        this.scriptingEnabled = scriptingEnabled;
     }
 
     public boolean getStoreSnapshot() {

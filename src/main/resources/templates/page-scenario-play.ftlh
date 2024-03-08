@@ -12,6 +12,12 @@
     <script defer src="${scenario.urlSandSagaScript}"></script>
 
     <script>
+        <#if scenario.scriptingEnabled>
+        // global variables, accessible from browser console
+        var sandGame = null;
+        var brushes = null;
+        </#if>
+
         document.addEventListener('DOMContentLoaded', () => {
             if (window.SandGameJS !== undefined && window.SandSaga !== undefined) {
                 const root = document.getElementById('sand-game-root');
@@ -39,10 +45,23 @@
                     if (window.localStorage !== undefined) {
                         localStorage.setItem(localStorageKey, '' + id);
                     }
-                },
+                };
                 </#if>
 
-                SandSaga.init(root, config);
+                const controller = SandSaga.init(root, config);
+                <#if scenario.scriptingEnabled>
+                if (controller !== undefined) {
+                    controller.addOnInitialized(s => {
+                        sandGame = s;
+                    });
+                    brushes = SandGameJS.brushes;
+                    console.log('Globals:');
+                    console.log('  sandGame, brushes');
+                    console.log('Examples:');
+                    console.log('  sandGame.graphics().drawLine(10, 10, 300, 150, 2, brushes.sand);');
+                    console.log('  sandGame.graphics().draw(100, 20, brushes.meteor);');
+                }
+                </#if>
             } else {
                 const placeholder = document.getElementById('sand-game-placeholder-content');
                 placeholder.innerHTML = '<span style="color: red; font-weight: bold;">' +

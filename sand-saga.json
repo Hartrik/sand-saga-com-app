@@ -9,16 +9,19 @@
         {
           "name": "tutorial-basics",
           "title": "Tutorial: Basics",
+          "scriptingEnabled": false,
           "storeSnapshot": false
         },
         {
           "name": "tutorial-fallthrough",
           "title": "Tutorial: Fall-through Mode",
+          "scriptingEnabled": false,
           "storeSnapshot": false
         },
         {
           "name": "tutorial-move",
           "title": "Tutorial: Move Tool",
+          "scriptingEnabled": false,
           "storeSnapshot": false
         }
       ]
@@ -29,11 +32,13 @@
         {
           "name": "mission-deforestation",
           "title": "Mission: Deforestation",
+          "scriptingEnabled": false,
           "storeSnapshot": false
         },
         {
           "name": "mission-recultivation",
           "title": "Mission: Recultivation",
+          "scriptingEnabled": false,
           "storeSnapshot": true
         }
       ]
@@ -44,31 +49,37 @@
         {
           "name": "puzzle-sep-w",
           "title": "Challenge: Separation 1",
+          "scriptingEnabled": false,
           "storeSnapshot": false
         },
         {
           "name": "puzzle-sep-ws",
           "title": "Challenge: Separation 2",
+          "scriptingEnabled": false,
           "storeSnapshot": false
         },
         {
           "name": "puzzle-sep-s",
           "title": "Challenge: Separation 3",
+          "scriptingEnabled": false,
           "storeSnapshot": false
         },
         {
           "name": "puzzle-transfer-w-1",
           "title": "Challenge: Water Transfer 1",
+          "scriptingEnabled": false,
           "storeSnapshot": true
         },
         {
           "name": "puzzle-transfer-w-2",
           "title": "Challenge: Water Transfer 2",
+          "scriptingEnabled": false,
           "storeSnapshot": true
         },
         {
           "name": "puzzle-transfer-s",
           "title": "Challenge: Sand Transfer",
+          "scriptingEnabled": false,
           "storeSnapshot": true
         }
       ]
@@ -79,21 +90,25 @@
         {
           "name": "sandbox",
           "title": "Sandbox",
+          "scriptingEnabled": true,
           "storeSnapshot": true
         },
         {
           "name": "sandbox-rain",
           "title": "Sandbox: Rain",
+          "scriptingEnabled": true,
           "storeSnapshot": false
         },
         {
           "name": "sandbox-meteors",
           "title": "Sandbox: Meteors",
+          "scriptingEnabled": true,
           "storeSnapshot": false
         },
         {
           "name": "sandbox-empty",
           "title": "Sandbox: Empty",
+          "scriptingEnabled": true,
           "storeSnapshot": true
         }
       ]
