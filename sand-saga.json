@@ -1,7 +1,7 @@
 {
-  "urlSandGameJsScript": "https://files.harag.cz/www/app/sand-saga/prod/24w07a/sand-game-js.umd.min.js",
-  "urlSandGameJsCss": "https://files.harag.cz/www/app/sand-saga/prod/24w07a/sand-game-js.css",
-  "urlSandSagaScriptFormat": "https://files.harag.cz/www/app/sand-saga/prod/24w07a/sand-saga_%s.umd.min.js",
+  "urlSandGameJsScript": "https://files.harag.cz/www/app/sand-saga/prod/24w10a/sand-game-js.umd.min.js",
+  "urlSandGameJsCss": "https://files.harag.cz/www/app/sand-saga/prod/24w10a/sand-game-js.css",
+  "urlSandSagaScriptFormat": "https://files.harag.cz/www/app/sand-saga/prod/24w10a/sand-saga_%s.umd.min.js",
   "categories": [
     {
       "title": "Tutorial",
@@ -76,6 +76,11 @@
     {
       "title": "Sandbox",
       "scenarios": [
+        {
+          "name": "sandbox",
+          "title": "Sandbox",
+          "storeSnapshot": true
+        },
         {
           "name": "sandbox-rain",
           "title": "Sandbox: Rain",
