@@ -29,7 +29,7 @@ import org.jboss.logging.Logger;
 
 /**
  * @author Patrik Harag
- * @version 2024-03-02
+ * @version 2024-03-08
  */
 @ApplicationScoped
 public class CompletedProvider {
@@ -69,18 +69,17 @@ public class CompletedProvider {
         entity.ip = ip;
         entity.userId = UserEntity.findByPrincipalAsId(userPrincipal);
 
-        if (limitAdditionalData.next()) {
-            if (input.metadata != null && input.metadata.length() <= 8192) {
-                entity.metadata = input.metadata;
-            }
-
-            if (scenario.getStoreSnapshot()) {
+        if (scenario.getStoreSnapshot()) {
+            if (limitAdditionalData.next()) {
+                if (input.metadata != null && input.metadata.length() <= 8192) {
+                    entity.metadata = input.metadata;
+                }
                 if (input.data != null && input.data.length <= 150_000) {
                     entity.snapshot = input.data;
                 }
+            } else {
+                LOGGER.warn("API limit exceeded - completed additional data");
             }
-        } else {
-            LOGGER.warn("API limit exceeded - completed additional data");
         }
 
         liveStatsProvider.incrementCompleted();
