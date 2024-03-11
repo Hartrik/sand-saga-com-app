@@ -22,7 +22,7 @@
     <#if page_description?has_content><meta name="Description" content="${page_description}"></#if>
     <#if page_description?has_content><meta property="og:description" content="${page_description}"></#if>
     <#if page_title?has_content><meta property="og:title" content="${page_title}"></#if>
-    <#if page_image?has_content><meta property="og:image" content="${page_image}"></#if>
+    <#if page_image?has_content><meta property="og:image" content="${page_image}"><#else><meta property="og:image" content="/social-preview.png"</#if>
 
     <!-- icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=1">
