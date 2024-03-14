@@ -1,11 +1,14 @@
 <#include "layout.ftlh">
 
-<#assign page_title=""/>
 <#assign page_description="The Sand Saga is a unique falling-sand game, built on the Sand Game JS engine. It belongs to a genre that includes popular titles like The Powder Toy or Noita."/>
 <#assign enable_google_analytics=true/>
 
 <#macro page_head>
-  <link href="/data/page-index.css?v=1" rel="stylesheet">
+  <style>
+      .container {
+          max-width: 768px;
+      }
+  </style>
 
   <#if !user??> <#-- if not logged -->
     <script>
@@ -99,46 +102,57 @@
   </#if>
 </#macro>
 
-<#macro page_body>
+<#macro page_bar>
+<ul class="navbar-nav">
+  <li class="nav-item">
+    <a class="nav-link" href="/about">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+      </svg>
+      About
+    </a>
+  </li>
+</ul>
+</#macro>
 
+<#macro page_body>
   <#if !user??>  <#-- if not logged -->
   <#-- login dialog -->
-    <div class="modal fade" id="dialog-login" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <strong>Login</strong>
-          </div>
-          <div class="modal-body">
-            <form class="" action="/login" method="POST">
-              <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-              <div class="mb-3">
-                <label class="form-label" for="username">Name</label>
-                <input type="text" id="username" name="username" class="form-control" placeholder="Enter login" maxlength="30" required>
-              </div>
-              <div class="mb-3">
-                <label class="form-label" for="password">Pass</label>
-                <input type="password" id="password" name="password" class="form-control" placeholder="Enter password" maxlength="30" required>
-              </div>
-              <div class="mb-3">
-                <button type="submit" class="btn btn-primary">Send</button>
-              </div>
-            </form>
-          </div>
+  <div class="modal fade" id="dialog-login" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <strong>Login</strong>
+        </div>
+        <div class="modal-body">
+          <form class="" action="/login" method="POST">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+            <div class="mb-3">
+              <label class="form-label" for="username">Name</label>
+              <input type="text" id="username" name="username" class="form-control" placeholder="Enter login" maxlength="30" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="password">Pass</label>
+              <input type="password" id="password" name="password" class="form-control" placeholder="Enter password" maxlength="30" required>
+            </div>
+            <div class="mb-3">
+              <button type="submit" class="btn btn-primary">Send</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
+  </div>
   </#if>
 
   <div style="float: left;">
-    <img class="small-preview" src="/data/preview-sm-01.png" style="top: 50px; margin-left: -300px;" alt="Background image">
+    <img class="sand-saga-bg-image" src="/data/preview-sm-01.png" style="top: 200px; margin-left: -300px;" alt="Background image">
   </div>
   <div style="float: right;">
-    <img class="small-preview" src="/data/preview-sm-04.png" style="top: 50px;" alt="Background image">
-    <img class="small-preview" src="/data/preview-sm-07.png" style="top: 500px;" alt="Background image">
+    <img class="sand-saga-bg-image" src="/data/preview-sm-04.png" style="top: 200px;" alt="Background image">
+    <img class="sand-saga-bg-image" src="/data/preview-sm-07.png" style="top: 600px;" alt="Background image">
   </div>
 
-  <h1>Sand Saga <span style="color: rgba(var(--bs-danger-rgb));">BETA</span></h1>
   <div class="alert alert-info">
     <p>
       The Sand Saga is a unique falling-sand game, built on the <a href="https://harag.cz/app/sand-game-js">Sand Game JS</a> engine.
@@ -219,7 +233,7 @@
     </#if>
   </div>
 
-  <div id="footer-image"></div>
+  <div class="sand-saga-sand-footer"></div>
 </#macro>
 
 <@display_page/>

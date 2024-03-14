@@ -1,0 +1,145 @@
+
+body {
+    background-color: #ffffff;
+    background-position: 0px 0px;
+    background-size: 200px 200px;
+    background-image: url("/data/noise.png");
+    overflow-x: hidden;
+}
+
+#page-content-wrapper {
+    min-width: 100vw;  /* old browsers */
+    min-width: 100dvw;
+    min-height: 100vh;  /* old browsers */
+    min-height: 100dvh;
+}
+
+@media (min-width: 1360px) {
+    #page-content-wrapper {
+        min-width: 0;
+        width: 100%;
+    }
+}
+
+nav {
+    background-color: rgb(52, 58, 64);
+    background-position: 0px 0px;
+    background-size: 100px 100px;
+    background-image: url("/data/noise.png");
+    margin-bottom: 1em;
+}
+
+.spacer {
+    flex: 1 1 auto;
+    padding-top: 2em;
+}
+
+.navbar-brand, .navbar-text, .nav-link {
+    padding: 0;
+}
+
+.navbar-brand img {
+    vertical-align: bottom;
+    width: 24px;
+    height: 24px;
+}
+
+h1 {
+    font-size: 1rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+@media (min-width: 500px) {
+    .navbar-brand, .navbar-text, .nav-link {
+        padding: 0.25rem;
+    }
+    h1 {
+        font-size: 1rem;
+    }
+}
+
+@media (min-width: 768px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+    .navbar-brand img {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .navbar-brand, .navbar-text, .nav-link {
+        padding: 0.5rem;
+    }
+    h1 {
+        font-size: 2rem;
+    }
+}
+
+.bi {
+    vertical-align: -0.125em;
+}
+
+/* index */
+
+.sand-saga-play-sandbox {
+    text-align: center;
+    margin-top: 2em;
+    margin-bottom: 1em;
+}
+
+.sand-saga-play-sandbox .bi {
+    vertical-align: -0.125em;
+    width: 1em;
+    height: 1em;
+}
+
+.sand-saga-scenario-list {
+    margin-bottom: 1rem;
+}
+
+.alert-info {
+    background-color: rgb(236, 236, 236);
+    background-position: 0px 0px;
+    background-size: 200px 200px;
+    background-image: url("/data/noise.png");
+    border-color: var(--bs-border-color);
+}
+
+.sand-saga-sand-footer {
+    height: 80px;
+    background-image: url('/data/footer-image.png');
+    background-repeat: repeat no-repeat;
+    background-size: 1380px 80px;
+    background-position: center bottom;
+    image-rendering: pixelated;
+}
+
+.sand-saga-footer {
+    font-size: small;
+}
+
+.sand-saga-bg-image {
+    user-select: none;
+    pointer-events: none;
+    position: absolute;
+    z-index: -1;
+    border-radius: 8px;
+}
+
+@media (max-width: 1099px) {
+    .sand-saga-bg-image {
+        display: none;
+    }
+}
+
+.btn-discord {
+    --bs-btn-bg: rgb(88, 101, 242);
+}
+
+.btn-discord .bi-discord {
+    width: 1em;
+    height: 1em;
+}

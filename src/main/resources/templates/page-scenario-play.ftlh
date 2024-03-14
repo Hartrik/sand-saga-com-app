@@ -5,7 +5,6 @@
 <#assign enable_google_analytics=true/>
 
 <#macro page_head>
-    <link rel="stylesheet" type="text/css" href="/data/page-scenario-play.css" />
     <link rel="stylesheet" type="text/css" href="${scenario.urlSandGameJsCss}" />
 
     <script defer src="${scenario.urlSandGameJsScript}"></script>
@@ -75,8 +74,13 @@
     </script>
 </#macro>
 
-<#macro page_body_title>
-    <h1><a href="/">Sand Saga</a> / ${scenario.title}</h1>
+<#macro page_bar>
+  <span class="navbar-text">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-play-fill" viewBox="0 0 16 16">
+      <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"/>
+    </svg>
+    ${scenario.title}
+  </span>
 </#macro>
 
 <#macro page_body>

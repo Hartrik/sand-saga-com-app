@@ -1,11 +1,7 @@
 <#setting locale="en_US">
 
 <#macro page_head></#macro>
-<#macro page_body_title>
-  <#if page_title?has_content>
-  <h1>${page_title}</h1>
-  </#if>
-</#macro>
+<#macro page_bar></#macro>
 <#macro page_body></#macro>
 <#macro page_bottom></#macro>
 
@@ -21,7 +17,7 @@
     <meta property="og:site_name" content="SandSaga.com">
     <#if page_description?has_content><meta name="Description" content="${page_description}"></#if>
     <#if page_description?has_content><meta property="og:description" content="${page_description}"></#if>
-    <#if page_title?has_content><meta property="og:title" content="${page_title}"></#if>
+    <meta property="og:title" content="${page_title!'Sand Saga'}">
     <#if page_image?has_content><meta property="og:image" content="${page_image}"><#else><meta property="og:image" content="/social-preview.png"</#if>
 
     <!-- icons -->
@@ -41,7 +37,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" type="text/css" href="/data/main.css">
+    <link rel="stylesheet" type="text/css" href="/data/sand-saga.css">
 
     <#if enable_google_analytics?? && enable_google_analytics>
     <#include "part-google-analytics.ftlh">
@@ -51,15 +47,17 @@
   </head>
 
   <body class="d-flex">
-
-    <!-- Page content wrapper-->
     <div id="page-content-wrapper" class="d-flex flex-column">
 
-<#--      <!-- Navigation &ndash;&gt;-->
-<#--      <nav id="navbar" class="navbar navbar-dark bg-dark">-->
-<#--      </nav>-->
-
-      <#-- page content -->
+      <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+          <a class="navbar-brand" href="/">
+            <img src="/favicon-32x32.png" width="32" height="32" alt="Logo">
+            <h1 style="display: inline;">Sand Saga</h1>
+          </a>
+          <@page_bar/>
+        </div>
+      </nav>
 
       <noscript>
         <div class="container">
@@ -73,11 +71,9 @@
       </noscript>
 
       <main class="${page_container_style!'container'}">
-        <@page_body_title/>
         <@page_body/>
       </main>
 
-      <#-- filler-->
       <div class="spacer"></div>
 
       <@page_bottom/>

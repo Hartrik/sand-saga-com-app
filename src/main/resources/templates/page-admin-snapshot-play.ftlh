@@ -4,7 +4,6 @@
 <#assign enable_google_analytics=false/>
 
 <#macro page_head>
-  <link rel="stylesheet" type="text/css" href="/data/page-scenario-play.css" />
   <link rel="stylesheet" type="text/css" href="${config.urlSandGameJsCss}" />
 
   <script defer src="${config.urlSandGameJsScript}"></script>
@@ -65,8 +64,8 @@
   </script>
 </#macro>
 
-<#macro page_body_title>
-  <h1><a href="/">Sand Saga</a> / Snapshot</h1>
+<#macro page_bar>
+  <code class="navbar-text">${snapshotUrl}</code>
 </#macro>
 
 <#macro page_body>
