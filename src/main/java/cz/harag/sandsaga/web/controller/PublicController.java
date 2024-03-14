@@ -3,12 +3,9 @@ package cz.harag.sandsaga.web.controller;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import cz.harag.sandsaga.web.service.*;
 import cz.harag.sandsaga.web.dto.SandSagaScenario;
 import cz.harag.sandsaga.web.model.UserEntity;
-import cz.harag.sandsaga.web.service.CompletedProvider;
-import cz.harag.sandsaga.web.service.LiveStatsProvider;
-import cz.harag.sandsaga.web.service.SandSagaConfigProvider;
-import cz.harag.sandsaga.web.service.Templates;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.NotFoundException;
@@ -22,7 +19,7 @@ import org.jboss.logging.Logger;
 
 /**
  * @author Patrik Harag
- * @version 2024-03-03
+ * @version 2024-03-14
  */
 @Path("/")
 public class PublicController {
@@ -43,6 +40,9 @@ public class PublicController {
 
     @Inject
     CompletedProvider completedProvider;
+
+    @Inject
+    TextProvider textProvider;
 
     @GET
     @Path("/")
@@ -82,5 +82,16 @@ public class PublicController {
         parameters.put("config", config);
         parameters.put("scenario", scenario);
         return templates.build("page-scenario-play.ftlh", security, parameters);
+    }
+
+    @GET
+    @Path("/about")
+    @Produces(MediaType.TEXT_HTML)
+    public String aboutHandler() {
+        Map<String, Object> parameters = new LinkedHashMap<>();
+        parameters.put("articleTitle", "About");
+        parameters.put("articleContent", textProvider.get(TextProvider.KEY_ABOUT_PAGE));
+
+        return templates.build("page-article.ftlh", security, parameters);
     }
 }
