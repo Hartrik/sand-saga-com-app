@@ -12,15 +12,15 @@ import org.jboss.logging.Logger;
 
 /**
  * @author Patrik Harag
- * @version 2024-03-14
+ * @version 2024-03-15
  */
 @ApplicationScoped
-public class TextProvider {
-    private static final Logger LOGGER = Logger.getLogger(TextProvider.class);
+public class TextsProvider {
+    private static final Logger LOGGER = Logger.getLogger(TextsProvider.class);
 
     public static final String KEY_ABOUT_PAGE = "about-page";
 
-    private Map<String, String> texts = new LinkedHashMap<>();
+    private final Map<String, String> texts = new LinkedHashMap<>();
 
     void onStart(@Observes StartupEvent event) {
         reload();

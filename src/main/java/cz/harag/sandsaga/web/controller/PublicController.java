@@ -42,7 +42,7 @@ public class PublicController {
     CompletedProvider completedProvider;
 
     @Inject
-    TextProvider textProvider;
+    TextsProvider textsProvider;
 
     @GET
     @Path("/")
@@ -90,7 +90,7 @@ public class PublicController {
     public String aboutHandler() {
         Map<String, Object> parameters = new LinkedHashMap<>();
         parameters.put("articleTitle", "About");
-        parameters.put("articleContent", textProvider.get(TextProvider.KEY_ABOUT_PAGE));
+        parameters.put("articleContent", textsProvider.get(TextsProvider.KEY_ABOUT_PAGE));
 
         return templates.build("page-article.ftlh", security, parameters);
     }

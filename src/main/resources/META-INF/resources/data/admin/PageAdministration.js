@@ -2,7 +2,7 @@ import { DomBuilder } from "/data/admin/DomBuilder.js";
 import { formatDate } from "/data/admin/Utils.js";
 
 /**
- * @version 2024-03-03
+ * @version 2024-03-15
  * @author Patrik Harag
  */
 
@@ -50,6 +50,17 @@ handle(false, false, fetch('/api/admin/server-status', {
 root.append(DomBuilder.par(null, [
     DomBuilder.button('Reload Config', {class: 'btn btn-primary'}, () => {
         handle(true, true, fetch('/api/admin/reload-config', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: ''
+        }));
+    }),
+    ' ',
+    DomBuilder.button('Reload Texts', {class: 'btn btn-primary'}, () => {
+        handle(true, true, fetch('/api/admin/reload-texts', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

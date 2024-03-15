@@ -1,5 +1,6 @@
 package cz.harag.sandsaga.web.controller;
 
+import cz.harag.sandsaga.web.service.*;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,12 +11,6 @@ import cz.harag.sandsaga.web.dto.OutReportDto;
 import cz.harag.sandsaga.web.dto.OutStatsDto;
 import cz.harag.sandsaga.web.dto.OutStatsScenarioDto;
 import cz.harag.sandsaga.web.dto.OutUserDto;
-import cz.harag.sandsaga.web.service.CompletedProvider;
-import cz.harag.sandsaga.web.service.LiveStatsProvider;
-import cz.harag.sandsaga.web.service.ReportProvider;
-import cz.harag.sandsaga.web.service.SandSagaConfigProvider;
-import cz.harag.sandsaga.web.service.StatsProvider;
-import cz.harag.sandsaga.web.service.UserProvider;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.DELETE;
@@ -28,7 +23,7 @@ import jakarta.ws.rs.core.MediaType;
 
 /**
  * @author Patrik Harag
- * @version 2024-03-03
+ * @version 2024-03-15
  */
 @RolesAllowed("admin")
 @Path("/api/admin")
@@ -52,6 +47,9 @@ public class AdminApiController {
     @Inject
     UserProvider userProvider;
 
+    @Inject
+    TextsProvider textsProvider;
+
     // server
 
     @POST
@@ -59,6 +57,13 @@ public class AdminApiController {
     @Produces(MediaType.APPLICATION_JSON)
     public void handleReloadConfig() {
         configProvider.reload();
+    }
+
+    @POST
+    @Path("/reload-texts")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void handleReloadTexts() {
+        textsProvider.reload();
     }
 
     @POST
