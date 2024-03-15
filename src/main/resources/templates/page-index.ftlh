@@ -223,17 +223,18 @@
 </#macro>
 
 <#macro page_bottom>
-  <div class="container sand-saga-footer">
-    <a href="https://harag.cz/app/sand-game-js">Sand Game JS</a> (${config.versionSandGameJs}) & Sand Saga; &copy; Patrik Harag, <a href="https://harag.cz">harag.cz</a>; all rights reserved
-    <#if user?? && user == 'ADMIN'>
-      &bull; <a href="/admin">Administration</a>
-    <#elseif user??>
-    <#else>
-      &bull; <a href="#" onclick="sand_saga_com_showFormLogin(); return false;">Administration</a>
-    </#if>
-  </div>
-
   <div class="sand-saga-sand-footer"></div>
+  <div class="sand-saga-footer bg-dark">
+    <div class="container">
+      <a href="https://harag.cz/app/sand-game-js">Sand Game JS</a> (${config.versionSandGameJs}) & Sand Saga; &copy; Patrik Harag, <a href="https://harag.cz">harag.cz</a>; all rights reserved
+      <#if user?? && user == 'ADMIN'>
+        &bull; <a href="/admin">Administration</a>
+      <#elseif user??>
+      <#else>
+        &bull; <a href="#" onclick="sand_saga_com_showFormLogin(); return false;">Administration</a>
+      </#if>
+    </div>
+  </div>
 </#macro>
 
 <@display_page/>
