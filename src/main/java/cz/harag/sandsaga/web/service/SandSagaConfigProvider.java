@@ -26,7 +26,7 @@ import org.jboss.logging.Logger;
 
 /**
  * @author Patrik Harag
- * @version 2024-03-08
+ * @version 2024-03-16
  */
 @ApplicationScoped
 public class SandSagaConfigProvider {
@@ -101,10 +101,9 @@ public class SandSagaConfigProvider {
         sandSagaScenario.setVersionSandGameJs(configRoot.getVersionSandGameJs());
 
         // resolve urls
-        sandSagaScenario.setUrlSandGameJsScript(configRoot.getUrlSandGameJsScript());
-        sandSagaScenario.setUrlSandGameJsCss(configRoot.getUrlSandGameJsCss());
-        String urlSandSagaScript = String.format(configRoot.getUrlSandSagaScriptFormat(), configScenario.getName());
-        sandSagaScenario.setUrlSandSagaScript(urlSandSagaScript);
+        sandSagaScenario.setUrlSandGameJsScript(formatUrl(configRoot.getUrlSandGameJsScript(), configRoot));
+        sandSagaScenario.setUrlSandGameJsCss(formatUrl(configRoot.getUrlSandGameJsCss(), configRoot));
+        sandSagaScenario.setUrlSandSagaScript(formatScenarioUrl(configRoot.getUrlSandSagaScriptFormat(), configRoot, configScenario));
 
         // resolve entity id
         Optional<ScenarioEntity> optional = ScenarioEntity.findByName(configScenario.getName()).firstResultOptional();
@@ -118,6 +117,16 @@ public class SandSagaConfigProvider {
         }
 
         return sandSagaScenario;
+    }
+
+    private static String formatUrl(String url, ConfigRoot configRoot) {
+        return url.replace("{versionSandGameJs}", configRoot.getVersionSandGameJs())
+                .replace("{versionSandSagaScript}", configRoot.getVersionSandSagaScript())
+                .replace("{versionSandSagaServer}", configRoot.getVersionSandSagaServer());
+    }
+
+    private static String formatScenarioUrl(String url, ConfigRoot configRoot, ConfigScenario configScenario) {
+        return formatUrl(url.replace("{scenario}", configScenario.getName()), configRoot);
     }
 
     public SandSagaScenario scenario(String name) {

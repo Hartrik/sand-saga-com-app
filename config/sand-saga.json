@@ -1,8 +1,10 @@
 {
   "versionSandGameJs": "24w10a-dev",
-  "urlSandGameJsScript": "https://files.harag.cz/www/app/sand-saga/prod/24w10a/sand-game-js.umd.min.js",
-  "urlSandGameJsCss": "https://files.harag.cz/www/app/sand-saga/prod/24w10a/sand-game-js.css",
-  "urlSandSagaScriptFormat": "https://files.harag.cz/www/app/sand-saga/prod/24w10a/sand-saga_%s.umd.min.js",
+  "versionSandSagaScript": "24w10a",
+  "versionSandSagaServer": "24w11a",
+  "urlSandGameJsScript": "https://files.harag.cz/www/app/sand-saga/prod/{versionSandSagaScript}/sand-game-js.umd.min.js",
+  "urlSandGameJsCss": "https://files.harag.cz/www/app/sand-saga/prod/{versionSandSagaScript}/sand-game-js.css",
+  "urlSandSagaScriptFormat": "https://files.harag.cz/www/app/sand-saga/prod/{versionSandSagaScript}/sand-saga_{scenario}.umd.min.js",
   "categories": [
     {
       "title": "Tutorial",
