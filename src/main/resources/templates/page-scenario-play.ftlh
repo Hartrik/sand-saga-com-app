@@ -1,7 +1,7 @@
 <#include "layout.ftlh">
 
 <#assign page_title="${scenario.title}"/>
-<#assign page_description="Sand Saga"/>
+<#assign page_description="The Sand Saga is a unique falling-sand game. It allows players to experiment with various elements, such as sand, soil, water and fire. ${scenario.title} is one of its scenarios."/>
 <#assign enable_google_analytics=true/>
 
 <#macro page_head>
