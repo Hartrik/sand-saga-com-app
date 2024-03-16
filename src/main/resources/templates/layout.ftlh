@@ -51,7 +51,7 @@
         <div class="container">
           <a class="navbar-brand" href="/">
             <img src="/favicon-32x32.png" width="32" height="32" alt="Logo">
-            <h1 style="display: inline;">Sand Saga</h1>
+            <h1 style="display: inline;">Sand Saga <sup><span style="color: red; font-size: small;">BETA</span></sup></h1>
           </a>
           <@page_bar/>
         </div>
