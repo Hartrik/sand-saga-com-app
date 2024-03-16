@@ -63,7 +63,7 @@ public class AdminApiController {
     @Path("/reload-texts")
     @Produces(MediaType.APPLICATION_JSON)
     public void handleReloadTexts() {
-        textsProvider.reload();
+        textsProvider.reloadCache();
     }
 
     @POST
