@@ -1,6 +1,6 @@
 {
-  "versionSandGameJs": "24w10a-dev",
-  "versionSandSagaScript": "24w10a",
+  "versionSandGameJs": "24w11a-dev",
+  "versionSandSagaScript": "24w11a",
   "versionSandSagaServer": "24w11a",
   "urlSandGameJsScript": "https://files.harag.cz/www/app/sand-saga/prod/{versionSandSagaScript}/sand-game-js.umd.min.js",
   "urlSandGameJsCss": "https://files.harag.cz/www/app/sand-saga/prod/{versionSandSagaScript}/sand-game-js.css",
@@ -94,6 +94,12 @@
           "name": "sandbox",
           "title": "Sandbox",
           "scriptingEnabled": true,
+          "storeSnapshot": false
+        },
+        {
+          "name": "sandbox-sandscape",
+          "title": "Sandbox: Sandscape",
+          "scriptingEnabled": true,
           "storeSnapshot": true
         },
         {
@@ -112,7 +118,7 @@
           "name": "sandbox-empty",
           "title": "Sandbox: Empty",
           "scriptingEnabled": true,
-          "storeSnapshot": true
+          "storeSnapshot": false
         }
       ]
     }
