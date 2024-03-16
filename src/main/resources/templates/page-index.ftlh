@@ -226,7 +226,7 @@
   <div class="sand-saga-sand-footer"></div>
   <div class="sand-saga-footer bg-dark">
     <div class="container">
-      <a href="https://harag.cz/app/sand-game-js">Sand Game JS</a> (${config.versionSandGameJs}) & Sand Saga; &copy; Patrik Harag, <a href="https://harag.cz">harag.cz</a>; all rights reserved
+      <a href="https://harag.cz/app/sand-game-js">Sand Game JS</a> (<a href="https://harag.cz/app/sand-game-js/history">${config.versionSandGameJs}</a>) & Sand Saga; &copy; Patrik Harag, <a href="https://harag.cz">harag.cz</a>; all rights reserved
       <#if user?? && user == 'ADMIN'>
         &bull; <a href="/admin">Administration</a>
       <#elseif user??>

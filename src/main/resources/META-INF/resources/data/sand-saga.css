@@ -85,6 +85,10 @@ h1 {
     vertical-align: -0.125em;
 }
 
+.btn-harag-cz img {
+    vertical-align: -0.125em;
+ }
+
 /* index */
 
 .sand-saga-play-sandbox {
@@ -145,9 +149,4 @@ h1 {
 
 .btn-discord {
     --bs-btn-bg: rgb(88, 101, 242);
-}
-
-.btn-discord .bi-discord {
-    width: 1em;
-    height: 1em;
 }
