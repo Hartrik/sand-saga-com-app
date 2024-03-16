@@ -53,6 +53,7 @@ public class TextsProvider {
     public void reloadCache() {
         if (enableCache) {
             reloadCache(KEY_ABOUT_PAGE);
+            reloadCache(KEY_MANUAL_PAGE);
         }
     }
 
