@@ -19,7 +19,7 @@ import org.jboss.logging.Logger;
 
 /**
  * @author Patrik Harag
- * @version 2024-03-14
+ * @version 2024-03-16
  */
 @Path("/")
 public class PublicController {
@@ -91,6 +91,17 @@ public class PublicController {
         Map<String, Object> parameters = new LinkedHashMap<>();
         parameters.put("articleTitle", "About");
         parameters.put("articleContent", textsProvider.get(TextsProvider.KEY_ABOUT_PAGE));
+
+        return templates.build("page-article.ftlh", security, parameters);
+    }
+
+    @GET
+    @Path("/manual")
+    @Produces(MediaType.TEXT_HTML)
+    public String manualHandler() {
+        Map<String, Object> parameters = new LinkedHashMap<>();
+        parameters.put("articleTitle", "Manual");
+        parameters.put("articleContent", textsProvider.get(TextsProvider.KEY_MANUAL_PAGE));
 
         return templates.build("page-article.ftlh", security, parameters);
     }

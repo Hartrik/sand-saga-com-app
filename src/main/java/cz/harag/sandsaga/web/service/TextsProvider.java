@@ -20,6 +20,7 @@ public class TextsProvider {
     private static final Logger LOGGER = Logger.getLogger(TextsProvider.class);
 
     public static final String KEY_ABOUT_PAGE = "about-page";
+    public static final String KEY_MANUAL_PAGE = "manual-page";
     private static final String CONFIG_TEXT_FILE_PREFIX = "cz.harag.sandsaga.texts.file.";
 
     @ConfigProperty(name = "cz.harag.sandsaga.texts.enable-cache")

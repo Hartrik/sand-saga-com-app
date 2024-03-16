@@ -87,7 +87,15 @@ h1 {
 
 .btn-harag-cz img {
     vertical-align: -0.125em;
- }
+}
+
+kbd {
+    color: #000000;
+    background-color: rgba(0, 0, 0, .03);
+    border: 1px solid lightgray;
+    padding: 0 1px;
+    margin: 0 1px;
+}
 
 /* index */
 
