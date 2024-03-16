@@ -125,7 +125,7 @@ public class AdminApiController {
     @Path("/completed/{id}/snapshot.sgjs")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public void handleDeleteCompletedSnapshot(@PathParam("id") Long id) {
-        completedProvider.deleteSnapshotData(id);
+        completedProvider.deleteSnapshotData(id, true);
     }
 
     // report

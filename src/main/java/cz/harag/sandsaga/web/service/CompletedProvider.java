@@ -29,7 +29,7 @@ import org.jboss.logging.Logger;
 
 /**
  * @author Patrik Harag
- * @version 2024-03-08
+ * @version 2024-03-16
  */
 @ApplicationScoped
 public class CompletedProvider {
@@ -107,12 +107,15 @@ public class CompletedProvider {
     }
 
     @Transactional
-    public void deleteSnapshotData(Long id) {
+    public void deleteSnapshotData(Long id, boolean deleteMetadata) {
         CompletedEntity entity = CompletedEntity.findById(id);
         if (entity == null) {
             throw new NotFoundException();
         }
         entity.snapshot = null;
+        if (deleteMetadata) {
+            entity.metadata = null;
+        }
         entity.persist();
     }
 
