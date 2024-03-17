@@ -39,7 +39,7 @@
               infoElement.classList.add('show');
             }
           }
-          setTimeout(() => sandSaga_showTryOtherScenarios(), 1000);
+          setTimeout(() => sandSaga_showTryOtherScenarios(), 2 * 60 * 1000);
         }
 
         const localStorageKey = 'scenario_' + config.scenario;
