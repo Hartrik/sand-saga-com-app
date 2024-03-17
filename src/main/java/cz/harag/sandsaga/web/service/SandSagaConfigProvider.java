@@ -26,7 +26,7 @@ import org.jboss.logging.Logger;
 
 /**
  * @author Patrik Harag
- * @version 2024-03-16
+ * @version 2024-03-17
  */
 @ApplicationScoped
 public class SandSagaConfigProvider {
@@ -54,8 +54,8 @@ public class SandSagaConfigProvider {
         try {
             ConfigRoot configRoot = new ObjectMapper().readValue(new File(configFile), ConfigRoot.class);
             cachedSandGameConfig.setVersionSandGameJs(configRoot.getVersionSandGameJs());
-            cachedSandGameConfig.setUrlSandGameJsScript(configRoot.getUrlSandGameJsScript());
-            cachedSandGameConfig.setUrlSandGameJsCss(configRoot.getUrlSandGameJsCss());
+            cachedSandGameConfig.setUrlSandGameJsScript(formatUrl(configRoot.getUrlSandGameJsScript(), configRoot));
+            cachedSandGameConfig.setUrlSandGameJsCss(formatUrl(configRoot.getUrlSandGameJsCss(), configRoot));
 
             for (ConfigCategory configCategory : configRoot.getCategories()) {
                 SandSagaCategory sandSagaCategory = new SandSagaCategory();
