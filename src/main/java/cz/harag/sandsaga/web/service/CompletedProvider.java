@@ -18,7 +18,6 @@ import cz.harag.sandsaga.web.dto.InCompletedMultipart;
 import cz.harag.sandsaga.web.dto.SandSagaScenario;
 import cz.harag.sandsaga.web.model.CompletedEntity;
 import cz.harag.sandsaga.web.model.UserEntity;
-import io.quarkus.panache.common.Sort;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -29,7 +28,7 @@ import org.jboss.logging.Logger;
 
 /**
  * @author Patrik Harag
- * @version 2024-03-16
+ * @version 2024-03-18
  */
 @ApplicationScoped
 public class CompletedProvider {
@@ -120,8 +119,12 @@ public class CompletedProvider {
     }
 
     @Transactional
-    public List<OutCompletedDto> list(int pageIndex, int pageSize) {
-        return CompletedEntity.<CompletedEntity>findAll(Sort.by("time").descending())
+    public List<OutCompletedDto> list(int pageIndex, int pageSize, Boolean withSnapshotOnly) {
+        final String filter = (withSnapshotOnly != null && withSnapshotOnly)
+                ? "WHERE snapshot IS NOT NULL "
+                : "";
+
+        return CompletedEntity.<CompletedEntity>find(filter + "ORDER BY time DESC")
                 .page(pageIndex, pageSize)
                 .stream().map(this::asDto).collect(Collectors.toList());
     }

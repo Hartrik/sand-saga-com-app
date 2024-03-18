@@ -1,6 +1,7 @@
 package cz.harag.sandsaga.web.controller;
 
 import cz.harag.sandsaga.web.service.*;
+import jakarta.ws.rs.*;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,12 +14,6 @@ import cz.harag.sandsaga.web.dto.OutStatsScenarioDto;
 import cz.harag.sandsaga.web.dto.OutUserDto;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.DELETE;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
 /**
@@ -96,8 +91,8 @@ public class AdminApiController {
     @GET
     @Path("/completed")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<OutCompletedDto> handleGetCompleted() {
-        return completedProvider.list(0, 100);
+    public List<OutCompletedDto> handleGetCompleted(@QueryParam("withSnapshotOnly") Boolean withSnapshotOnly) {
+        return completedProvider.list(0, 100, withSnapshotOnly);
     }
 
     @GET

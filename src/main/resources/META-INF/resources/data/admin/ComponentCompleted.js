@@ -9,9 +9,14 @@ import {formatDate, handle} from "./Utils.js";
 export default class ComponentCompleted extends Component {
 
     #node = DomBuilder.div();
+    #content;
+    #checkboxWithSnapshotOnly;
 
     refresh() {
-        fetch('/api/admin/completed', {
+        const params = new URLSearchParams({
+            withSnapshotOnly: this.#checkboxWithSnapshotOnly.checked
+        });
+        fetch('/api/admin/completed?' + params, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -48,8 +53,8 @@ export default class ComponentCompleted extends Component {
                 ]));
             }
 
-            this.#node.innerHTML = '';
-            this.#node.append(table.createNode());
+            this.#content.innerHTML = '';
+            this.#content.append(table.createNode());
         });
     }
 
@@ -112,6 +117,19 @@ export default class ComponentCompleted extends Component {
     }
 
     createNode() {
+        this.#node.append(DomBuilder.div({ class: 'form-check' }, [
+            this.#checkboxWithSnapshotOnly = DomBuilder.element('input', {
+                class: 'form-check-input',
+                type: 'checkbox'
+            }),
+            DomBuilder.element('label', { class: 'form-check-label' }, 'With snapshot only')
+        ]));
+
+        this.#checkboxWithSnapshotOnly.addEventListener("change", () => {
+            this.refresh();
+        });
+
+        this.#node.append(this.#content = DomBuilder.div());
         return this.#node;
     }
 }
