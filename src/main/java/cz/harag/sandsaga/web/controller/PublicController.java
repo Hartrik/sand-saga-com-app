@@ -1,7 +1,8 @@
 package cz.harag.sandsaga.web.controller;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import cz.harag.sandsaga.web.dto.OutStatsScenarioDto;
+import cz.harag.sandsaga.web.dto.SandSagaCategory;
+import java.util.*;
 
 import cz.harag.sandsaga.web.service.*;
 import cz.harag.sandsaga.web.dto.SandSagaScenario;
@@ -15,11 +16,12 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.SecurityContext;
+import java.util.stream.Collectors;
 import org.jboss.logging.Logger;
 
 /**
  * @author Patrik Harag
- * @version 2024-03-16
+ * @version 2024-03-22
  */
 @Path("/")
 public class PublicController {
@@ -37,6 +39,9 @@ public class PublicController {
 
     @Inject
     LiveStatsProvider liveStatsProvider;
+
+    @Inject
+    StatsProvider statsProvider;
 
     @Inject
     CompletedProvider completedProvider;
@@ -104,5 +109,33 @@ public class PublicController {
         parameters.put("articleContent", textsProvider.get(TextsProvider.KEY_MANUAL_PAGE));
 
         return templates.build("page-article.ftlh", security, parameters);
+    }
+
+    @GET
+    @Path("/stats")
+    @Produces(MediaType.TEXT_HTML)
+    public String statsHandler() {
+        Map<String, Object> parameters = new LinkedHashMap<>();
+        parameters.put("stats", liveStatsProvider.getStats());
+
+        // sort and get title
+        List<OutStatsScenarioDto> statsByScenario = statsProvider.listScenarioStats(0, 1000);
+        Map<String, OutStatsScenarioDto> statsByScenarioMap = statsByScenario.stream()
+                .collect(Collectors.toMap(OutStatsScenarioDto::getName, stats -> stats, (a, b) -> b, LinkedHashMap::new));
+
+        List<OutStatsScenarioDto> statsByScenarioResult = new ArrayList<>(statsByScenario.size());
+
+        for (SandSagaCategory category : config.categories()) {
+            for (SandSagaScenario scenario : category.getScenarios()) {
+                OutStatsScenarioDto stats = statsByScenarioMap.get(scenario.getName());
+                if (stats != null) {
+                    stats.setName(scenario.getTitle());
+                    statsByScenarioResult.add(stats);
+                }
+            }
+        }
+        parameters.put("statsByScenario", statsByScenarioResult);
+
+        return templates.build("page-stats.ftlh", security, parameters);
     }
 }

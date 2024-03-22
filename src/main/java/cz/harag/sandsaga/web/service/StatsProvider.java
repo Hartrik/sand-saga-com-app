@@ -1,63 +1,24 @@
 package cz.harag.sandsaga.web.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import cz.harag.sandsaga.web.dto.OutStatsDayDto;
-import cz.harag.sandsaga.web.dto.InUpdateMultipart;
-import cz.harag.sandsaga.web.dto.SandSagaScenario;
 import cz.harag.sandsaga.web.dto.OutStatsDto;
 import cz.harag.sandsaga.web.dto.OutStatsScenarioDto;
 import cz.harag.sandsaga.web.model.CompletedEntity;
 import cz.harag.sandsaga.web.model.DayStatsEntity;
 import cz.harag.sandsaga.web.model.ScenarioEntity;
 import io.quarkus.panache.common.Sort;
+import io.quarkus.scheduler.Scheduled;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import org.jboss.logging.Logger;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Patrik Harag
- * @version 2024-03-02
+ * @version 2024-03-22
  */
 @ApplicationScoped
 public class StatsProvider {
-
-    private static final Logger LOGGER = Logger.getLogger(StatsProvider.class);
-
-    @Inject
-    SandSagaConfigProvider configProvider;
-
-    @Inject
-    LiveStatsProvider liveStatsProvider;
-
-    @Transactional
-    public void update(InUpdateMultipart input, String ip) {
-        Long epochDay = System.currentTimeMillis() / 86_400_000;
-
-        liveStatsProvider.incrementUpdates();
-
-        // increment day stats
-        if (DayStatsEntity.incrementUpdates(epochDay) > 0) {
-            // ok
-
-        } else {
-            // create entity
-            DayStatsEntity entity = new DayStatsEntity();
-            entity.id = epochDay;
-            entity.updates = 1L;
-            entity.persistAndFlush();
-        }
-
-        // increment scenario stats
-        if (input.scenario != null) {
-            SandSagaScenario scenario = configProvider.scenario(input.scenario);
-            if (scenario != null) {
-                ScenarioEntity.incrementUpdates(scenario.getEntityId());
-            }
-        }
-    }
 
     @Transactional
     public List<OutStatsScenarioDto> listScenarioStats(int pageIndex, int pageSize) {
@@ -104,6 +65,7 @@ public class StatsProvider {
     // TEMPORARY
 
     @Transactional
+    @Scheduled(every = "15m", delayed = "15m")
     public void updateStatsFromCompleted() {
         for (ScenarioEntity scenario : ScenarioEntity.<ScenarioEntity>listAll()) {
             scenario.completed = CompletedEntity.countCompleted(scenario);

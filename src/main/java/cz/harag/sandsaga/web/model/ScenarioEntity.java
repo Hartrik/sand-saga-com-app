@@ -32,8 +32,8 @@ public class ScenarioEntity extends PanacheEntity {
         return ScenarioEntity.find("name", name);
     }
 
-    public static int incrementUpdates(Long id) {
-        return update("updates = updates + 1 WHERE id = ?1", id);
+    public static int incrementUpdates(Long id, long count) {
+        return update("updates = updates + ?2 WHERE id = ?1", id, count);
     }
 
     public static OutStatsDto sumStats() {

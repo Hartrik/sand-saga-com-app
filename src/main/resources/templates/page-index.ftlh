@@ -169,7 +169,7 @@
     </p>
     <p style="text-align: center;">
       <span style="white-space: nowrap;"><strong>${stats.completed?string.number}</strong> <small style="margin-right: 1em;">scenarios completed</small></span>
-      <span style="white-space: nowrap;"><strong>${stats.updates?string.number}</strong> <small>minutes played</small></span>
+      <span style="white-space: nowrap;"><strong>${stats.updates?string.number}</strong> <small style="margin-right: 1em;">minutes played</small> <a href="/stats" style="text-decoration: none;">*</a></span>
     </p>
   </div>
 
