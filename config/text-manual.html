@@ -137,32 +137,20 @@
 
 <p>Here are a few examples of what you can do...</p>
 
-<pre style="color: black;
-border: 1px solid rgba(0, 0, 0, .125);
-border-radius: 0.25rem;
-border-left: 4px solid;
-padding: 1rem;"><code>// spawn fire after each iteration = fire source
+<pre><code>// spawn fire after each iteration = fire source
 sandGame.addOnProcessed(() => {
     sandGame.graphics().drawRectangle(60, 50, 100, 55, brushes.fire);
 });
 </code></pre>
 
-<pre style="color: black;
-border: 1px solid rgba(0, 0, 0, .125);
-border-radius: 0.25rem;
-border-left: 4px solid;
-padding: 1rem;"><code>// bigger fire
+<pre><code>// bigger fire
 sandGame.addOnProcessed(() => {
     sandGame.graphics().drawRectangle(120, 50, 170, 55, brushes.fire);
     sandGame.graphics().drawRectangle(120, 50, 170, 55, brushes.effect_temp_255);
 });
 </code></pre>
 
-<pre style="color: black;
-border: 1px solid rgba(0, 0, 0, .125);
-border-radius: 0.25rem;
-border-left: 4px solid;
-padding: 1rem;"><code>// control processing manually
+<pre><code>// control processing manually
 sandGame.stopProcessing();
 for (let i = 0; i < 1000; i++) {
     sandGame.doProcessing();  // perform one iteration now

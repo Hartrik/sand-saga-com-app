@@ -97,6 +97,14 @@ kbd {
     margin: 0 1px;
 }
 
+pre {
+    color: black;
+    border: 1px solid rgba(0, 0, 0, .125);
+    border-radius: 0.25rem;
+    border-left: 4px solid;
+    padding: 1rem;
+}
+
 /* index */
 
 .sand-saga-play-sandbox {
