@@ -1,4 +1,4 @@
-<h2>Manual</h2>
+<h2>User Manual</h2>
 
 <p>
   Sand Saga can be played using either a mouse and keyboard or a touch screen
@@ -68,3 +68,147 @@
   <strong>Scripting</strong> <span style="color: red;">[advanced]</span>&emsp;By pressing <kbd>F12</kbd>, you can open the browser’s developer tools.
   Here, in the console, you can programmatically manipulate the canvas.
 </p>
+
+
+<hr style="margin-top: 4rem;">
+<p style="text-align: center; color: red; font-size: large;">[more advanced]</p>
+<hr>
+
+<h2>Content Creation</h2>
+<p>For creative individuals, there are additional possibilities. They are ordered from less technical to more technical.</p>
+
+<h3>Resources</h3>
+<p>
+  Resources for Sand Game JS can be imported directly using the Import button or by dragging and dropping.
+  In the future, a workshop might be available for them.
+  Please note that import may be disabled in certain scenarios to prevent cheating.
+</p>
+<p>There are two types of resources: snapshots and tool definitions.</p>
+
+<div style="margin-left: 2rem;">
+  <h4>Snapshots</h4>
+  <p>
+    A snapshot refers to the saved content of the canvas. It can be created using the Export button.
+    Creating a snapshot whitch is interesting for other players is the simplest and most basic way of creating content.
+    There is an ongoing effort to maintain backward compatibility.
+    In the current version, it is still possible to open even the oldest created snapshots.
+  </p>
+  <p>Examples can be found <a href="https://github.com/Hartrik/sand-game-js/tree/master/examples/snapshots">here</a>.</p>
+
+  <h4>Tool Definitions</h4>
+  <p>Currently, tool definitions are limited to template tools. In the future, it will be possible to define brush tools declaratively.</p>
+  <p>Examples can be found <a href="https://github.com/Hartrik/sand-game-js/tree/master/examples/tools">here</a>.</p>
+</div>
+
+<h3>Scripting</h3>
+<p>
+  With scripting, you can manipulate the canvas and control processing.
+  If you create something interesting, you can create a <a href="https://gist.github.com/">GitHub gist</a> or a repository and share the link on our Discord server.
+  Currently, there is no comprehensive documentation available, so you may need to experiment more or look into the <a href="https://github.com/Hartrik/sand-game-js">source codes</a>.
+  On the other hand, nobody ever reads the documentation anyway.
+</p>
+
+<div class="alert alert-warning" role="alert">
+  <p>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2"/>
+    </svg>
+    <strong>Be aware that running scripts from untrusted sources can pose a security risk.</strong>
+  </p>
+  <p>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
+      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+      <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
+    </svg>
+    When exploring the source codes of Sand Game JS, make sure you are looking at the correct version. The repository may contain new changes.
+  </p>
+</div>
+
+<p>
+  To begin with scripting, press <kbd>F12</kbd> to open the developer tools and navigate to the console.
+  Please note that scripting may be disabled in certain scenarios to prevent cheating.
+</p>
+
+<p>You have access to the following global variables:</p>
+<ul>
+  <li><code>sandGame</code> - instance of <a href="https://github.com/Hartrik/sand-game-js/blob/master/src/core/SandGame.js">SandGame</a>.</li>
+  <li><code>brushes</code> - list of brushes as a map.</li>
+</ul>
+
+<p>Here are a few examples of what you can do...</p>
+
+<pre style="color: black;
+border: 1px solid rgba(0, 0, 0, .125);
+border-radius: 0.25rem;
+border-left: 4px solid;
+padding: 1rem;"><code>// spawn fire after each iteration = fire source
+sandGame.addOnProcessed(() => {
+    sandGame.graphics().drawRectangle(60, 50, 100, 55, brushes.fire);
+});
+</code></pre>
+
+<pre style="color: black;
+border: 1px solid rgba(0, 0, 0, .125);
+border-radius: 0.25rem;
+border-left: 4px solid;
+padding: 1rem;"><code>// bigger fire
+sandGame.addOnProcessed(() => {
+    sandGame.graphics().drawRectangle(120, 50, 170, 55, brushes.fire);
+    sandGame.graphics().drawRectangle(120, 50, 170, 55, brushes.effect_temp_255);
+});
+</code></pre>
+
+<pre style="color: black;
+border: 1px solid rgba(0, 0, 0, .125);
+border-radius: 0.25rem;
+border-left: 4px solid;
+padding: 1rem;"><code>// control processing manually
+sandGame.stopProcessing();
+for (let i = 0; i < 1000; i++) {
+    sandGame.doProcessing();  // perform one iteration now
+}
+sandGame.startProcessing();
+</code></pre>
+
+<h3>Scenarios</h3>
+<p>
+  Scenarios are like lightweight modifications.
+  They function by using Sand Game JS as a library and can define their own tools, templates, scenes, objectives, and customize various settings.
+  This is how all the basic scenarios that you can see on the main page work, from tutorials to sandboxes.
+  Currently, there is no comprehensive documentation available, so you may need to experiment more or look into the <a href="https://github.com/Hartrik/sand-game-js">source codes</a>.
+  The <a href="https://github.com/Hartrik/sand-game-js/blob/master/src/main.js">main.js</a> file is important as it defines the API.
+</p>
+
+<p>To create a custom scenario, follow these steps:</p>
+<ol>
+  <li>Create a repository from the <a href="https://github.com/Hartrik/sand-saga-scenario">template</a> by clicking on 'Use this template'.</li>
+  <li>Continue with the instructions in the readme.</li>
+</ol>
+
+<p>If you have an interesting and unique scenario that you want to be published on sandsaga.com, follow these steps:</p>
+<ol>
+  <li>Test it thoroughly.</li>
+  <li>Write ideally on Discord, channel #content-creation, attach a link to the repository.</li>
+  <li>The scenario will have to pass a review.</li>
+  <li>I will assemble the scenario myself and deploy it.</li>
+</ol>
+
+<p>
+  It might be a good idea to grant me push access to the repository (by adding me as a collaborator).
+  This way, I can promptly address any deployment-related issues.
+</p>
+
+<h3>Modifications</h3>
+<p>Modifications are essentially forks of the Sand Game JS. You can change everything.</p>
+
+<p>To start with mod development, fork the <a href="https://github.com/Hartrik/sand-game-js">Sand Game JS</a> on GitHub. The same procedure applies for publication as with scenarios.</p>
+
+<div class="alert alert-warning" role="alert">
+  <p>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2"/>
+    </svg>
+    <strong>Scenarios are preferred over modifications</strong> – they are much easier to update when a new version of Sand Game JS is released.
+    Modifications require constant care or they may become obsolete soon. Avoid creating forks unless necessary.
+  </p>
+</div>
