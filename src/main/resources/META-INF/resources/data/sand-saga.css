@@ -123,11 +123,14 @@ pre {
     margin-bottom: 1rem;
 }
 
-.alert-info {
-    background-color: rgb(236, 236, 236);
+.alert {
     background-position: 0px 0px;
     background-size: 200px 200px;
     background-image: url("/data/noise.png");
+}
+
+.alert-info {
+    background-color: rgb(236, 236, 236);
     border-color: var(--bs-border-color);
 }
 
