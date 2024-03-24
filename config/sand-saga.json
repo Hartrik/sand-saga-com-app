@@ -1,9 +1,9 @@
 {
-  "versionSandGameJs": "24w11a-dev",
+  "versionSandGameJs": "24w12a",
   "versionSandSagaScript": "24w11a",
   "versionSandSagaServer": "24w11a",
-  "urlSandGameJsScript": "https://files.harag.cz/www/app/sand-saga/prod/{versionSandSagaScript}/sand-game-js.umd.min.js",
-  "urlSandGameJsCss": "https://files.harag.cz/www/app/sand-saga/prod/{versionSandSagaScript}/sand-game-js.css",
+  "urlSandGameJsScript": "https://files.harag.cz/www/app/sand-game-js/prod/{versionSandGameJs}/sand-game-js.umd.min.js",
+  "urlSandGameJsCss": "https://files.harag.cz/www/app/sand-game-js/prod/{versionSandGameJs}/sand-game-js.css",
   "urlSandSagaScriptFormat": "https://files.harag.cz/www/app/sand-saga/prod/{versionSandSagaScript}/sand-saga_{scenario}.umd.min.js",
   "categories": [
     {
